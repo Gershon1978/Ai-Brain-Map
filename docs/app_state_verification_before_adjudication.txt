@@ -1,0 +1,28 @@
+== application state (independent verifier)
+  nodes=69  edges=66  citations=155
+  quotes: byte-exact=107  whitespace-only=48  missing=0
+  chunks: cited 37 of 43, unused 6 ['big_blue_book_p0693_c00', 'bike_repair_manual_chris_p0003_c00', 'bike_repair_manual_chris_p0071_c05', 'bike_repair_manual_chris_p0088_c00', 'bike_repair_manual_chris_p0089_c00', 'bike_repair_manual_chris_p0148_c00']
+  node status: {'verified': 61, 'candidate': 1, 'needs_review': 7}
+  edge status: {'verified': 55, 'needs_review': 11}
+  components=5 sizes=[45, 16, 6, 1, 1] largest=45 (65%)
+  batches: [('seed', 27, 12), ('phase5-brake-1', 10, 10), ('phase5-cockpit-2', 7, 7), ('phase5-drivetrain-3', 7, 7), ('phase5-rearshock-4', 5, 5), ('phase5-quillstem-5', 4, 4), ('phase5-cassette-6', 5, 5), ('phase5-hubfit-7', 4, 4), ('phase8a-brakes', 0, 12)]
+
+WARNINGS: 48
+  - node comp-rear-hub: whitespace-only match on big_blue_book_p0238_c00
+  - node comp-rear-hub: whitespace-only match on big_blue_book_p0250_c00
+  - node comp-freehub-body: whitespace-only match on big_blue_book_p0238_c00
+  - node comp-freehub-body: whitespace-only match on big_blue_book_p0250_c00
+  - node comp-cassette: whitespace-only match on bike_repair_manual_chris_p0066_c00
+  - node comp-cassette: whitespace-only match on big_blue_book_p0200_c00
+  - node comp-freehub-xdr: whitespace-only match on big_blue_book_p0244_c01
+  - node comp-freehub-xdr: whitespace-only match on big_blue_book_p0253_c01
+  - node comp-hub-centerlock: whitespace-only match on big_blue_book_p0679_c00
+  - node comp-hub-centerlock: whitespace-only match on big_blue_book_p0680_c02
+PROBLEMS: 5
+  - edge std-brake-centerlock_has_property_std-brake-centerlock-torque: 'standard' not an allowed target type for has_property
+  - edge proc-brake-bleed_affects_comp-caliper-hydraulic: 'procedure' not an allowed source type for affects
+  - edge comp-rear-hub_interfaces_with_std-brake-thru-axle: 'standard' not an allowed target type for interfaces_with
+  - edge edge-freehub-ratchet-part-of-body: 'subcomponent' not an allowed target type for part_of
+  - edge edge-cartridge-bearing-part-of-freehub: 'subcomponent' not an allowed target type for part_of
+
+VERDICT: FAIL

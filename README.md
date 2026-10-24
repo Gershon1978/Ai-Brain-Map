@@ -19,7 +19,7 @@ whole point of the project, and it is the rule that matters most.
 | Evidence bundle | **43 chunks** (36 original + 7 added 2026-10-25) |
 | Chunks cited | **36 of 43** — 7 unused (8a cites 2 of them, 8b/8c the rest) |
 | Connectivity | 7 components, largest 35 (51%) |
-| Test suite | 15 tests. **Test Q pins the graph numbers *and* the exact list of uncited chunks**, so growing the bundle or landing a batch requires a deliberate pin update — it is designed to fail loudly on a mismatch |
+| Test suite | **16 tests**, all passing headlessly (`npx tsx tools/run_suite.mjs`). Test Q pins the graph numbers *and* the exact list of uncited chunks; Test R pins the five ontology adjudications by reason |
 
 Live app: Google AI Studio, app id `82983f51-5ac2-4ac3-ba0f-6d27161b376a`.
 

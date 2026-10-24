@@ -104,7 +104,7 @@
     },
     {
       "id": "std-brake-centerlock-torque",
-      "type": "standard",
+      "type": "measurement",
       "name": "Center Lock Ring Torque Specification",
       "subsystem": "sys-brakes",
       "aliases": ["Center Lock Tightening Torque", "40 N·m Lockring Standard"],
@@ -545,11 +545,11 @@
       ]
     },
     {
-      "id": "comp-rear-hub_interfaces_with_std-brake-thru-axle",
+      "id": "comp-rear-hub_conforms_to_std-brake-thru-axle",
       "src": "comp-rear-hub",
       "dst": "std-brake-thru-axle",
-      "type": "interfaces_with",
-      "claim": "Rear wheel hub interface with presumed 12mm or 15mm thru-axle diameter is visually estimated and unconfirmed.",
+      "type": "conforms_to",
+      "claim": "The rear hub's axle interface is presumed to conform to a 12mm or 15mm thru-axle standard; the diameter is visually estimated and unconfirmed.",
       "status": "needs_review",
       "evidence_type": "service_manual",
       "confidence": 0.95,

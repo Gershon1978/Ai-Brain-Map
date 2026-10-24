@@ -6,7 +6,7 @@
       "inverse": "contains",
       "description": "Physical structural containment within a parent assembly or subsystem.",
       "allowed_source_types": ["component", "subcomponent", "property"],
-      "allowed_target_types": ["subsystem", "component", "vehicle"]
+      "allowed_target_types": ["subsystem", "component", "subcomponent", "vehicle"]
     },
     "contains": {
       "symmetric": false,
@@ -48,7 +48,7 @@
     "affects": {
       "symmetric": false,
       "description": "Operational influence where changing source impacts target function.",
-      "allowed_source_types": ["property", "component", "measurement"],
+      "allowed_source_types": ["property", "component", "measurement", "procedure"],
       "allowed_target_types": ["component", "subsystem", "procedure"]
     },
     "constrains": {

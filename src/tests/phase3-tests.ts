@@ -11,6 +11,7 @@ import { exportToJsonl, exportToGraphml, importGraph } from '../services/graph-e
 import { calculateHybridLayout } from '../services/hybrid-layout.ts';
 import { getSeedGraph, getMergedGraph, getExpansionRegistry } from '../services/graph-loader.ts';
 import { computeCoverageReport } from '../services/coverage-service.ts';
+import relationOntology from '../data/relation-ontology.json';
 import type { GraphNode, GraphEdge, GraphPayload } from '../types/graph.ts';
 
 export interface TestResult {
@@ -728,6 +729,105 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
       ? `All runtime coverage and integrity invariants verified: 69 nodes (61v/1c/7r), 66 edges (55v/11r), ${coverageReport.batchLedger.length} batches in ledger, 155 citations (107 byte-exact, 48 whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, waiting for batches 8b-8c), ${coverageReport.connectivity.componentCount} components (largest: ${coverageReport.connectivity.largestSize} nodes, ${coverageReport.connectivity.largestPercentage}%; ${coverageReport.connectivity.remainingIslands.length} islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated against the computed rule.`
       : `Test Q failed: ${qErrors.join('; ')}`,
     details: { coverageReport, qErrors },
+  });
+
+  // --- 16. Test R: ontology adjudication regressions ---
+  // Five pre-existing edges broke the ontology. Each was fixed either by correcting the RECORD or by
+  // widening the RULE, and each fix is pinned here by its own reason - so reverting one fails this
+  // test with the specific cause, not merely because some aggregate count drifted.
+  const rErrors: string[] = [];
+  const relMap = (relationOntology as any).relations as Record<string, any>;
+  const typesOf = (name: string): string[] => relMap[name]?.allowed_target_types || [];
+  const srcsOf = (name: string): string[] => relMap[name]?.allowed_source_types || [];
+  const mg = getMergedGraph();
+  const findEdge = (src: string, dst: string) =>
+    mg.edges.find((e) => e.src === src && e.dst === dst);
+  const findNode = (id: string) => mg.nodes.find((n) => n.id === id);
+
+  // R1 - a 40 N.m torque specification is a MEASUREMENT, not a standard. Fixed by retyping the node,
+  // not by teaching has_property to accept standard targets.
+  if ((findNode('std-brake-centerlock-torque') as any)?.type !== 'measurement') {
+    rErrors.push('R1: std-brake-centerlock-torque should be typed measurement');
+  }
+  if (!typesOf('has_property').includes('measurement')) {
+    rErrors.push('R1: has_property should allow a measurement target');
+  }
+  if (typesOf('has_property').includes('standard')) {
+    rErrors.push('R1: has_property must NOT accept standard targets (the node was mis-typed, the rule was not too narrow)');
+  }
+
+  // R2 - a bleed procedure does act on a caliper. Fixed by widening affects: the relation already
+  // listed procedure as an allowed TARGET, so excluding it as a source was an unexplained asymmetry.
+  if (!srcsOf('affects').includes('procedure')) {
+    rErrors.push('R2: affects should allow a procedure source');
+  }
+  const bleed = findEdge('proc-brake-bleed', 'comp-caliper-hydraulic');
+  if (!bleed || bleed.type !== 'affects') {
+    rErrors.push('R2: proc-brake-bleed -> comp-caliper-hydraulic should be an affects edge');
+  }
+  if ((findNode('proc-brake-bleed') as any)?.type !== 'procedure') {
+    rErrors.push('R2: proc-brake-bleed should still be typed procedure');
+  }
+
+  // R3 - a hub does not "interface with" a standard, it CONFORMS to one; the same map already says
+  // this three times. Fixed by retyping the edge, and interfaces_with must still reject standards.
+  const hubAxle = findEdge('comp-rear-hub', 'std-brake-thru-axle');
+  if (!hubAxle || hubAxle.type !== 'conforms_to') {
+    rErrors.push('R3: comp-rear-hub -> std-brake-thru-axle should be conforms_to');
+  }
+  if (!typesOf('conforms_to').includes('standard')) {
+    rErrors.push('R3: conforms_to should allow a standard target');
+  }
+  if (typesOf('interfaces_with').includes('standard')) {
+    rErrors.push('R3: interfaces_with must NOT accept standard targets');
+  }
+
+  // R4 - nested assemblies (subcomponent inside subcomponent) are legitimate, and part_of must agree
+  // with its own inverse: contains already allowed a subcomponent target.
+  if (!typesOf('part_of').includes('subcomponent')) {
+    rErrors.push('R4: part_of should allow a subcomponent target');
+  }
+  if (!typesOf('contains').includes('subcomponent')) {
+    rErrors.push('R4: contains must keep allowing a subcomponent target (inverse symmetry)');
+  }
+  const ratchet = findEdge('comp-freehub-ratchet', 'comp-freehub-body');
+  const bearing = findEdge('comp-freehub-cartridge-bearing', 'comp-freehub-body');
+  if (!ratchet || ratchet.type !== 'part_of') {
+    rErrors.push('R4: freehub ratchet -> freehub body should be part_of');
+  }
+  if (!bearing || bearing.type !== 'part_of') {
+    rErrors.push('R5: freehub cartridge bearing -> freehub body should be part_of');
+  }
+
+  // R5 - widening part_of must not introduce containment cycles.
+  const partOf = new Map<string, string[]>();
+  for (const e of mg.edges) {
+    if (e.type === 'part_of') {
+      partOf.set(e.src, [...(partOf.get(e.src) || []), e.dst]);
+    }
+  }
+  const state = new Map<string, number>(); // 1 = on stack, 2 = done
+  const hasCycle = (node: string): boolean => {
+    if (state.get(node) === 1) return true;
+    if (state.get(node) === 2) return false;
+    state.set(node, 1);
+    for (const next of partOf.get(node) || []) {
+      if (hasCycle(next)) return true;
+    }
+    state.set(node, 2);
+    return false;
+  };
+  if (mg.nodes.some((n) => hasCycle(n.id))) {
+    rErrors.push('R5: part_of contains a cycle');
+  }
+
+  results.push({
+    name: 'Test R: Ontology Adjudication Regressions',
+    passed: rErrors.length === 0,
+    message: rErrors.length === 0
+      ? 'All five adjudications hold for their own reason: torque retyped to measurement, affects widened to accept procedures, hub/thru-axle retyped to conforms_to, part_of widened symmetrically with contains, no part_of cycles.'
+      : `Test R failed: ${rErrors.join('; ')}`,
+    details: rErrors,
   });
 
   const allPassed = results.every((r) => r.passed);

@@ -18,11 +18,6 @@ WARNINGS: 48
   - node comp-freehub-xdr: whitespace-only match on big_blue_book_p0253_c01
   - node comp-hub-centerlock: whitespace-only match on big_blue_book_p0679_c00
   - node comp-hub-centerlock: whitespace-only match on big_blue_book_p0680_c02
-PROBLEMS: 5
-  - edge std-brake-centerlock_has_property_std-brake-centerlock-torque: 'standard' not an allowed target type for has_property
-  - edge proc-brake-bleed_affects_comp-caliper-hydraulic: 'procedure' not an allowed source type for affects
-  - edge comp-rear-hub_interfaces_with_std-brake-thru-axle: 'standard' not an allowed target type for interfaces_with
-  - edge edge-freehub-ratchet-part-of-body: 'subcomponent' not an allowed target type for part_of
-  - edge edge-cartridge-bearing-part-of-freehub: 'subcomponent' not an allowed target type for part_of
+PROBLEMS: 0
 
-VERDICT: FAIL
+VERDICT: PASS - application state is consistent
