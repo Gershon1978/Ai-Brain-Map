@@ -1,5 +1,13 @@
 # HANDOFF — three batches that finish the map
 
+> ## ⚠ SUPERSEDED IN PART — read [`AUDIT_v2.md`](AUDIT_v2.md) first
+>
+> An evidence audit of every proposed edge found that three of the nine relationships assert more
+> than their cited sentence says. **Two edges are dropped, one is redesigned into two, and two
+> quotes are replaced.** The batch tables below are kept for history; `AUDIT_v2.md` is authoritative
+> on what may be inserted. The honest post-batch shape is **73 nodes / 73 edges / 41 of 43 chunks
+> cited / 3 components (largest 69)** — *not* one connected graph.
+
 Status at handoff (2026-10-25): **69 nodes / 63 edges / 152 citations / 43-chunk bundle,
 36 of 43 chunks cited (7 unused), 7 disconnected components (largest 35).**
 
@@ -7,7 +15,9 @@ The bundle was grown from 36 to 43 chunks on 2026-10-25 (owner-approved). The 7 
 verbatim from the corpus and verified byte-identical. Five of them are not cited yet — batches 8b
 and 8c below use them. `p0002_c02` and `p0585_c00` were **already** in the 36.
 
-Goal: **one connected graph, 72 nodes / 74 edges, 43 of 43 chunks cited, 0 unused.**
+Goal (audited, see `AUDIT_v2.md`): **73 nodes / 73 edges / 41 of 43 chunks cited / 3 components
+(largest 69)**. Two proposed edges are unsupportable from the bundle and are dropped; the crank
+cluster and `comp-fork-seals` stay disconnected because no bundled sentence joins them.
 
 ---
 
