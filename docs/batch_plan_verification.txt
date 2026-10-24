@@ -1,0 +1,15 @@
+== proposed nodes: 4, proposed edges: 10, citations in the proposal: 14
+== recomputed: nodes=73 edges=73 citations=166 cited=41 of 43 unused=2 components=3 largest=69
+   node split: {'verified': 64, 'candidate': 1, 'needs_review': 8}
+   edge split: {'verified': 59, 'needs_review': 14}
+   component sizes: [69, 3, 1]
+   unused chunks: ['big_blue_book_p0693_c00', 'bike_repair_manual_chris_p0071_c05']
+
+WARNINGS: 4
+  - node comp-chainring: quote is inside the [VISUAL DATA] part - fine, status is needs_review
+  - edge edge-conn4-pad-against-rotor: chunk big_blue_book_p0663_c00 contains a visual section, but the quote is in the prose part
+  - edge edge-conn4-caliper-holds-pads: chunk big_blue_book_p0663_c00 contains a visual section, but the quote is in the prose part
+  - edge edge-conn4-chainring-on-crank: quote is inside the [VISUAL DATA] part - fine, status is needs_review
+PROBLEMS: 0
+
+VERDICT: PASS - proposal verified
