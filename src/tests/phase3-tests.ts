@@ -610,7 +610,9 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     { batch: 'phase5-quillstem-5', nodes: 4, edges: 4, citations: 8 },
     { batch: 'phase5-cassette-6', nodes: 5, edges: 5, citations: 10 },
     { batch: 'phase5-hubfit-7', nodes: 4, edges: 4, citations: 8 },
-    { batch: 'phase6-connectors-3', nodes: 0, edges: 9, citations: 9 },
+    // One row per expansion FILE. The connectors file was relabelled when batch 8a was appended to
+    // it, so its row is phase8a-brakes and now carries all 12 of that file's edges; the 9 connector
+    // edges keep their own per-edge batch labels (phase6-connectors-1/2/3).
     { batch: 'phase8a-brakes', nodes: 0, edges: 12, citations: 12 },
   ];
 

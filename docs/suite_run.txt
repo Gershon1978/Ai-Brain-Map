@@ -1,0 +1,19 @@
+=== graph suite (tsx, headless) === 
+PASS  Phase 3 Schema & Literal Quote Self-Check (59 Citations)
+PASS  Fix A: Mandatory Quote Verification Enforcement
+PASS  Test B: Entity Traceability
+PASS  Test C: Compatibility (Verified vs Incompatible)
+PASS  Fix C: verified_compatible Gate (Unreviewed Edge yields conditionally_compatible)
+PASS  Test D: Conditional Compatibility
+PASS  Test F: Contradictory Evidence Handling
+PASS  Test G: Unknown Values Handling
+PASS  Test H: Duplicate Ingestion Idempotency
+PASS  Test K: Evidence Grade Rule (Grade B cannot justify numbers)
+PASS  Test L: Offline Detach Invariance
+PASS  Test M: Export Round-Trip (JSONL & GraphML chunk_id preservation)
+PASS  Test N: Layout Limits & Degree Auto-Collapse Enforcement
+PASS  Test P: Seed Immutability & Expansion Merge
+PASS  Test Q: Coverage & Integrity Verification
+
+OVERALL: true  (15/15 passed)
+SUITE_EXIT=0 
