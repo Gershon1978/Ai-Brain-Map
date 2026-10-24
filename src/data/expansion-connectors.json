@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "batch": "phase6-connectors-3",
+  "batch": "phase8a-brakes",
   "nodes": [],
   "edges": [
     {
@@ -221,6 +221,81 @@
           "page": 66,
           "section": "MAINTAINING YOUR TRANSMISSION • CHAIN, CASSETTE, AND CHAINSET",
           "quote": "The cassette and freewheel allow the rear\nwheel to rotate while the pedals remain",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "edge-conn4-pad-against-rotor",
+      "src": "comp-brake-pad",
+      "dst": "comp-rotor-6bolt",
+      "type": "interfaces_with",
+      "claim": "Brake pads are forced against the rotor to slow the bike.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8a-brakes",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0663_c00",
+          "book": "big_blue_book",
+          "page": 663,
+          "section": "SYSTEMS",
+          "quote": "Brake pads are housed in the caliper and are forced against the rotor",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "edge-conn4-caliper-holds-pads",
+      "src": "comp-caliper-hydraulic",
+      "dst": "comp-brake-pad",
+      "type": "contains",
+      "claim": "The brake pads are housed in the caliper.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8a-brakes",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0663_c00",
+          "book": "big_blue_book",
+          "page": 663,
+          "section": "SYSTEMS",
+          "quote": "Brake pads are housed in the caliper",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "edge-conn4-caliper-uses-dot-fluid",
+      "src": "comp-caliper-hydraulic",
+      "dst": "prop-fluid-dot",
+      "type": "has_property",
+      "claim": "A hydraulic caliper may use DOT 3 or DOT 4 brake fluid, with mineral oil as the alternative.",
+      "status": "needs_review",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8a-brakes",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0710_c00",
+          "book": "big_blue_book",
+          "page": 710,
+          "section": "HAYES® HYDRAULIC CALIPER BRAKES",
+          "quote": "Hayes® offers brakes in both mineral oil and hydraulic brakes using DOT\n3 or DOT 4 brake fluid.",
           "evidence_grade": "A",
           "linked_to_chunk": true,
           "confidence": 1.0
