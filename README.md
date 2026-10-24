@@ -19,7 +19,7 @@ whole point of the project, and it is the rule that matters most.
 | Evidence bundle | **43 chunks** (36 original + 7 added 2026-10-25) |
 | Chunks cited | **36 of 43** — 7 unused (8a cites 2 of them, 8b/8c the rest) |
 | Connectivity | 7 components, largest 35 (51%) |
-| Test suite | 15 tests, all passing; `tsc` clean; `vite build` green |
+| Test suite | 15 tests. **Test Q pins the graph numbers *and* the exact list of uncited chunks**, so growing the bundle or landing a batch requires a deliberate pin update — it is designed to fail loudly on a mismatch |
 
 Live app: Google AI Studio, app id `82983f51-5ac2-4ac3-ba0f-6d27161b376a`.
 
@@ -94,7 +94,11 @@ npm run dev      # vite
 npm run build    # tsc --noEmit is run by the AI Studio build; vite build here
 ```
 
-The in-app suite is opened from the UI (TestSuiteModal) and prints all 15 results.
+The in-app suite is opened from the UI (TestSuiteModal) and prints all 15 results. Test Q is the
+integrity gate: it recomputes nodes, edges, status splits, citations, chunk coverage, connectivity
+and the ceiling sentence, then compares them to deliberate pins. **If the data and the pins
+disagree, that is a real finding, not a nuisance — never edit a pin to match a suspicious number
+without recomputing it independently first.**
 
 Note: `public/sql-wasm.wasm` is not in this repo (it is a 1 MB binary from the AI Studio project);
 only the optional "attach a local kb.db" feature needs it.

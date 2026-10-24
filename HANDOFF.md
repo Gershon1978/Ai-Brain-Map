@@ -104,6 +104,27 @@ own test output — that is exactly how four earlier fabrications passed.
 7. The merged totals equal the projected numbers, recomputed from the files, not copied.
 8. Test Q passes with updated pins; `tsc --noEmit` exit 0; `vite build` exit 0.
 
+### Test Q is a gate, not paperwork
+
+Test Q pins the bundle state as well as the graph, and it pins the **exact list** of uncited chunks:
+
+```ts
+const EXPECTED_UNUSED = [ 'big_blue_book_p0663_c00', 'big_blue_book_p0693_c00', ... ];  // 7 ids today
+```
+
+So every batch must move four things together, each recomputed from the files:
+
+| after | edges | citations (byte-exact / ws-only) | cited of bundled | unused | components / largest |
+|---|---|---|---|---|---|
+| today | 63 | 152 (104 / 48) | 36 of 43 | 7 | 7 / 35 |
+| 8a | 66 | 155 (107 / 48) | 38 of 43 | 5 | 5 / 45 |
+| 8b | ~70 | ~159 | 41 of 43 | 2 | 4 / 45 |
+| 8c | ~74 | ~163 | 43 of 43 | 0 | 1 / 72 |
+
+When `unused` reaches 0, `ceilingSentence` switches back to the "every bundled chunk is cited"
+wording on its own — the service computes it from `unusedCount`, and the test checks the rule, not a
+frozen string. Never hard-code a sentence the data may contradict.
+
 `tools/verify_wake22.py` does 1-7 mechanically against `kb.db` (needs the database file);
 `tools/check_batch8a_quotes.py` checks the three 8a quotes against the bundle.
 

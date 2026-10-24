@@ -191,6 +191,8 @@ export function computeCoverageReport(): CoverageReport {
       remainingIslands,
     },
     ceilingSentence:
-      'Every bundled source chunk is cited, so the graph cannot grow until new source evidence is added to the bundle.',
+      unusedCount === 0
+        ? 'Every bundled source chunk is cited, so the graph cannot grow until new source evidence is added to the bundle.'
+        : `${unusedCount} of ${totalBundledCount} bundled source chunks are not cited yet: the graph can still grow by citing them, and no new evidence is needed until they are used.`,
   };
 }

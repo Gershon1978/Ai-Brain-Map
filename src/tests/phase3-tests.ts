@@ -570,6 +570,7 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
 
   // --- 15. Test Q: Coverage & Integrity Verification ---
   const coverageReport = computeCoverageReport();
+  const mergedForCoverage = getMergedGraph();
   const qErrors: string[] = [];
 
   // Totals: 69 nodes, 63 edges
@@ -646,19 +647,48 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
 
-  // Chunk coverage: 36 distinct cited of 36 bundled, 0 unused
+  // Chunk coverage: 36 distinct cited of 43 bundled, 7 unused (the batch-8 waiting list)
   if (coverageReport.chunkCoverage.citedDistinctCount !== 36) {
     qErrors.push(
       `Expected 36 cited distinct chunks, got ${coverageReport.chunkCoverage.citedDistinctCount}`
     );
   }
-  if (coverageReport.chunkCoverage.totalBundledCount !== 36) {
+  if (coverageReport.chunkCoverage.totalBundledCount !== 43) {
     qErrors.push(
-      `Expected 36 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
+      `Expected 43 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
     );
   }
-  if (coverageReport.chunkCoverage.unusedCount !== 0) {
-    qErrors.push(`Expected 0 unused chunks, got ${coverageReport.chunkCoverage.unusedCount}`);
+  if (coverageReport.chunkCoverage.unusedCount !== 7) {
+    qErrors.push(`Expected 7 unused chunks, got ${coverageReport.chunkCoverage.unusedCount}`);
+  }
+
+  // The exact waiting list, not just its size. These 7 chunks are the evidence batches 8a-8c must
+  // cite; if one silently stops being cited, this catches it even while the count still matches.
+  const EXPECTED_UNUSED = [
+    'big_blue_book_p0663_c00',
+    'big_blue_book_p0693_c00',
+    'bike_repair_manual_chris_p0003_c00',
+    'bike_repair_manual_chris_p0071_c05',
+    'bike_repair_manual_chris_p0088_c00',
+    'bike_repair_manual_chris_p0089_c00',
+    'bike_repair_manual_chris_p0148_c00',
+  ];
+  const citedIdsRC: string[] = [];
+  for (const coll of [mergedForCoverage.nodes, mergedForCoverage.edges] as any[]) {
+    for (const item of coll) {
+      for (const ev of item.evidence || []) {
+        if (ev && ev.chunk_id) citedIdsRC.push(ev.chunk_id);
+      }
+    }
+  }
+  const citedSetRC = new Set<string>(citedIdsRC);
+  const actualUnused = Object.keys((seedEvidence as any).chunks || {})
+    .filter((id) => !citedSetRC.has(id))
+    .sort();
+  if (JSON.stringify(actualUnused) !== JSON.stringify(EXPECTED_UNUSED)) {
+    qErrors.push(
+      `Unused chunk set mismatch: expected [${EXPECTED_UNUSED.join(', ')}], got [${actualUnused.join(', ')}]`
+    );
   }
 
   // Connectivity: 7 components, largest 35 nodes (51%), and 6 remaining islands with size and example node id
@@ -678,9 +708,12 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
 
-  // Plain sentence stating ceiling
+  // Plain sentence stating the ceiling - it must follow the same rule the service computes, so a
+  // frozen copy of it cannot pass while the panel says something false.
   const expectedCeiling =
-    'Every bundled source chunk is cited, so the graph cannot grow until new source evidence is added to the bundle.';
+    coverageReport.chunkCoverage.unusedCount === 0
+      ? 'Every bundled source chunk is cited, so the graph cannot grow until new source evidence is added to the bundle.'
+      : `${coverageReport.chunkCoverage.unusedCount} of ${coverageReport.chunkCoverage.totalBundledCount} bundled source chunks are not cited yet: the graph can still grow by citing them, and no new evidence is needed until they are used.`;
   if (coverageReport.ceilingSentence !== expectedCeiling) {
     qErrors.push(`Ceiling sentence mismatch: got "${coverageReport.ceilingSentence}"`);
   }
@@ -690,7 +723,7 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     name: 'Test Q: Coverage & Integrity Verification',
     passed: testQPassed,
     message: testQPassed
-      ? `All runtime coverage and integrity invariants verified: 69 nodes (61v/1c/7r), 63 edges (53v/10r), 9 batches in ledger, 152 citations (104 byte-exact, 48 whitespace-only in seed), 36/36 chunks cited (0 unused), 7 components (largest: 35 nodes, 51%; 6 islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated.`
+      ? `All runtime coverage and integrity invariants verified: 69 nodes (61v/1c/7r), 63 edges (53v/10r), 9 batches in ledger, 152 citations (104 byte-exact, 48 whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, waiting for batches 8a-8c), 7 components (largest: 35 nodes, 51%; 6 islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated against the computed rule.`
       : `Test Q failed: ${qErrors.join('; ')}`,
     details: { coverageReport, qErrors },
   });
