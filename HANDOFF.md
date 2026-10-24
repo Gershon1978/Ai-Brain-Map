@@ -1,7 +1,7 @@
 # HANDOFF — three batches that finish the map
 
 Status at handoff (2026-10-25): **69 nodes / 63 edges / 152 citations / 43-chunk bundle,
-38 of 43 chunks cited, 7 disconnected components (largest 35).**
+36 of 43 chunks cited (7 unused), 7 disconnected components (largest 35).**
 
 The bundle was grown from 36 to 43 chunks on 2026-10-25 (owner-approved). The 7 new chunks are
 verbatim from the corpus and verified byte-identical. Five of them are not cited yet — batches 8b

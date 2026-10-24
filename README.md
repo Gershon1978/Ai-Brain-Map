@@ -17,7 +17,7 @@ whole point of the project, and it is the rule that matters most.
 | Edges | **63** (53 verified, 10 needs_review) |
 | Citations | **152** (104 byte-exact, 48 differ from their chunk in whitespace only) |
 | Evidence bundle | **43 chunks** (36 original + 7 added 2026-10-25) |
-| Chunks cited | **38 of 43** — 5 unused, waiting for batches 8b/8c |
+| Chunks cited | **36 of 43** — 7 unused (8a cites 2 of them, 8b/8c the rest) |
 | Connectivity | 7 components, largest 35 (51%) |
 | Test suite | 15 tests, all passing; `tsc` clean; `vite build` green |
 
