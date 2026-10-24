@@ -1,13 +1,13 @@
 == application state (independent verifier)
-  nodes=69  edges=66  citations=155
-  quotes: byte-exact=107  whitespace-only=48  missing=0
-  chunks: cited 37 of 43, unused 6 ['big_blue_book_p0693_c00', 'bike_repair_manual_chris_p0003_c00', 'bike_repair_manual_chris_p0071_c05', 'bike_repair_manual_chris_p0088_c00', 'bike_repair_manual_chris_p0089_c00', 'bike_repair_manual_chris_p0148_c00']
-  node status: {'verified': 61, 'candidate': 1, 'needs_review': 7}
-  edge status: {'verified': 55, 'needs_review': 11}
-  components=5 sizes=[45, 16, 6, 1, 1] largest=45 (65%)
-  batches: [('seed', 27, 12), ('phase5-brake-1', 10, 10), ('phase5-cockpit-2', 7, 7), ('phase5-drivetrain-3', 7, 7), ('phase5-rearshock-4', 5, 5), ('phase5-quillstem-5', 4, 4), ('phase5-cassette-6', 5, 5), ('phase5-hubfit-7', 4, 4), ('phase8a-brakes', 0, 12)]
+  nodes=70  edges=69  citations=159
+  quotes: byte-exact=111  whitespace-only=48  missing=0
+  chunks: cited 39 of 43, unused 4 ['big_blue_book_p0693_c00', 'bike_repair_manual_chris_p0003_c00', 'bike_repair_manual_chris_p0071_c05', 'bike_repair_manual_chris_p0148_c00']
+  node status: {'verified': 62, 'candidate': 1, 'needs_review': 7}
+  edge status: {'verified': 57, 'needs_review': 12}
+  components=4 sizes=[62, 6, 1, 1] largest=62 (89%)
+  batches: [('seed', 27, 12), ('phase5-brake-1', 10, 10), ('phase5-cassette-6', 5, 5), ('phase5-cockpit-2', 7, 7), ('phase8a-brakes', 0, 12), ('phase5-drivetrain-3', 7, 7), ('phase8b-fork', 1, 3), ('phase5-hubfit-7', 4, 4), ('phase5-quillstem-5', 4, 4), ('phase5-rearshock-4', 5, 5)]
 
-WARNINGS: 48
+WARNINGS: 59 (48 whitespace-only citations, 11 undeclared sections)
   - node comp-rear-hub: whitespace-only match on big_blue_book_p0238_c00
   - node comp-rear-hub: whitespace-only match on big_blue_book_p0250_c00
   - node comp-freehub-body: whitespace-only match on big_blue_book_p0238_c00
@@ -18,6 +18,17 @@ WARNINGS: 48
   - node comp-freehub-xdr: whitespace-only match on big_blue_book_p0253_c01
   - node comp-hub-centerlock: whitespace-only match on big_blue_book_p0679_c00
   - node comp-hub-centerlock: whitespace-only match on big_blue_book_p0680_c02
+  - section: edge edge-freehub-partof-hub: no section declared for big_blue_book_p0238_c00 (bundle says 'FREEHUB REMOVAL & INSTALLATION')
+  - section: edge edge-cassette-fits-freehub: no section declared for bike_repair_manual_chris_p0066_c00 (bundle says 'MAINTAINING YOUR TRANSMISSION • CHAIN, C')
+  - section: edge edge-fluid-dot-incomp-mineral: no section declared for big_blue_book_p0731_c00 (bundle says 'TEKTRO® HYDRAULIC BRAKES')
+  - section: edge edge-fluid-dot-incomp-mineral: no section declared for big_blue_book_p0710_c00 (bundle says 'HAYES® HYDRAULIC CALIPER BRAKES')
+  - section: edge edge-rotor6bolt-incomp-centerlock: no section declared for big_blue_book_p0679_c00 (bundle says 'DISC BRAKE ROTORS')
+  - section: edge edge-rotor6bolt-incomp-centerlock: no section declared for big_blue_book_p0679_c00 (bundle says 'DISC BRAKE ROTORS')
+  - section: edge edge-chainline-affects-derailleur: no section declared for big_blue_book_p0585_c00 (bundle says 'CHAINLINE')
+  - section: edge edge-headset-interfaces-steerer: no section declared for big_blue_book_p0051_c00 (bundle says 'CHAPTER 16 — HEADSETS')
 PROBLEMS: 0
+
+KNOWN, DOCUMENTED (printed, not counted): 1
+  - node comp-bb-threaded: section declared wrongly for bike_repair_manual_chris_p0002_c02 (got '5.  If bottom bracket service is required, use appropriate BB tool to remove bearing cups. Note thread direction: Right ', bundle says '5.  If bottom bracket service is required, use appropriate BB tool to remove bearing cups. Note thread direction: Right side is usually reverse-threaded.')  [known: seed_graph.json is frozen; its section string was truncated at ingest. Fixing it would mean editing the frozen seed for cosmetics, so it is recorded instead.]
 
 VERDICT: PASS - application state is consistent

@@ -17,14 +17,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "src" / "data"
-FILES = ["seed_graph.json", "expansion-brakes.json", "expansion-cockpit.json",
-         "expansion-drivetrain.json", "expansion-rearshock.json", "expansion-quillstem.json",
-         "expansion-cassette.json", "expansion-hubfit.json", "expansion-connectors.json"]
+# Glob, not a hand-maintained list: a new expansion file must never be silently ignored.
+FILES = ["seed_graph.json"] + sorted(p.name for p in DATA.glob("expansion-*.json"))
 
 chunks = json.loads((DATA / "seed-evidence.json").read_text(encoding="utf-8"))["chunks"]
 onto = json.loads((DATA / "relation-ontology.json").read_text(encoding="utf-8"))["relations"]
 
 problems, warns = [], []
+missing_section = []
+known_hits, known_msgs = set(), []
+
+# Documented exceptions. Each one is printed, never hidden, and the verifier FAILS if an entry here
+# stops occurring (so the list can only shrink honestly).
+KNOWN = {
+    ("node", "comp-bb-threaded", "bike_repair_manual_chris_p0002_c02"):
+        "seed_graph.json is frozen; its section string was truncated at ingest. Fixing it would mean "
+        "editing the frozen seed for cosmetics, so it is recorded instead.",
+}
 nodes, edges, per_batch = [], [], []
 for name in FILES:
     doc = json.loads((DATA / name).read_text(encoding="utf-8"))
@@ -54,6 +63,25 @@ for kind, coll in (("node", nodes), ("edge", edges)):
                 continue
             text = rec["text"]
             cited.add(cid)
+            # section metadata must match the bundle record - the app's Test P checks this, and a
+            # second, independent check here means the verifier does not depend on that test running.
+            want_section = rec.get("section") or ""
+            declared = "section" in ev
+            got_section = ev.get("section") or ""
+            if declared and want_section != got_section:
+                key = (kind, ent.get("id"), cid)
+                msg = "%s %s: section declared wrongly for %s (got %r, bundle says %r)" % (
+                    kind, ent.get("id"), cid, got_section, want_section)
+                if key in KNOWN:
+                    known_hits.add(key)
+                    known_msgs.append("%s  [known: %s]" % (msg, KNOWN[key]))
+                else:
+                    problems.append(msg)
+            elif not declared and want_section:
+                # Absence asserts nothing false, so it is graded below a failure - but it is still
+                # metadata that the app's Test P does not check, so it is counted and reported.
+                missing_section.append("%s %s: no section declared for %s (bundle says %r)"
+                                       % (kind, ent.get("id"), cid[:40], want_section[:40]))
             if q in text:
                 exact += 1
                 pos, mark = text.find(q), text.find("[VISUAL DATA]")
@@ -128,12 +156,23 @@ report.append("  components=%d sizes=%s largest=%d (%d%%)"
                  round(100 * len(comps[0]) / len(nodes))))
 report.append("  batches: %s" % [(b, n, e) for b, n, e in per_batch])
 report.append("")
-report.append("WARNINGS: %d" % len(warns))
+report.append("WARNINGS: %d (%d whitespace-only citations, %d undeclared sections)"
+              % (len(warns) + len(missing_section), len(warns), len(missing_section)))
 for w in warns[:10]:
     report.append("  - " + w)
+for w in missing_section[:8]:
+    report.append("  - section: " + w)
+stale = [k for k in KNOWN if k not in known_hits]
+for k in stale:
+    problems.append("stale KNOWN entry, no longer occurring - remove it: %s" % (k,))
+
 report.append("PROBLEMS: %d" % len(problems))
 for p in problems:
     report.append("  - " + p)
+report.append("")
+report.append("KNOWN, DOCUMENTED (printed, not counted): %d" % len(known_msgs))
+for k in known_msgs:
+    report.append("  - " + k)
 report.append("")
 report.append("VERDICT: %s" % ("PASS - application state is consistent" if not problems
                                else "FAIL"))

@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "batch": "phase8b-fork",
+  "nodes": [
+    {
+      "id": "comp-fork",
+      "type": "component",
+      "name": "Fork",
+      "subsystem": "sys-cockpit",
+      "aliases": ["Front Fork"],
+      "description": "The fork carries the front wheel and is turned by the steering assembly; its steerer tube runs inside the headset.",
+      "status": "verified",
+      "batch": "phase8b-fork",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0089_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 89,
+          "quote": "turns\nthe fork and the front wheel",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-conn4-headset-holds-fork",
+      "src": "comp-headset",
+      "dst": "comp-fork",
+      "type": "interfaces_with",
+      "claim": "The headset holds the front fork in the head tube while letting it turn.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8b-fork",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0088_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 88,
+          "section": "HEADSETS",
+          "quote": "both hold the front fork securely \nin the head tube",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "edge-conn4-steerer-part-of-fork",
+      "src": "comp-steerer",
+      "dst": "comp-fork",
+      "type": "part_of",
+      "claim": "The steerer tube is the part of the fork that turns in the headset.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8b-fork",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0088_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 88,
+          "section": "HEADSETS",
+          "quote": "the part of\nthe fork known as the steerer tube",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "edge-conn4-fork-turns-front-wheel",
+      "src": "comp-fork",
+      "dst": "sys-wheels",
+      "type": "affects",
+      "claim": "Connectivity hypothesis: turning the handlebar turns the fork and the front wheel together, coupling the fork to the wheel subsystem. This is co-motion, not a documented attachment.",
+      "status": "needs_review",
+      "evidence_type": "service_manual",
+      "confidence": 0.5,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8b-fork",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0089_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 89,
+          "quote": "turns\nthe fork and the front wheel",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 0.5
+        }
+      ]
+    }
+  ]
+}
