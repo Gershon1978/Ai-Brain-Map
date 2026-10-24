@@ -1,4 +1,4 @@
-=== graph suite (tsx, headless) === 
+=== suite (headless) === 
 PASS  Phase 3 Schema & Literal Quote Self-Check (59 Citations)
 PASS  Fix A: Mandatory Quote Verification Enforcement
 PASS  Test B: Entity Traceability
@@ -14,6 +14,7 @@ PASS  Test M: Export Round-Trip (JSONL & GraphML chunk_id preservation)
 PASS  Test N: Layout Limits & Degree Auto-Collapse Enforcement
 PASS  Test P: Seed Immutability & Expansion Merge
 PASS  Test Q: Coverage & Integrity Verification
+PASS  Test R: Ontology Adjudication Regressions
 
-OVERALL: true  (15/15 passed)
-SUITE_EXIT=0 
+OVERALL: true  (16/16 passed)
+SUITE_EXIT=0
