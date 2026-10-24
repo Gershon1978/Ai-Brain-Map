@@ -1,0 +1,92 @@
+== A. frozen files (hash must equal the one recorded before wake-20 was sent)
+  seed          63ac51261765d930 vs 63ac51261765d930 UNCHANGED
+  brake-1       a384a15fb5581f0c vs a384a15fb5581f0c UNCHANGED
+  cockpit-2     13f28204569156e1 vs 13f28204569156e1 UNCHANGED
+  drivetrain-3  62442afcf5e63529 vs 62442afcf5e63529 UNCHANGED
+  rearshock-4   ace4858b7de6fd83 vs ace4858b7de6fd83 UNCHANGED
+  quillstem-5   69526d23b6be5725 vs 69526d23b6be5725 UNCHANGED
+  cassette-6    0a15c41866388782 vs 0a15c41866388782 UNCHANGED
+  hubfit-7      2e86bcd491646ba3 vs 2e86bcd491646ba3 UNCHANGED
+  data__seed_graph.json          identical to _fixed: True
+  data__seed-evidence.json       identical to _fixed: True
+
+== B. seed must still be 27 / 12 / 59 with 20/20 + 39/39 literal
+  nodes=27 edges=12 bundle chunks=36
+  node citations=39 edge citations=20 total=59
+  byte-exact in bundle (newlines kept): node 7/39  edge 4/20
+  exact after whitespace collapse   : node 39/39  edge 20/20
+
+== C. bundle vs kb.db (anti-circularity)
+  chunks=36 identical=36 differs=0 nonexistent=0
+
+== D. src/data/expansion-connectors.json
+  top-level batch = phase6-connectors-3 ; nodes = 0 ; edges = 9
+  comp-rotor-6bolt|comp-rear-hub|mounted_on        phase6-connectors-1  | big_blue_book_p0679_c00                bundle=True literal=True kb=True meta=True
+  comp-stem-quill|comp-steerer|mounted_on          phase6-connectors-1  | big_blue_book_p0820_c00                bundle=True literal=True kb=True meta=True
+  rule-hub-135mm|comp-rear-hub|constrains          phase6-connectors-1  | big_blue_book_p0219_c01                bundle=True literal=True kb=True meta=True
+  comp-headset-threadless|comp-headset|part_of     phase6-connectors-2  | big_blue_book_p0861_c00                bundle=True literal=True kb=True meta=True
+  comp-ebike-motor|comp-rear-hub|fits_into         phase6-connectors-2  | Ai_generated_ebike_motor_p0003_c00     bundle=True literal=True kb=True meta=True
+  ec-xiaomi-table|comp-ebike-motor|indicates       phase6-connectors-2  | xiaomi_ebike_escooter_p0001_c02        bundle=True literal=True kb=True meta=True
+  rule-brake-fluid-contamination|comp-caliper-hydr phase6-connectors-2  | big_blue_book_p0728_c04                bundle=True literal=True kb=True meta=True
+  comp-cassette|prop-chainline|has_property        phase6-connectors-3  | big_blue_book_p0585_c00                bundle=True literal=True kb=True meta=True
+  comp-freewheel|comp-cassette|interfaces_with     phase6-connectors-3  | bike_repair_manual_chris_p0066_c00     bundle=True literal=True kb=True meta=True
+  approved but missing: none
+  present but not approved: none
+
+== E. merged map, recomputed from the files
+  seed                 nodes=27  {'verified': 26, 'candidate': 1}         edges=12  {'verified': 9, 'needs_review': 3}
+  phase5-brake-1       nodes=10  {'verified': 7, 'needs_review': 3}       edges=10  {'verified': 7, 'needs_review': 3}
+  phase5-cockpit-2     nodes=7   {'verified': 5, 'needs_review': 2}       edges=7   {'verified': 5, 'needs_review': 2}
+  phase5-drivetrain-3  nodes=7   {'verified': 5, 'needs_review': 2}       edges=7   {'verified': 5, 'needs_review': 2}
+  phase5-rearshock-4   nodes=5   {'verified': 5}                          edges=5   {'verified': 5}
+  phase5-quillstem-5   nodes=4   {'verified': 4}                          edges=4   {'verified': 4}
+  phase5-cassette-6    nodes=5   {'verified': 5}                          edges=5   {'verified': 5}
+  phase5-hubfit-7      nodes=4   {'verified': 4}                          edges=4   {'verified': 4}
+  phase6-connectors-3  nodes=0   {}                                       edges=9   {'verified': 9}
+  merged nodes=69 edges=63
+  node statuses: {'verified': 61, 'candidate': 1, 'needs_review': 7}
+  edge statuses: {'verified': 53, 'needs_review': 10}
+  expansion contribution: nodes=42 edges=51 (reply said 42 / 51)
+  dangling endpoints: none
+  duplicate edges: none
+
+== F. connectivity
+  components=7 largest=35 (51%)
+  sizes [35, 16, 8, 6, 2, 1, 1]
+  still separate: [['std-quill-diameter-fit', 16], ['rule-brake-fluid-contamination', 8], ['comp-shock-air-chamber', 6], ['prop-fluid-dot', 2], ['comp-fork-seals', 1], ['comp-bb-threaded', 1]]
+
+== G. ontology: do the connectors-3 relations allow these endpoint types
+  ontology entries: 14  (first keys: ['part_of', 'contains', 'fits_into', 'mounted_on', 'interfaces_with', 'conforms_to'])
+  has_property     comp-cassette(component) -> prop-chainline(property)  src_ok=True dst_ok=True
+  interfaces_with  comp-freewheel(component) -> comp-cassette(component)  src_ok=True dst_ok=True
+
+== H. edge status=verified with digits but only sub-A evidence (all 63 edges)
+  flagged: 0
+  digit claims correctly held at needs_review on grade B: 6
+     std-brake-centerlock_has_property_std-brake-centerlock-t needs_review
+     comp-rear-hub_interfaces_with_std-brake-thru-axle        needs_review
+     edge-steerer-conforms-to-dia                             needs_review
+     edge-stem-conforms-to-torque                             needs_review
+     edge-derailleur-conforms-to-pitch                        needs_review
+     edge-xdr-conforms-to-bearing-dim                         needs_review
+
+== I. properties marked verified without a citation (all 69 nodes)
+  flagged: 0
+
+== J. every citation in all 9 files, checked against bundle and kb.db
+  seed_graph.json          citations= 59  whitespace-only diffs=48  problems=0
+  expansion-brakes.json    citations= 20  whitespace-only diffs=0  problems=0
+  expansion-cockpit.json   citations= 14  whitespace-only diffs=0  problems=0
+  expansion-drivetrain.json citations= 14  whitespace-only diffs=0  problems=0
+  expansion-rearshock.json citations= 10  whitespace-only diffs=0  problems=0
+  expansion-quillstem.json citations=  8  whitespace-only diffs=0  problems=0
+  expansion-cassette.json  citations= 10  whitespace-only diffs=0  problems=0
+  expansion-hubfit.json    citations=  8  whitespace-only diffs=0  problems=0
+  expansion-connectors.json citations=  9  whitespace-only diffs=0  problems=0
+  TOTAL citations=152  byte-exact=104  whitespace-only=48  problems=0
+
+PROBLEMS: 0
+
+NOTES: 2
+  - frozen seed: 48 of 59 citations differ from the chunk in whitespace only (e.g. '* DOT FLUID' vs '*   DOT FLUID'); the word sequence is identical. Not edited - the seed is frozen and I do not rewrite evidence by hand.
+  - edge rule-hub-135mm|comp-rear-hub|constrains evidence keys = ['book', 'chunk_id', 'confidence', 'evidence_grade', 'linked_to_chunk', 'page', 'quote']
