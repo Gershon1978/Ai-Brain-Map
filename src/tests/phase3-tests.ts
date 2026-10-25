@@ -574,30 +574,30 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
   const mergedForCoverage = getMergedGraph();
   const qErrors: string[] = [];
 
-  // Totals: 78 nodes, 81 edges
-  if (coverageReport.totals.nodes !== 78) {
-    qErrors.push(`Expected 78 nodes, found ${coverageReport.totals.nodes}`);
+  // Totals: 87 nodes, 90 edges
+  if (coverageReport.totals.nodes !== 87) {
+    qErrors.push(`Expected 87 nodes, found ${coverageReport.totals.nodes}`);
   }
-  if (coverageReport.totals.edges !== 81) {
-    qErrors.push(`Expected 81 edges, found ${coverageReport.totals.edges}`);
+  if (coverageReport.totals.edges !== 90) {
+    qErrors.push(`Expected 90 edges, found ${coverageReport.totals.edges}`);
   }
 
-  // Status split: nodes 69 verified / 1 candidate / 8 needs_review; edges 65 verified / 16 needs_review
+  // Status split: nodes 78 verified / 1 candidate / 8 needs_review; edges 74 verified / 16 needs_review
   if (
-    coverageReport.nodeStatusSplit.verified !== 69 ||
+    coverageReport.nodeStatusSplit.verified !== 78 ||
     coverageReport.nodeStatusSplit.candidate !== 1 ||
     coverageReport.nodeStatusSplit.needs_review !== 8
   ) {
     qErrors.push(
-      `Node status split mismatch: expected 69/1/8, got ${coverageReport.nodeStatusSplit.verified}/${coverageReport.nodeStatusSplit.candidate}/${coverageReport.nodeStatusSplit.needs_review}`
+      `Node status split mismatch: expected 78/1/8, got ${coverageReport.nodeStatusSplit.verified}/${coverageReport.nodeStatusSplit.candidate}/${coverageReport.nodeStatusSplit.needs_review}`
     );
   }
   if (
-    coverageReport.edgeStatusSplit.verified !== 65 ||
+    coverageReport.edgeStatusSplit.verified !== 74 ||
     coverageReport.edgeStatusSplit.needs_review !== 16
   ) {
     qErrors.push(
-      `Edge status split mismatch: expected 65/16, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
+      `Edge status split mismatch: expected 74/16, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
     );
   }
 
@@ -630,6 +630,9 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     // not OCR. 3 nodes (property, symptom, failure mode) and 4 edges, all citing 1 chunk each.
     // This is why the graph is now ONE connected component: components [78] instead of [74,1].
     { batch: 'phase12-fork-seal', nodes: 3, edges: 4, citations: 7 },
+    // phase13: the SYMPTOM/CAUSE/SOLUTION charts that exist only as page images (grade C, OCR).
+    // 9 nodes (3 symptoms, 3 failure modes, 3 procedures) and 9 edges, one citation each.
+    { batch: 'phase13-fault-charts', nodes: 9, edges: 9, citations: 18 },
   ];
 
   if (coverageReport.batchLedger.length !== expectedBatches.length) {
@@ -653,12 +656,12 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     }
   }
 
-  // Citations: 182 total; 134 byte-exact; 48 whitespace-only (all 48 in frozen seed)
-  if (coverageReport.citations.total !== 182) {
-    qErrors.push(`Expected 182 citations, got ${coverageReport.citations.total}`);
+  // Citations: 200 total; 152 byte-exact; 48 whitespace-only (all 48 in frozen seed)
+  if (coverageReport.citations.total !== 200) {
+    qErrors.push(`Expected 200 citations, got ${coverageReport.citations.total}`);
   }
-  if (coverageReport.citations.byteExact !== 134) {
-    qErrors.push(`Expected 134 byte-exact citations, got ${coverageReport.citations.byteExact}`);
+  if (coverageReport.citations.byteExact !== 152) {
+    qErrors.push(`Expected 152 byte-exact citations, got ${coverageReport.citations.byteExact}`);
   }
   if (coverageReport.citations.whitespaceOnly !== 48) {
     qErrors.push(
@@ -666,27 +669,38 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
 
-  // Chunk coverage: 48 distinct cited of 50 bundled, 2 unused. The two left over are deliberate:
-  // p0693_c00 (generic "manufacturers differ" sentence) and p0071_c05 (a visual seal hint) were both
-  // audited and rejected as insufficient for an edge.
-  if (coverageReport.chunkCoverage.citedDistinctCount !== 48) {
+  // Chunk coverage: 49 distinct cited of 61 bundled, 12 unused: the 2 audited rejections plus the 10
+  // OCR'd picture pages whose text (spec tables, cover, cross-reference) no edge cites yet.
+  if (coverageReport.chunkCoverage.citedDistinctCount !== 49) {
     qErrors.push(
-      `Expected 48 cited distinct chunks, got ${coverageReport.chunkCoverage.citedDistinctCount}`
+      `Expected 49 cited distinct chunks, got ${coverageReport.chunkCoverage.citedDistinctCount}`
     );
   }
-  if (coverageReport.chunkCoverage.totalBundledCount !== 50) {
+  if (coverageReport.chunkCoverage.totalBundledCount !== 61) {
     qErrors.push(
-      `Expected 50 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
+      `Expected 61 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
     );
   }
-  if (coverageReport.chunkCoverage.unusedCount !== 2) {
-    qErrors.push(`Expected 2 unused chunks, got ${coverageReport.chunkCoverage.unusedCount}`);
+  if (coverageReport.chunkCoverage.unusedCount !== 12) {
+    qErrors.push(`Expected 12 unused chunks, got ${coverageReport.chunkCoverage.unusedCount}`);
   }
 
-  // The exact uncited list, not just its size. Both are rejected evidence, and if either silently
-  // becomes cited without a documented correction, this test says so.
+  // The exact uncited list, not just its size. The first two are rejected evidence; the ten *_ocr
+  // chunks are the remaining image-only pages, ingested as retrievable text because they are the
+  // COMPLETE set of text-bearing picture pages (6 diagnostic charts, 3 spec tables, 1 cover), not a
+  // sample. Only p254 is cited so far; the other charts are queued, and this pin makes that visible.
   const EXPECTED_UNUSED = [
+    'big_blue_book_p0001_ocr',
+    'big_blue_book_p0188_ocr',
+    'big_blue_book_p0219_ocr',
+    'big_blue_book_p0301_ocr',
+    'big_blue_book_p0486_ocr',
     'big_blue_book_p0693_c00',
+    'big_blue_book_p0803_ocr',
+    'big_blue_book_p0842_ocr',
+    'big_blue_book_p0928_ocr',
+    'big_blue_book_p0986_ocr',
+    'big_blue_book_p0990_ocr',
     'bike_repair_manual_chris_p0071_c05',
   ];
   const citedIdsRC: string[] = [];
@@ -716,9 +730,9 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
       `Expected 1 connected component, got ${coverageReport.connectivity.componentCount}`
     );
   }
-  if (coverageReport.connectivity.largestSize !== 78) {
+  if (coverageReport.connectivity.largestSize !== 87) {
     qErrors.push(
-      `Expected largest component of 78 nodes, got ${coverageReport.connectivity.largestSize}`
+      `Expected largest component of 87 nodes, got ${coverageReport.connectivity.largestSize}`
     );
   }
   if (coverageReport.connectivity.remainingIslands.length !== 0) {
@@ -865,11 +879,29 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     rErrors.push('R6: comp-fork-seals should still be typed subcomponent (the rule was narrow, not the node mis-typed)');
   }
 
+  // R7 - a troubleshooting table's SOLUTION column is a procedure that fixes a named failure mode, and
+  // the ontology had no relation for it: the graph could say what is wrong and never what fixes it.
+  // Added `resolves` (procedure -> failure_mode) for phase13. Pinned here so it cannot be silently
+  // dropped, and so the direction (procedure fixes failure, not the reverse) is enforced.
+  if (!srcsOf('resolves').includes('procedure')) {
+    rErrors.push('R7: resolves should allow a procedure source');
+  }
+  if (!typesOf('resolves').includes('failure_mode')) {
+    rErrors.push('R7: resolves should allow a failure_mode target');
+  }
+  const fixEdge = findEdge('proc-adjust-hub-bearing', 'fm-loose-hub-adjustment');
+  if (!fixEdge || fixEdge.type !== 'resolves') {
+    rErrors.push('R7: proc-adjust-hub-bearing -> fm-loose-hub-adjustment should be a resolves edge');
+  }
+  if ((findNode('sym-wheel-lateral-play') as any)?.type !== 'symptom') {
+    rErrors.push('R7: sym-wheel-lateral-play should be typed symptom');
+  }
+
   results.push({
     name: 'Test R: Ontology Adjudication Regressions',
     passed: rErrors.length === 0,
     message: rErrors.length === 0
-      ? 'All six adjudications hold for their own reason: torque retyped to measurement, affects widened to accept procedures, hub/thru-axle retyped to conforms_to, part_of widened symmetrically with contains, no part_of cycles, indicates widened to accept a subcomponent fault.'
+      ? 'All seven adjudications hold for their own reason: torque retyped to measurement, affects widened to accept procedures, hub/thru-axle retyped to conforms_to, part_of widened symmetrically with contains, no part_of cycles, indicates widened to accept a subcomponent fault, resolves added so a procedure can name the failure mode it fixes.'
       : `Test R failed: ${rErrors.join('; ')}`,
     details: rErrors,
   });

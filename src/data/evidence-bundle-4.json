@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0.0",
+  "corpus": "big_blue_book_page_images_ocr",
+  "source_file": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+  "note": "Grade C: these pages have NO text layer, so their text comes from OCR of the page image. Six are SYMPTOM/CAUSE/SOLUTION troubleshooting tables and three are specification tables (hub/axle widths, tool interfaces, crown-race standards). Spacing is degraded by the transcription, and per Test K a grade-C citation may never justify a numeric claim - the specification tables are therefore ingested as retrievable text, NOT as numeric evidence.",
+  "chunks": {
+    "big_blue_book_p0001_ocr": {
+      "chunk_id": "big_blue_book_p0001_ocr",
+      "book": "big_blue_book",
+      "page": 1,
+      "section": "COVER",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.7867,
+      "text": "4THEDITION\nREPAIR\nBO\nBICYCLE\nBLUE\nBy C. Calvin Jones\nParkTool\n8884"
+    },
+    "big_blue_book_p0188_ocr": {
+      "chunk_id": "big_blue_book_p0188_ocr",
+      "book": "big_blue_book",
+      "page": 188,
+      "section": "SYMPTOM / CAUSE / SOLUTION (tires and tubes)",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.8717,
+      "text": "SYMPTOM\nCAUSE\nSOLUTION\nGetanew tubeand install\nAnew tubein andit won't\ncarefully,extra careis\nPinchedthetubeoninstall\nhold air\nneeded when using levers to\nreinstall\n1. Possible slice in tire\nallowingthetubetoblow\nGet anewtubeand tire\nNewly installed tire blows\nout\nas needed, then install\nup right away\n2. Failure at the bead not\ncarefully\nallowing the tire to seat\nproperly\n1. Deflate tire, use soapy\nwater to lubricatebead and\n1. The tire is not fully seated\nNewly installed tire does not\nreinflate\n2. Damaged tire casing in\nspin straight on rim\n2. If properly seated, tire\nsidewalls\npossibly defective and\nshould be replaced\n1. Remove valve core and use\nTubeless tire not able to\nTire bead not seating well\ncompressed air\ninflate\nto rim\n2. Check for incompatible\ntire/rimcombinations\nNewly installed inner tube\nCauseofflattirestill\nRemove tire, inspect inside,\nflats again in one day\nimbedded inside tire casing\nand replace inner tube\nRemovetube and attempt to\nImproper patching\nremove and replace patch.\nNewly patched inner tube\ntechnique, possibly from\nThis is difficult, and tube\nleaking at patch\nlack of glue or contaminants\nreplacement is often the best\nsolution."
+    },
+    "big_blue_book_p0219_ocr": {
+      "chunk_id": "big_blue_book_p0219_ocr",
+      "book": "big_blue_book",
+      "page": 219,
+      "section": "HUB AND AXLE WIDTH STANDARDS",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.7452,
+      "text": "FRONT\nAXLEI\nHUB\nNUMBER\nTYPICALUSES&\nOR\nTHRUAXLE\nOFSPEEDS\nWIDTH\nOTHERINFO\nREAR\nDIAMETER(MM)\nOpenDropout\nFront\nN/A\n100\nCommonbikes\n10\n110\nOldertrackbike,coasterhub\n5, or 1 for\n10\n120\nOlder road bikes and track bikes\ntrack bikes\n10\n6, 7\n126\nOlderroadbikes\n10\n8-12\n130\nModern road bikes, hybrids\nMTB internal gear hubs, road disc\n10\n6-12\n135\nbrake hubs\nRear\n10\n9-12\n140\nTandem\n10\n9-12\n145\nTandem\n10\n10-12\n148\nRear\"Boost\"standard\n10\n10-12\n160\nTandem\n10\n10-12\n170\nFat tire rear open\n10\n10-12\n185\nMTBfat tire\n10\n10-12\n190\nMTB fat tire open dropout\nThru Axle\n12\nN/A\n100\nCyclocross and road\n15\nN/A\n100\nSuspension XC forks\n20\nN/A\n110\nSuspension DHforks\nFront\nN/A\n15\n135\nMTBfat tirethruaxle\n15\n142\nN/A\nFork\n15\n150\nN/A\nFork,MTBfat tire\n12\n135\nOlderrearMTBthruaxles\n12\n142\n9-12\nThru axle\n12\n10-12\n148\nRear\"Boost\"standard\n12\n8-9\n150\nOlderdownhill standard\nRear\n12\n10-12\n157\nMTB\"Super Boost Plus\"\n12\n10-12\n160\nMTB\n12\n10-12\n177\nMTBfat tirethru axle\n12\n10-12\n197\nMTBfat tire"
+    },
+    "big_blue_book_p0254_ocr": {
+      "chunk_id": "big_blue_book_p0254_ocr",
+      "book": "big_blue_book",
+      "page": 254,
+      "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr+column-reconstruction",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.8944,
+      "text": "SYMPTOM Wheel moves laterally back and forth at rim When spun without brake rub, wheel slows quickly Wheel turns roughly and/ or rumbling felt or heard at frame/fork Cartridge bearing wearing out quickly | CAUSE 1. Loose adjustment at hub 2. Loose skewer or thru axle adjustment Hub adjustment too tight Bearings badly worn Overly tight preload adjustment | SOLUTION 1. Tighten bearing adjustment 2. Correctly tighten skewer or thru axle Loosen adjustment Replace bearings Replace bearings and adjust preload correctly",
+      "columns_text": [
+        "SYMPTOM Wheel moves laterally back and forth at rim When spun without brake rub, wheel slows quickly Wheel turns roughly and/ or rumbling felt or heard at frame/fork Cartridge bearing wearing out quickly",
+        "CAUSE 1. Loose adjustment at hub 2. Loose skewer or thru axle adjustment Hub adjustment too tight Bearings badly worn Overly tight preload adjustment",
+        "SOLUTION 1. Tighten bearing adjustment 2. Correctly tighten skewer or thru axle Loosen adjustment Replace bearings Replace bearings and adjust preload correctly"
+      ]
+    },
+    "big_blue_book_p0301_ocr": {
+      "chunk_id": "big_blue_book_p0301_ocr",
+      "book": "big_blue_book",
+      "page": 301,
+      "section": "SYMPTOM / CAUSE / SOLUTION (wheels and spokes)",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.8739,
+      "text": "SYMPTOM\nCAUSE\nSOLUTION\nSpinning rim wobbles side\nTrue wheel to correct\nMisadjusted spoke tension\nto side\nwobble\nMinimize issue by truing\nRim wobbles when spinning\nRim is bent from impact\nbut replace rim or wheelif\nafter truing attempted\nissue unresolvable\nCheck and correct spoke\nSpoke breaking on relatively\nSpoke fatigued from too low\ntension,increasingtension\nnew wheel\nspoke tension\nas needed\nSpokes breaking on older\nSpokes have reached limit of\nReplace wheel or relace with\nwheel\nfatiguelife\nnew spokes"
+    },
+    "big_blue_book_p0486_ocr": {
+      "chunk_id": "big_blue_book_p0486_ocr",
+      "book": "big_blue_book",
+      "page": 486,
+      "section": "SYMPTOM / CAUSE / SOLUTION (chain)",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.8874,
+      "text": "SYMPTOM\nCAUSE\nSOLUTION\nInspect and locate link. If\nChain has occasional skip\nmisshaped, replace chain. If\nStiff link in chain\nat rear sprockets but is not\nlink looks in good condition,\ntimed to one per pedal stroke\nlubricate and flex back and\nforth.\nNew chain skips on gears\nPrevious sprockets worn to\nReplace rear sprockets\nwhen under pressure\nyour old chain\nSqueaking sound from back\nLack of chain lubricant\nLubricatechain\nwhen pedalling\nReplace chain, as repairing\nChain broke under load of\nBroken link\nold chain is still likely to fail\nriding\nagain"
+    },
+    "big_blue_book_p0803_ocr": {
+      "chunk_id": "big_blue_book_p0803_ocr",
+      "book": "big_blue_book",
+      "page": 803,
+      "section": "SYMPTOM / CAUSE / SOLUTION (rim brakes)",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.8819,
+      "text": "CAUSE\nSYMPTOM\nSOLUTION\nToe brakes in by keeping the\nBrake pads are hitting the\nrear section of the pad about\nBrakes squealing\nrim too squarely and causing\n1mm further away from the\nrim in comparison to the\na resonance\nfront\nUsing a screwdriver or hex\nOne brake pad hits the rim\nSpring tension in brakes is\nwrench, add tension to the\nbefore the other\nnot adjusted properly\nside of the brake that is\nhitting first\nBrakes are dragging on the\nCheck that housing and\nrims and there is very little\nSomething is causing cables\ncables are in good working\nresistance at the lever for\nto bind\norder, then replace as needed\nabout an inch"
+    },
+    "big_blue_book_p0842_ocr": {
+      "chunk_id": "big_blue_book_p0842_ocr",
+      "book": "big_blue_book",
+      "page": 842,
+      "section": "SYMPTOM / CAUSE / SOLUTION (stems)",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.8775,
+      "text": "CAUSE\nSYMPTOM\nSOLUTION\nRemove stem and clean\nStem moves easily on\nTheinner diameter of stem\nsteering column and inside\nsteering column even when\ncontaminated with grease\nstem with alcohol, then\ntorqued properly\nor oil\nreinstall and torque\nReplace tape on regular basis\nWhite powder corrosion\nBar material corroding from\nand clean. Bars can break\nfound under bar tape of drop\nsweat through bar tape\nfrom corrosion. Replace bars\nbars\nif badly corroded.\nLow coefficient of friction\nSupplement joint with\nCarbon handlebars slip\nof carbon fiber can result in\nassembly paste that contains\naround\nslipping\nsilica\nLeft and right side of bars\nReplace bars immediately-\nBent bar material, possibly\nseems to be at different\ndo not use until bars\nfrom an impact\nangles\nreplaced\nDropper post not rising\nSeat clamp on seat tube\nLoosen seat clamp bolt\nback up\noverly tight\nslightly and test"
+    },
+    "big_blue_book_p0928_ocr": {
+      "chunk_id": "big_blue_book_p0928_ocr",
+      "book": "big_blue_book",
+      "page": 928,
+      "section": "PARK TOOL PRODUCT CROSS-REFERENCE",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.8776,
+      "text": "ITEMDESCRIPTION\nPARKTOOLPRODUCT\nMany choices including MTC-40, IB-3, IB-2,\nMulti-tools with hex keys\nMTC-20\nChain tool\nCT-5, IB-3, MTC-40\nTirelevers\nTL-4.2, TL-6.2\nPatch kit\nVP-1,GP-2\nSpoke wrench\nSW-0, SW-2 as needed\nScrewdriver as part of multi-tool\nIB-1, IB-2, MTC-20, MTC-30\nPortable tire pump\nPMP-3.2,PMP-4.2\nTire boot\nTB-2\nNon-tool Supplies and Parts:\nEven if you ride tubeless, a spare tube is a\nSpare inner tubes, purchase to fit\nsafe fall back\nChain quick links\nPurchasetomatch widthofchain\nCO, air cartridges and head\nUseful especially to reseat tubeless tires\nRag or foil cleaner wipe\nTo wipe your hands\nZip ties\n6 of various widths, sizes\nDuct Tape\nA smallamount"
+    },
+    "big_blue_book_p0986_ocr": {
+      "chunk_id": "big_blue_book_p0986_ocr",
+      "book": "big_blue_book",
+      "page": 986,
+      "section": "COMPONENT / TOOL INTERFACE TABLE",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.8064,
+      "text": "COMPONENT\nBRAND/\nPARK TOOL\nNOM.\nPARK TOOL\nINTERFACE\nMODEL\nPART IMAGE\nMODEL\nDIAM.\nOPTIONS\nDESC.\nEXAMPLES\nNUMBER\n52.2mm\nEnduro\nPark Tool\n16-notch\nOD\nTorqTite\nBBT-47\n50.4mm\nChris King\nPark Tool\n12-notch\nT47\nOD\nBBT-47\nCampagnolo\n43mm\nVeloce,\nPark Tool\n6-notch\nOD\nMirage,\nBBT-4\nXenon\nBontrager\n43.4mm\nPark Tool\n8-notch\nTruvativ,\nOD\nBBT-18\nShimano\nCampagnoloo\n23mm\nRecord\nPark Tool\n12-spline\nChorus,\nID\nBBT-5/FR-11\nCentaur?\nsquarespindle\nLockring of\n44-\nvarious brands\nPark Tool\n3-or6-notch\n46mm\nofadjustable\nHCW-5\nOD\nbottom\nbrackets\n36mm\nAdjustable BB,\nPark Tool\n2flats\nacross\nright-side cup\nHCW-4\nflats\nVarious\n3mm\nadjustable\nPark Tool\n2, 4, 6 or 8 hole\ndiam.\nbottom bracket\nSPA-1\nleft-side cups"
+    },
+    "big_blue_book_p0990_ocr": {
+      "chunk_id": "big_blue_book_p0990_ocr",
+      "book": "big_blue_book",
+      "page": 990,
+      "section": "CROWN RACE STANDARDS (SHIS / JIS / ISO)",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "extraction": "ocr",
+      "ocr_engine": "rapidocr_onnxruntime (CPU/ONNX)",
+      "ocr_mean_confidence": 0.7669,
+      "text": "SHIS\nFORK SEAT\nCROWN RACE\nLEGACY NAME\nOD(mm)\nNAME\nID (mm)\n271\n27\nl-inch JIS\n27.0\n26.5\n26\nI1-inch Pro or'euro\n26.4\n30.1\n11/8-inch threaded/threadless\n30\n30.0\n33.1\n33\n11/4-inch threaded/threadless\n33.0\n13/8-inch integrated race\n11/2-inch with pressed races\n40\n40.0\n39.9"
+    }
+  }
+}

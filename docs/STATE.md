@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| nodes | **78** — 69 verified, 1 candidate, 8 needs_review |
-| edges | **81** — 65 verified, 16 needs_review |
-| citations | **182** — 134 byte-exact, 48 whitespace-only (all in the frozen seed) |
-| bundle | 50 chunks (43 frozen seed + 7 ingested pages); **48 cited**, 2 deliberately uncited |
-| components | **1** — all 78 nodes connected; no islands |
-| batch ledger | 16 rows (seed + 15 expansion files) |
+| nodes | **87** — 78 verified, 1 candidate, 8 needs_review |
+| edges | **90** — 74 verified, 16 needs_review |
+| citations | **200** — 152 byte-exact, 48 whitespace-only (all in the frozen seed) |
+| bundle | 61 chunks (43 frozen seed + 7 text-layer pages + 11 OCR'd picture pages); **49 cited** |
+| components | **1** — all 87 nodes connected; no islands |
+| batch ledger | 17 rows (seed + 16 expansion files) |
 
 Checks, all observed on this state:
 
@@ -362,6 +362,61 @@ a `[VISUAL DATA]` analysis; promoting it while that quote was still attached tri
 And the crank-puller sentence that once demoted the crank edge was replaced — not reinterpreted — by a
 sentence that states the fastening outright.
 
+### OCR the 900-page book? Measured before spending an hour (2026-10-25)
+
+`tools/figure_pages.py` maps Big Blue Book first: **992 pages, 20 with no text layer, 682 illustrated,
+621 pages carrying 625 FIGURE captions — 36 of them diagnostic** ("Look and feel for pits along ball
+path of cone", "Grab wheel and pull side-to-side laterally to check for play", "Pull up and down at
+middle of chain to test chain wear").
+
+Then `tools/ocr_figure_gain.py` asks the only question that matters before bulk OCR: *does OCR of a
+figure page add words the text layer does not already have?*
+
+| sample pages | layer words | OCR words | words only the image had |
+|---|---|---|---|
+| 77, 100, 108, 230, 300, 373 | 155 | 157 | **2** (`imano`, `ultegra` — a logo, misread) |
+
+**1.3%, all artefact.** BBB's figure labels are vector text and are already in the layer, so OCR-ing
+992 pages would add noise, not knowledge. That experiment cost four minutes and saved about an hour.
+
+The place OCR pays is the **20 pages with no text at all**. `tools/ocr_batch_pages.py` on exactly those
+pages: 11 produce ≥40 chars, and **six of them are SYMPTOM / CAUSE / SOLUTION troubleshooting tables**
+(p188 tyres, p254 hub bearings, p301 spokes, p486 chain, p803 rim brakes, p842 stems), plus three
+specification tables (p219 hub/axle widths, p986 tool interfaces, p990 crown-race standards). Those
+charts are invisible to every text extractor — a mechanic's differential-diagnosis logic, locked in an
+image.
+
+### Reading order is not reading: the table had to be reconstructed
+
+The first build produced quotes like
+`"Wheel moves laterally back\nadjustment\n2. Loose skewer or thru axle\nand forth at rim"` — RapidOCR
+returns boxes in the order it finds them, which on a three-column table interleaves the columns. The
+guard refused to write it (the quote *was* a substring, and still nonsense), so `tools/ocr_table.py`
+clusters boxes by x-centre into columns and emits a column-wise linearisation, where a cell becomes one
+contiguous string: `"Wheel moves laterally back and forth at rim"`. Only then could a citation be made.
+
+### phase13-fault-charts: the first diagnostic trees in the graph
+
+From p254, whose transcription was checked against the rendered page before any claim was written:
+
+| symptom | cause (failure mode) | solution (procedure) |
+|---|---|---|
+| wheel moves laterally at the rim | loose hub bearing adjustment | tighten bearing adjustment |
+| wheel slows quickly when spun | hub adjustment too tight | loosen adjustment |
+| wheel turns roughly or rumbles | worn hub bearings | replace bearings |
+
+9 nodes, 9 edges, **all grade C**. Each symptom points at both its failure mode and at `comp-rear-hub`,
+because the connectivity pin failed on two disconnected 3-node sub-trees until it did — the gate
+demanding better modelling, not the author.
+
+New relation: **`resolves`** (procedure → failure_mode), the SOLUTION column of a troubleshooting table.
+Without it a graph can say *what is wrong* and never *what fixes it*, which is the difference between a
+parts catalogue and a mechanic. Pinned as **R7** in Test R.
+
+Grade C is doing real work here: the same pages include numeric tables (hub widths, crown-race
+diameters), and Test K means none of those digits may support a verified numeric claim. They are
+ingested as retrievable text and nothing more.
+
 ### One seed citation is contaminated — found while closing the island
 
 `comp-fork-seals` carries two seed citations. The second is:
@@ -386,6 +441,40 @@ Consequences, stated plainly:
   pages is not yet automated** — that is the next gate worth writing (a grade-A citation whose chunk
   contains markdown bold, or whose first 120 chars do not appear in the named PDF page, is suspect).
 
+
+### The five vendor sources GPT suggested — inspected, with verdicts (2026-10-25)
+
+Each was fetched rather than assumed; only what was actually reachable is reported as reachable.
+
+| source | status | what it is | verdict for this brain |
+|---|---|---|---|
+| `si.shimano.com` | **HTTP 403** to automated fetch | not retrieved, so not assessed | needs a real browser session or a manual download; do not claim content we have not read |
+| `sram.com/en/service` | reachable, HTML index | manuals are **PDFs** behind the index (spare-parts catalogues 72–85 MB, bleed manuals, **Service Interval Chart 50 KB**, **Basic Troubleshooting 5.8 MB**, suspension setup guide), plus a compatibility-advisor tool | **highest numeric value**: service intervals and the DOT-vs-mineral bleed split are exactly the numbers this graph lacks. Copyright SRAM LLC; quote-only posture applies |
+| `parktool.com/.../repair-help` | reachable, **189 HTML articles**, server-rendered, dated | diagnostic *reasoning*, keyed by "where's the problem" | **highest diagnostic value per byte**: `if X then Y` logic plus the traps a mature mechanic knows |
+| `trekbikes.com/…/owners_manuals` | **HTTP 404** | — | dead URL as given; needs a corrected path before any judgement |
+| `giant-bicycles.com/global/manuals` | reachable, large HTML library | owner's and component manuals as PDFs, many languages | low diagnostic density (assembly/fit/warranty), some torque tables. Not first |
+
+The Park Tool headset article is the model of what belongs in an *experienced mechanic's* graph, and it
+shows what this ontology still lacks:
+
+> "If the headset seems to lock in place or center itself when the wheel is straight, it is likely the
+> lower races have dents from the ball bearings. The headset should be replaced."
+>
+> "Over time, a loose headset may allow play in the cup or adapter of the headset, wallowing out the head
+> tube. A bearing adjustment will not fix this."
+>
+> "If play always seems present no matter the adjustment, the steering column may be too long for the
+> stem and top cap."
+
+That is symptom → competing cause → **trap** → resolution, i.e. differential diagnosis. Encoding it
+needs two things this round deliberately did not half-build: a citation field for web provenance
+(**`retrieved_at`** — a web page changes, a printed page does not) and a relation from a
+`diagnostic_test` to the thing it tests.
+
+Sources were read, not copied: no vendor text is in the corpus, and nothing from the three reachable
+sites has been ingested. The BBB charts were local, grade C, and were used instead.
+
+### Evidence grades (what each one may and may not support)
 
 | grade | meaning | may back a `verified` numeric claim? |
 |---|---|---|

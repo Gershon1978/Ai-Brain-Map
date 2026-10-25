@@ -1,0 +1,459 @@
+{
+  "schema_version": "1.0.0",
+  "batch": "phase13-fault-charts",
+  "source_note": "The hub-bearing diagnostic tree from BBB p254, a SYMPTOM / CAUSE / SOLUTION table that exists only as an image (the page has no text layer). Grade C: the transcription was checked against the rendered page before the claims were written, and can never support a number.",
+  "nodes": [
+    {
+      "id": "sym-wheel-lateral-play",
+      "type": "symptom",
+      "name": "Wheel moves laterally at the rim",
+      "subsystem": "sys-wheels",
+      "aliases": [
+        "Lateral wheel play"
+      ],
+      "description": "With the bike stationary, the wheel can be rocked side to side at the rim.",
+      "status": "verified",
+      "batch": "phase13-fault-charts",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "Wheel moves laterally back and forth at rim",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "sym-wheel-slows-quickly",
+      "type": "symptom",
+      "name": "Wheel slows quickly when spun",
+      "subsystem": "sys-wheels",
+      "aliases": [
+        "Stiff hub"
+      ],
+      "description": "Spun free of the brake, the wheel slows down much sooner than it should.",
+      "status": "verified",
+      "batch": "phase13-fault-charts",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "When spun without brake rub, wheel slows quickly",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "sym-wheel-rough-rumbling",
+      "type": "symptom",
+      "name": "Wheel turns roughly or rumbles",
+      "subsystem": "sys-wheels",
+      "aliases": [
+        "Grinding hub"
+      ],
+      "description": "Roughness or rumbling is felt or heard at the frame or fork when the wheel turns.",
+      "status": "verified",
+      "batch": "phase13-fault-charts",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "or rumbling felt or heard at frame/fork",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "fm-loose-hub-adjustment",
+      "type": "failure_mode",
+      "name": "Loose hub bearing adjustment",
+      "subsystem": "sys-wheels",
+      "aliases": [
+        "Loose cones"
+      ],
+      "description": "The hub bearing adjustment is too loose, so the wheel moves on its axle.",
+      "status": "verified",
+      "batch": "phase13-fault-charts",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "1. Loose adjustment at hub",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "fm-hub-adjustment-too-tight",
+      "type": "failure_mode",
+      "name": "Hub adjustment too tight",
+      "subsystem": "sys-wheels",
+      "aliases": [
+        "Over-tight cones"
+      ],
+      "description": "The hub bearing adjustment is too tight, binding the bearings.",
+      "status": "verified",
+      "batch": "phase13-fault-charts",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "Hub adjustment too tight",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "fm-hub-bearings-worn",
+      "type": "failure_mode",
+      "name": "Worn hub bearings",
+      "subsystem": "sys-wheels",
+      "aliases": [
+        "Rough bearings"
+      ],
+      "description": "The hub bearings are badly worn and no longer run smoothly.",
+      "status": "verified",
+      "batch": "phase13-fault-charts",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "Bearings badly worn",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "proc-adjust-hub-bearing",
+      "type": "procedure",
+      "name": "Tighten hub bearing adjustment",
+      "subsystem": "sys-wheels",
+      "aliases": [
+        "Cone adjustment"
+      ],
+      "description": "Take up the hub bearing adjustment until the play is removed.",
+      "status": "verified",
+      "batch": "phase13-fault-charts",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "1. Tighten bearing adjustment",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "proc-loosen-hub-adjustment",
+      "type": "procedure",
+      "name": "Loosen hub adjustment",
+      "subsystem": "sys-wheels",
+      "aliases": [
+        "Back off cones"
+      ],
+      "description": "Back off the hub bearing adjustment to free a binding hub.",
+      "status": "verified",
+      "batch": "phase13-fault-charts",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "Loosen adjustment",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "proc-replace-hub-bearings",
+      "type": "procedure",
+      "name": "Replace hub bearings",
+      "subsystem": "sys-wheels",
+      "aliases": [
+        "Bearing replacement"
+      ],
+      "description": "Replace the hub bearings rather than adjusting a worn set.",
+      "status": "verified",
+      "batch": "phase13-fault-charts",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "Replace bearings",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-lateralplay-indicates-loose-hub",
+      "src": "sym-wheel-lateral-play",
+      "dst": "fm-loose-hub-adjustment",
+      "type": "indicates",
+      "claim": "Lateral play at the rim indicates a loose hub bearing adjustment.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 0.9,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase13-fault-charts",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "Wheel moves laterally back and forth at rim",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "edge-lateralplay-indicates-rear-hub",
+      "src": "sym-wheel-lateral-play",
+      "dst": "comp-rear-hub",
+      "type": "indicates",
+      "claim": "Lateral play at the rim points at the rear hub as the component at fault.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 0.9,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase13-fault-charts",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "Wheel moves laterally back and forth at rim",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "edge-slowsquickly-indicates-tight-hub",
+      "src": "sym-wheel-slows-quickly",
+      "dst": "fm-hub-adjustment-too-tight",
+      "type": "indicates",
+      "claim": "A wheel that slows quickly when spun has its hub adjustment too tight.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 0.9,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase13-fault-charts",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "When spun without brake rub, wheel slows quickly",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "edge-rough-indicates-worn-bearings",
+      "src": "sym-wheel-rough-rumbling",
+      "dst": "fm-hub-bearings-worn",
+      "type": "indicates",
+      "claim": "Roughness or rumbling at the frame or fork indicates badly worn hub bearings.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 0.9,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase13-fault-charts",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "or rumbling felt or heard at frame/fork",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "edge-rough-indicates-rear-hub",
+      "src": "sym-wheel-rough-rumbling",
+      "dst": "comp-rear-hub",
+      "type": "indicates",
+      "claim": "Roughness or rumbling when the wheel turns points at the rear hub.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 0.9,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase13-fault-charts",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "or rumbling felt or heard at frame/fork",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "edge-slowsquickly-indicates-rear-hub",
+      "src": "sym-wheel-slows-quickly",
+      "dst": "comp-rear-hub",
+      "type": "indicates",
+      "claim": "A wheel that slows quickly when spun points at the rear hub's bearing adjustment.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 0.9,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase13-fault-charts",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "When spun without brake rub, wheel slows quickly",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "edge-tighten-resolves-loose-hub",
+      "src": "proc-adjust-hub-bearing",
+      "dst": "fm-loose-hub-adjustment",
+      "type": "resolves",
+      "claim": "Tightening the bearing adjustment resolves a loose hub adjustment.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 0.9,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase13-fault-charts",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "1. Tighten bearing adjustment",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "edge-loosen-resolves-tight-hub",
+      "src": "proc-loosen-hub-adjustment",
+      "dst": "fm-hub-adjustment-too-tight",
+      "type": "resolves",
+      "claim": "Loosening the adjustment resolves a hub that is too tight.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 0.9,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase13-fault-charts",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "Loosen adjustment",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "id": "edge-replace-resolves-worn-bearings",
+      "src": "proc-replace-hub-bearings",
+      "dst": "fm-hub-bearings-worn",
+      "type": "resolves",
+      "claim": "Replacing the bearings resolves worn hub bearings.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 0.9,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase13-fault-charts",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0254_ocr",
+          "book": "big_blue_book",
+          "page": 254,
+          "section": "SYMPTOM / CAUSE / SOLUTION (wheels and hub bearings)",
+          "quote": "Replace bearings",
+          "evidence_grade": "C",
+          "linked_to_chunk": true,
+          "confidence": 0.8
+        }
+      ]
+    }
+  ]
+}

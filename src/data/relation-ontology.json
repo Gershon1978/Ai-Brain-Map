@@ -81,6 +81,13 @@
       "allowed_source_types": ["symptom", "error_code"],
       "allowed_target_types": ["component", "subcomponent", "failure_mode"]
     },
+    "resolves": {
+      "symmetric": false,
+      "inverse": "resolved_by",
+      "description": "A procedure corrects a named failure mode (the SOLUTION column of a troubleshooting table).",
+      "allowed_source_types": ["procedure"],
+      "allowed_target_types": ["failure_mode"]
+    },
     "unknown_due_to_missing_evidence": {
       "symmetric": false,
       "description": "Explicit placeholder representing missing evidence in knowledge corpus.",

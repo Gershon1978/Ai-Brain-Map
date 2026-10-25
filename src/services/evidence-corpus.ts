@@ -15,6 +15,7 @@
 import bundle1 from '../data/seed-evidence.json';
 import bundle2 from '../data/evidence-bundle-2.json';
 import bundle3 from '../data/evidence-bundle-3.json';
+import bundle4 from '../data/evidence-bundle-4.json';
 
 export interface EvidenceChunk {
   chunk_id: string;
@@ -28,12 +29,13 @@ function asChunks(bundle: { chunks?: Record<string, unknown> }): Record<string, 
   return (bundle.chunks || {}) as Record<string, EvidenceChunk>;
 }
 
-export const EVIDENCE_BUNDLE_FILES = ['seed-evidence.json', 'evidence-bundle-2.json', 'evidence-bundle-3.json'] as const;
+export const EVIDENCE_BUNDLE_FILES = ['seed-evidence.json', 'evidence-bundle-2.json', 'evidence-bundle-3.json', 'evidence-bundle-4.json'] as const;
 
 export function getEvidenceChunks(): Record<string, EvidenceChunk> {
   return { ...asChunks(bundle1 as { chunks?: Record<string, unknown> }),
            ...asChunks(bundle2 as { chunks?: Record<string, unknown> }),
-           ...asChunks(bundle3 as { chunks?: Record<string, unknown> }) };
+           ...asChunks(bundle3 as { chunks?: Record<string, unknown> }),
+           ...asChunks(bundle4 as { chunks?: Record<string, unknown> }) };
 }
 
 export function getChunkText(): Record<string, string> {
