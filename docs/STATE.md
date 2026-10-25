@@ -251,6 +251,23 @@ Gaps that remain genuinely unfillable, verified rather than assumed:
 - `std-quill-diameter-fit` has **no edge to `comp-steerer`** (the real relation is
   `comp-stem-quill → std-quill-diameter-fit`), so a quill-diameter query cannot exercise that pair.
 
+## `conflicted` is construct-only, and that is now a verified fact
+
+The verdict is implemented, reachable by rule, and pinned by construction — but it has never fired on
+real data, and two independent methods agree it cannot with this corpus:
+
+- **Structural:** 0 of 75 edges carry a non-empty `conflicts[]`; 0 node pairs carry opposing
+  `compatible_with` / `incompatible_with` edges.
+- **Textual:** a scan of all 43 chunks finds **no mechanical contradiction** — 5 torque statements,
+  no subject with differing values; 4 fluid mentions, all consistent (the "DOT vs mineral" hits are one
+  Hayes sentence split across a line break); 33 dimension statements, all consistent with their own
+  standards.
+
+A reviewer asked to find a contradiction answered `NO CONTRADICTION IN CORPUS`, and the scan confirms
+it. **No synthetic conflict will be added.** Fabricating a contradiction to exercise a code path would
+undermine the only thing this graph claims — that every assertion is grounded in a cited sentence.
+`conflicted` stays proven by construction until two sources genuinely disagree.
+
 ## Next task
 
 1. **Local-first is settled** — the app runs with no AI Studio: `serve_local.cmd` → `localhost:8080`,

@@ -1,0 +1,13 @@
+== contradiction scan
+
+torque statements: 5
+
+fluid statements: 4 (DOT 1 / MINERAL 3)
+   MINERAL  big_blue_book_p0710_c00 | Hayes® offers brakes in both mineral oil and hydraulic brakes using DOT
+   DOT      big_blue_book_p0710_c00 | 3 or DOT 4 brake fluid.
+   MINERAL  big_blue_book_p0731_c00 | Tektro® uses a mineral oil as brake fluid.
+   MINERAL  big_blue_book_p0693_c00 | The DOT fluid and Mineral oils should
+
+dimension statements: 33
+
+VERDICT: NO mechanical contradiction detected by this scan
