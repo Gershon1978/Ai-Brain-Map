@@ -106,8 +106,12 @@ Both are listed in `EXPECTED_UNUSED` in Test Q, so neither can quietly become ci
 
 1. **Local-first is settled** — the app runs with no AI Studio: `serve_local.cmd` → `localhost:8080`,
    built from `dist/`. `docs/REGRESSION.md` proves a clean clone reproduces the state.
-2. **The crankset island is the last structural hole.** It has no evidence in this bundle: the corpus
-   mentions the chainset, never how it attaches. A bottom-bracket interface page would close it.
+2. **The crankset island is the last structural hole, and it is evidence-starved — measured, not
+   assumed.** `python tools/scan_crankset.py` classifies every crankset sentence in the bundle:
+   **0** assert an installed relationship, **1** only asks the mechanic to confirm shell width and
+   threading (`p0002_c02`), **5** are removal or service steps. The removal-instruction rule that
+   demoted `comp-crank-arm → comp-bb-threaded` is applied literally there. Closing the island needs a
+   bottom-bracket interface source, not more inference.
 3. The rear-suspension cluster is anchored now, but its anchor is one grade-A sentence about bushing
    wear. A frame/suspension schematic page would replace "wear at the frame attachments" with an
    explicit mounting statement.

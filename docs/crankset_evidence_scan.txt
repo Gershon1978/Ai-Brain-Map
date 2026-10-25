@@ -1,0 +1,15 @@
+== crankset attachment evidence scan
+
+sentences asserting an installed relationship: 0
+
+sentences naming shell/threading but only asking the mechanic to confirm a spec: 1
+  PROCEDURAL bike_repair_manual_chris_p0002_c02 | Confirm shell width, threading (BSA or Italian), and spindle length based on original BB.
+
+removal / service steps (do not count as installed state): 5
+  REMOVAL   bike_repair_manual_chris_p0002_c02 | Loosen crank arm bolts using hex wrench.
+  REMOVAL   bike_repair_manual_chris_p0002_c02 | Install crank puller into crank arm threads.
+  REMOVAL   bike_repair_manual_chris_p0002_c02 | Tighten crank puller to extract crank arm from bottom bracket spindle.
+  REMOVAL   bike_repair_manual_chris_p0002_c02 | If bottom bracket service is required, use appropriate BB tool to remove bearing cups.
+  REMOVAL   bike_repair_manual_chris_p0003_c00 | The image depicts a close-up of a bicycle's crankset area, specifically focusing on the removal/installation of the crank bolt.
+
+VERDICT: NO installed-relationship sentence exists in the bundle. The 3-node crankset island is evidence-starved, not mis-modelled; closing it requires a bottom-bracket interface source, not more inference.

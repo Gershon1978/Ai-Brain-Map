@@ -134,6 +134,14 @@ This is the shape of review that works: **one narrow question, a strict answer f
 identifier/quote check before belief.** The same pass also established the negative — no chunk
 attaches the crankset — which is now the documented next target.
 
+### Fourth pass — a correct negative
+
+The same search, aimed at the last hole (the 3-node crankset island), returned
+`ONLY REMOVAL INSTRUCTIONS`. That is the right answer and it was independently confirmed:
+`tools/scan_crankset.py` finds **0** sentences asserting an installed relationship, **1** that only
+tells the mechanic to confirm shell width and threading, and **5** removal/service steps. A reviewer
+that can say "there is nothing here" is worth more than one that always finds something.
+
 ## The lesson
 
 An external reviewer that reads the corpus but invents identifiers produces work that is *more*
