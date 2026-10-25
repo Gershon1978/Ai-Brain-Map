@@ -362,7 +362,30 @@ a `[VISUAL DATA]` analysis; promoting it while that quote was still attached tri
 And the crank-puller sentence that once demoted the crank edge was replaced — not reinterpreted — by a
 sentence that states the fastening outright.
 
-### Evidence grades (what each one may and may not support)
+### One seed citation is contaminated — found while closing the island
+
+`comp-fork-seals` carries two seed citations. The second is:
+
+- `chunk_id: bike_repair_manual_chris_p0112_c03`, `page: 112`, `section: "V-BRAKE ANATOMY"`,
+  `evidence_grade: "A"`, quote: `"**Fork Seal Condition:** Inspect fork seals for leaks or damage."`
+
+That chunk is **not Sidwells page 112**. Its text begins *"nch or 27.5-inch wheel. Tire shows knobby
+tread pattern"* and continues `"**B.3 Front Brake:** Hydraulic disc brake…"` — it is a machine-generated
+bike-inspection report (the markdown bold is the tell), filed under a real book and a real page number
+that it never came from. So a **grade-A citation was resting on fabricated provenance**.
+
+Consequences, stated plainly:
+
+- It is in the **frozen seed**, so it is recorded, not edited. The node's other seed citation
+  (`p0035_c01`, a mid-word slice: *"ribute in fork Freehub body and freewheel for play…"*) is genuine
+  but says nothing about seals either.
+- This is why phase12 matters: `comp-fork-seals` now connects to the graph on the publisher's own
+  words, and the two seed citations are no longer load-bearing.
+- The verifier has a rule for `verified` quotes that sit inside `[VISUAL DATA]`, but this chunk carries
+  no marker, so the rule cannot see it. **Detecting machine-written chunks that are dressed as book
+  pages is not yet automated** — that is the next gate worth writing (a grade-A citation whose chunk
+  contains markdown bold, or whose first 120 chars do not appear in the named PDF page, is suspect).
+
 
 | grade | meaning | may back a `verified` numeric claim? |
 |---|---|---|
