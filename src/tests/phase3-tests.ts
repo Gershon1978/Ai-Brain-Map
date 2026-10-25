@@ -593,11 +593,11 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
   if (
-    coverageReport.edgeStatusSplit.verified !== 58 ||
-    coverageReport.edgeStatusSplit.needs_review !== 17
+    coverageReport.edgeStatusSplit.verified !== 57 ||
+    coverageReport.edgeStatusSplit.needs_review !== 18
   ) {
     qErrors.push(
-      `Edge status split mismatch: expected 58/17, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
+      `Edge status split mismatch: expected 57/18, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
     );
   }
 
@@ -620,7 +620,7 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     { batch: 'phase8d-reartriangle', nodes: 1, edges: 2, citations: 3 },
     // phase9-frame: comp-frame, the anchor the suspension cluster was missing. One node, two edges:
     // shock->frame (mounted_on, verified) and steerer->frame (interfaces_with, provisional).
-    { batch: 'phase9-frame', nodes: 1, edges: 2, citations: 3 },
+    { batch: 'phase9-frame', nodes: 1, edges: 2, citations: 4 },
   ];
 
   if (coverageReport.batchLedger.length !== expectedBatches.length) {
@@ -644,12 +644,12 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     }
   }
 
-  // Citations: 169 total; 121 byte-exact; 48 whitespace-only (all 48 in frozen seed)
-  if (coverageReport.citations.total !== 169) {
-    qErrors.push(`Expected 169 citations, got ${coverageReport.citations.total}`);
+  // Citations: 170 total; 122 byte-exact; 48 whitespace-only (all 48 in frozen seed)
+  if (coverageReport.citations.total !== 170) {
+    qErrors.push(`Expected 170 citations, got ${coverageReport.citations.total}`);
   }
-  if (coverageReport.citations.byteExact !== 121) {
-    qErrors.push(`Expected 121 byte-exact citations, got ${coverageReport.citations.byteExact}`);
+  if (coverageReport.citations.byteExact !== 122) {
+    qErrors.push(`Expected 122 byte-exact citations, got ${coverageReport.citations.byteExact}`);
   }
   if (coverageReport.citations.whitespaceOnly !== 48) {
     qErrors.push(
@@ -730,7 +730,7 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     name: 'Test Q: Coverage & Integrity Verification',
     passed: testQPassed,
     message: testQPassed
-      ? `All runtime coverage and integrity invariants verified: 74 nodes (65v/1c/8r), 75 edges (58v/17r), ${coverageReport.batchLedger.length} batches in ledger, 169 citations (121 byte-exact, 48 whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, both rejected evidence), ${coverageReport.connectivity.componentCount} components (largest: ${coverageReport.connectivity.largestSize} nodes, ${coverageReport.connectivity.largestPercentage}%; ${coverageReport.connectivity.remainingIslands.length} islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated against the computed rule.`
+      ? `All runtime coverage and integrity invariants verified: 74 nodes (65v/1c/8r), 75 edges (57v/18r), ${coverageReport.batchLedger.length} batches in ledger, 170 citations (122 byte-exact, 48 whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, both rejected evidence), ${coverageReport.connectivity.componentCount} components (largest: ${coverageReport.connectivity.largestSize} nodes, ${coverageReport.connectivity.largestPercentage}%; ${coverageReport.connectivity.remainingIslands.length} islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated against the computed rule.`
       : `Test Q failed: ${qErrors.join('; ')}`,
     details: { coverageReport, qErrors },
   });

@@ -34,10 +34,10 @@
       "src": "comp-rear-shock",
       "dst": "comp-frame",
       "type": "mounted_on",
-      "claim": "The rear shock attaches to the frame at bushings — the manual calls them the frame attachments and expects wear there.",
-      "status": "verified",
+      "claim": "The rear shock attaches to the frame at bushings: the manual refers to 'the bushing of the frame attachments' and to 'shock mounting bolt tightness'. Both presuppose a mounting rather than stating one, so the relation is provisional until a sentence says the shock is mounted to the frame.",
+      "status": "needs_review",
       "evidence_type": "service_manual",
-      "confidence": 1.0,
+      "confidence": 0.6,
       "conditions": [],
       "conflicts": [],
       "batch": "phase9-frame",
@@ -51,6 +51,16 @@
           "evidence_grade": "A",
           "linked_to_chunk": true,
           "confidence": 1.0
+        },
+        {
+          "chunk_id": "big_blue_book_p0921_c00",
+          "book": "big_blue_book",
+          "page": 921,
+          "section": "SHOCKS (REAR SHOCKS)",
+          "quote": "Perform a\ndouble-check of linkage bolt and shock mounting bolt tightness.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 0.6
         }
       ]
     },

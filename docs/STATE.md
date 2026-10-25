@@ -72,8 +72,15 @@ graph from `[69, 3, 1]` into `[62, 7, 3, 1]`, which is how the weakness was foun
 | addition | evidence | status |
 |---|---|---|
 | `comp-frame` | p0148 "can move independently of the … rest of the frame" | verified |
-| `comp-rear-shock → comp-frame` (`mounted_on`) | p0921 "The rear shock can develop wear at the bushing of the frame attachments." | verified |
+| `comp-rear-shock → comp-frame` (`mounted_on`) | p0921 "…the bushing of the frame attachments" **and** "…shock mounting bolt tightness" | **needs_review** |
 | `comp-steerer → comp-frame` (`interfaces_with`) | p0861_c02 "This draws the steerer tube upwards relative to the frame…" | needs_review |
+
+The shock edge was briefly `verified` and was demoted after an independent judgment check
+(`docs/REVIEW_GEMINI.md`): both sentences **presuppose** a mounting — they talk about wear at the
+frame attachments and about checking a shock mounting bolt — but neither states that the shock is
+mounted to the frame. That is the same standard that demoted "extract crank arm from bottom bracket
+spindle", so consistency requires `needs_review`. Both quotes are cited, byte-exact, and the cluster
+stays attached (connectivity does not depend on status).
 
 All three quotes were **sliced out of the chunk text by a script**, so byte-exactness is a property of
 construction rather than of careful typing. The steerer edge stays provisional on purpose: the manual

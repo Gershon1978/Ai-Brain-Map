@@ -142,6 +142,29 @@ The same search, aimed at the last hole (the 3-node crankset island), returned
 tells the mechanic to confirm shell width and threading, and **5** removal/service steps. A reviewer
 that can say "there is nothing here" is worth more than one that always finds something.
 
+### Fifth pass — the review caught me being inconsistent
+
+I asked it to judge two of my own decisions in one session: demoting `comp-headset-threadless →
+sys-cockpit` (evidence = a chapter TOC) while promoting `comp-rear-shock → comp-frame` (evidence =
+"wear at the bushing of the frame attachments").
+
+Answer, verbatim:
+
+```
+A: CORRECT - A table of contents reflects editorial taxonomy, not an explicit mechanical assertion.
+B: OVERREACH - Status should be needs_review; a noun phrase inside a diagnostic wear test refers to
+   "the frame attachments" without asserting an explicit, installed mounted_on standard.
+VERDICT: INCONSISTENT - Case B must change to needs_review ...
+```
+
+It was right, and for the exact reason I had used one message earlier against the crank-puller
+sentence: **a wear diagnostic presupposes an installed state, it does not assert one.** Accepting it
+cost a `verified` edge and gained consistency; the edge also picked up a second, stronger quote
+("shock mounting bolt tightness") so no evidence was lost.
+
+House rule that came out of it: *presupposition is not assertion.* A sentence may only carry a
+`verified` structural relation if it says the relation, not if it implies the part exists.
+
 ## The lesson
 
 An external reviewer that reads the corpus but invents identifiers produces work that is *more*
