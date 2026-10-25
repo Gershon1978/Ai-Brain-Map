@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0.0",
+  "batch": "phase9-frame",
+  "nodes": [
+    {
+      "id": "comp-frame",
+      "type": "component",
+      "name": "Frame",
+      "aliases": [
+        "bicycle frame",
+        "chassis"
+      ],
+      "description": "The frame is the structural body of the bicycle. On full-suspension bikes the rear triangle can move independently of the rest of the frame; components such as the rear shock, the headset assembly and the brake calipers attach to it.",
+      "status": "verified",
+      "batch": "phase9-frame",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0148_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 148,
+          "section": "REAR SUSPENSION",
+          "quote": "The rear triangle of the frame,\nwhich connects the rear wheel to the shock\nabsorber, can move independently of the \nrest of the frame on bikes that are fitted\nwith rear suspension.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-frame-shock-frame-mount",
+      "src": "comp-rear-shock",
+      "dst": "comp-frame",
+      "type": "mounted_on",
+      "claim": "The rear shock attaches to the frame at bushings — the manual calls them the frame attachments and expects wear there.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase9-frame",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0921_c00",
+          "book": "big_blue_book",
+          "page": 921,
+          "section": "SHOCKS (REAR SHOCKS)",
+          "quote": "The rear shock can develop wear at the bushing of the frame attachments.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "edge-frame-steerer-bears-against-frame",
+      "src": "comp-steerer",
+      "dst": "comp-frame",
+      "type": "interfaces_with",
+      "claim": "The steerer tube bears against the frame: tightening the top cap draws it upwards relative to the frame and preloads the headset bearings. The manual states the relative motion, not a pressed-in fit, so this stays provisional.",
+      "status": "needs_review",
+      "evidence_type": "service_manual",
+      "confidence": 0.5,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase9-frame",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0861_c02",
+          "book": "big_blue_book",
+          "page": 861,
+          "section": "THREADLESS HEADSET ADJUSTMENT",
+          "quote": "This draws the steerer tube upwards relative to the frame, putting preload on the headset bearings.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 0.5
+        }
+      ]
+    }
+  ]
+}

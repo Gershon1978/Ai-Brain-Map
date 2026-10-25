@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| nodes | **73** — 64 verified, 1 candidate, 8 needs_review |
-| edges | **73** — 59 verified, 14 needs_review |
-| citations | **166** — 118 byte-exact, 48 whitespace-only (all in the frozen seed) |
+| nodes | **74** — 65 verified, 1 candidate, 8 needs_review |
+| edges | **75** — 59 verified, 16 needs_review |
+| citations | **169** — 121 byte-exact, 48 whitespace-only (all in the frozen seed) |
 | bundle | 43 chunks; **41 cited**, 2 deliberately uncited |
-| components | **3** — largest 69 (95%), crankset island 3, `comp-fork-seals` 1 |
-| batch ledger | 12 rows (seed + 11 expansion files) |
+| components | **3** — largest 70 (95%), crankset island 3, `comp-fork-seals` 1 |
+| batch ledger | 13 rows (seed + 12 expansion files) |
 
 Checks, all observed on this state:
 
@@ -35,18 +35,61 @@ out. 59 warnings are visible technical debt, not 59 confirmed graph errors.
 
 ## What is deliberately provisional
 
-Three edges carry `needs_review` **and** a claim prefixed `Connectivity hypothesis:`. They express
-coupling, not documented attachment, and the engine can only return `conditionally_compatible`
-across them — never `verified_compatible`:
+Fifteen edges carry `needs_review`. Because the engine only returns `verified_compatible` across
+`verified` edges, status alone is the gate — a "hypothesis" prefix is a human-readable warning, not a
+mechanism. Two of the fifteen are explicitly labelled, because they express coupling rather than
+documented attachment:
 
 | edge | why provisional |
 |---|---|
 | `comp-fork → sys-wheels` (`affects`) | the text asserts co-motion ("turns the fork and the front wheel"), not attachment |
-| `comp-rear-triangle → sys-wheels` (`affects`) | a linkage, not membership |
-| `comp-chainring → comp-crank-arm` (`mounted_on`) | the source is a `[VISUAL DATA]` analysis |
+| `comp-rear-triangle → sys-wheels` (`affects`) | a linkage, not membership — and it is load-bearing, see below |
 
-The cockpit cluster reaches the main component **only** through the first of these. That is the honest
-reason the graph has 3 components and not 1.
+The other thirteen fall into three classes: **grade-B visual estimates** (`edge-steerer-conforms-to-dia`,
+`edge-derailleur-conforms-to-pitch`, `edge-xdr-conforms-to-bearing-dim`,
+`comp-rear-hub_conforms_to_std-brake-thru-axle`, `edge-conn4-chainring-on-crank`), **brand-scoped
+statements dressed as universal properties** (`edge-conn4-caliper-uses-dot-fluid` cites Hayes
+specifically), and **principle-derived claims with no textual assertion** (`edge-rotor6bolt-incomp-
+centerlock` is `evidence_type: mechanical_principle`; its quote describes six-bolt flanges and never
+mentions incompatibility).
+
+## The suspension cluster now hangs on a structural anchor (resolved 2026-10-25)
+
+Before `phase9-frame`, the whole rear-suspension subsystem — `comp-rear-shock`, `comp-rear-triangle`
+and the five `comp-shock-*` subcomponents — touched the rest of the graph **only** through
+`edge-conn4-reartriangle-links-wheel`, the vaguest edge in the graph. Removing that one edge split the
+graph from `[69, 3, 1]` into `[62, 7, 3, 1]`, which is how the weakness was found.
+
+`phase9-frame` adds the node the corpus had been describing all along without ever naming: `comp-frame`.
+
+| addition | evidence | status |
+|---|---|---|
+| `comp-frame` | p0148 "can move independently of the … rest of the frame" | verified |
+| `comp-rear-shock → comp-frame` (`mounted_on`) | p0921 "The rear shock can develop wear at the bushing of the frame attachments." | verified |
+| `comp-steerer → comp-frame` (`interfaces_with`) | p0861_c02 "This draws the steerer tube upwards relative to the frame…" | needs_review |
+
+All three quotes were **sliced out of the chunk text by a script**, so byte-exactness is a property of
+construction rather than of careful typing. The steerer edge stays provisional on purpose: the manual
+asserts relative motion, not a pressed-in fit.
+
+The vague `edge-conn4-reartriangle-links-wheel` was **kept**, not deleted: it is still the only edge
+that speaks about the wheel end, and the graph is stronger with a documented hypothesis than with a
+deleted fact. The suspension cluster is now doubly attached.
+
+### The gap that nearly shipped: app and verifier disagreed about which files exist
+
+`tools/verify_app_state.py` globs `expansion-*.json`; `src/services/graph-loader.ts` imported a
+hand-maintained list. Adding `expansion-frame.json` therefore changed what the **verifier** measured
+while the **app** kept serving the old graph — the suite went 16/16 green against `73/73/166` while the
+verifier reported `74/75/169`. Two green checks, two different graphs.
+
+Fixed with `tools/verify_registry.py`, which fails when any `expansion-*.json` is not imported and
+registered, and now runs first in every cycle. `import.meta.glob` was rejected deliberately: it is
+Vite-only and would break the headless `tsx` runner.
+
+Operational lesson from the same session: an export folder inside the repo (`_for_gemini/`) was
+picked up by `tsc`, breaking `npm run lint` for everyone. It now lives outside the repo and `tsconfig`
+excludes it explicitly.
 
 ## Rejected evidence (kept, uncited, pinned)
 
@@ -56,13 +99,14 @@ reason the graph has 3 components and not 1.
 
 Both are listed in `EXPECTED_UNUSED` in Test Q, so neither can quietly become cited.
 
-## Next task (not expansion)
+## Next task
 
-1. **Reproducible sync** — AI Studio still holds pre-8a code and data (quota-blocked). When it returns,
-   push the repo state and prove equality: dumped files byte-identical to `src/`, then re-run
-   verifier + suite in the app.
-2. **Regression check** — on a clean clone: `npm ci`, `npm run lint`, `npm run build`,
-   `npx tsx tools/run_suite.mjs`, `python tools/verify_app_state.py`. All five must pass with no
-   manual steps.
-3. Only then consider new knowledge — which requires **new source evidence** or a **documented
-   correction**, not a connectivity target.
+1. **Local-first is settled** — the app runs with no AI Studio: `serve_local.cmd` → `localhost:8080`,
+   built from `dist/`. `docs/REGRESSION.md` proves a clean clone reproduces the state.
+2. **The crankset island is the last structural hole.** It has no evidence in this bundle: the corpus
+   mentions the chainset, never how it attaches. A bottom-bracket interface page would close it.
+3. The rear-suspension cluster is anchored now, but its anchor is one grade-A sentence about bushing
+   wear. A frame/suspension schematic page would replace "wear at the frame attachments" with an
+   explicit mounting statement.
+4. New knowledge otherwise requires **new source evidence** or a **documented correction** — never a
+   connectivity target.

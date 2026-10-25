@@ -574,17 +574,17 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
   const mergedForCoverage = getMergedGraph();
   const qErrors: string[] = [];
 
-  // Totals: 73 nodes, 73 edges
-  if (coverageReport.totals.nodes !== 73) {
-    qErrors.push(`Expected 73 nodes, found ${coverageReport.totals.nodes}`);
+  // Totals: 74 nodes, 75 edges
+  if (coverageReport.totals.nodes !== 74) {
+    qErrors.push(`Expected 74 nodes, found ${coverageReport.totals.nodes}`);
   }
-  if (coverageReport.totals.edges !== 73) {
-    qErrors.push(`Expected 73 edges, found ${coverageReport.totals.edges}`);
+  if (coverageReport.totals.edges !== 75) {
+    qErrors.push(`Expected 75 edges, found ${coverageReport.totals.edges}`);
   }
 
-  // Status split: nodes 64 verified / 1 candidate / 8 needs_review; edges 59 verified / 14 needs_review
+  // Status split: nodes 65 verified / 1 candidate / 8 needs_review; edges 59 verified / 16 needs_review
   if (
-    coverageReport.nodeStatusSplit.verified !== 64 ||
+    coverageReport.nodeStatusSplit.verified !== 65 ||
     coverageReport.nodeStatusSplit.candidate !== 1 ||
     coverageReport.nodeStatusSplit.needs_review !== 8
   ) {
@@ -593,11 +593,11 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
   if (
-    coverageReport.edgeStatusSplit.verified !== 58 ||
-    coverageReport.edgeStatusSplit.needs_review !== 15
+    coverageReport.edgeStatusSplit.verified !== 59 ||
+    coverageReport.edgeStatusSplit.needs_review !== 16
   ) {
     qErrors.push(
-      `Edge status split mismatch: expected 58/15, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
+      `Edge status split mismatch: expected 59/16, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
     );
   }
 
@@ -618,6 +618,9 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     { batch: 'phase8b-fork', nodes: 1, edges: 3, citations: 4 },
     { batch: 'phase8c-crank', nodes: 2, edges: 2, citations: 4 },
     { batch: 'phase8d-reartriangle', nodes: 1, edges: 2, citations: 3 },
+    // phase9-frame: comp-frame, the anchor the suspension cluster was missing. One node, two edges:
+    // shock->frame (mounted_on, verified) and steerer->frame (interfaces_with, provisional).
+    { batch: 'phase9-frame', nodes: 1, edges: 2, citations: 3 },
   ];
 
   if (coverageReport.batchLedger.length !== expectedBatches.length) {
@@ -641,12 +644,12 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     }
   }
 
-  // Citations: 152 total; 104 byte-exact; 48 whitespace-only (all 48 in frozen seed)
-  if (coverageReport.citations.total !== 166) {
-    qErrors.push(`Expected 166 citations, got ${coverageReport.citations.total}`);
+  // Citations: 169 total; 121 byte-exact; 48 whitespace-only (all 48 in frozen seed)
+  if (coverageReport.citations.total !== 169) {
+    qErrors.push(`Expected 169 citations, got ${coverageReport.citations.total}`);
   }
-  if (coverageReport.citations.byteExact !== 118) {
-    qErrors.push(`Expected 118 byte-exact citations, got ${coverageReport.citations.byteExact}`);
+  if (coverageReport.citations.byteExact !== 121) {
+    qErrors.push(`Expected 121 byte-exact citations, got ${coverageReport.citations.byteExact}`);
   }
   if (coverageReport.citations.whitespaceOnly !== 48) {
     qErrors.push(
@@ -695,15 +698,15 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
 
-  // Connectivity: 3 components, largest 69 nodes (95%), and 2 remaining islands
+  // Connectivity: 3 components, largest 70 nodes (95%), and 2 remaining islands
   if (coverageReport.connectivity.componentCount !== 3) {
     qErrors.push(
       `Expected 3 components, got ${coverageReport.connectivity.componentCount}`
     );
   }
-  if (coverageReport.connectivity.largestSize !== 69) {
+  if (coverageReport.connectivity.largestSize !== 70) {
     qErrors.push(
-      `Expected largest component of 69 nodes, got ${coverageReport.connectivity.largestSize}`
+      `Expected largest component of 70 nodes, got ${coverageReport.connectivity.largestSize}`
     );
   }
   if (coverageReport.connectivity.remainingIslands.length !== 2) {
@@ -727,7 +730,7 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     name: 'Test Q: Coverage & Integrity Verification',
     passed: testQPassed,
     message: testQPassed
-      ? `All runtime coverage and integrity invariants verified: 73 nodes (64v/1c/8r), 73 edges (58v/15r), ${coverageReport.batchLedger.length} batches in ledger, 166 citations (118 byte-exact, 48 whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, both rejected evidence), ${coverageReport.connectivity.componentCount} components (largest: ${coverageReport.connectivity.largestSize} nodes, ${coverageReport.connectivity.largestPercentage}%; ${coverageReport.connectivity.remainingIslands.length} islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated against the computed rule.`
+      ? `All runtime coverage and integrity invariants verified: 74 nodes (65v/1c/8r), 75 edges (59v/16r), ${coverageReport.batchLedger.length} batches in ledger, 169 citations (121 byte-exact, 48 whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, both rejected evidence), ${coverageReport.connectivity.componentCount} components (largest: ${coverageReport.connectivity.largestSize} nodes, ${coverageReport.connectivity.largestPercentage}%; ${coverageReport.connectivity.remainingIslands.length} islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated against the computed rule.`
       : `Test Q failed: ${qErrors.join('; ')}`,
     details: { coverageReport, qErrors },
   });

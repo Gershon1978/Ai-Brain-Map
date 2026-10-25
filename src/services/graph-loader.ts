@@ -15,6 +15,7 @@ import expansionConnectorsJson from '../data/expansion-connectors.json';
 import expansionForkJson from '../data/expansion-fork.json';
 import expansionCrankJson from '../data/expansion-crank.json';
 import expansionReartriangleJson from '../data/expansion-reartriangle.json';
+import expansionFrameJson from '../data/expansion-frame.json';
 import { GraphPayload, GraphNode, GraphEdge } from '../types/graph.ts';
 
 export interface ExpansionFile {
@@ -63,6 +64,12 @@ export function getExpansionConnectors(): ExpansionFile {
 /**
  * Registry of all expansion files.
  * Add new expansion datasets here to automatically integrate across the system.
+ *
+ * This list is hand-maintained AND machine-checked: `python tools/verify_registry.py` fails when a
+ * `src/data/expansion-*.json` exists that is not registered here. That guard exists because the
+ * independent verifier globs the data directory while this file imports statically, so a new batch
+ * used to be visible to the verifier and invisible to the app — the suite would pass while the app
+ * silently held an older graph.
  */
 const expansionRegistry: ExpansionFile[] = [
   expansionBrakesJson as unknown as ExpansionFile,
@@ -76,6 +83,7 @@ const expansionRegistry: ExpansionFile[] = [
   expansionForkJson as unknown as ExpansionFile,
   expansionCrankJson as unknown as ExpansionFile,
   expansionReartriangleJson as unknown as ExpansionFile,
+  expansionFrameJson as unknown as ExpansionFile,
 ];
 
 export function getExpansionRegistry(): ExpansionFile[] {

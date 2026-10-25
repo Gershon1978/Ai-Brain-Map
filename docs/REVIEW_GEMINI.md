@@ -89,6 +89,51 @@ Proposed correction, **not applied** — it needs approval because it changes se
   into the drivetrain. Reasonable, and consistent with the island being evidence-starved rather than
   mis-built.
 
+## Correction to my own proposal (same session)
+
+I proposed retargeting `edge-conn4-reartriangle-links-wheel` to `comp-rear-shock`. That was wrong, and
+the data said so in two ways:
+
+1. **The precise edge already existed.** `edge-conn4-reartriangle-holds-shock`
+   (`comp-rear-triangle → comp-rear-shock`, `interfaces_with`, verified) carries the same chunk and the
+   same sentence. Retargeting would have produced a duplicate — the verifier's `src|type|dst` check
+   would have failed the build.
+2. **The vague edge is load-bearing.** Deleting it split the graph from `[69, 3, 1]` into
+   `[62, 7, 3, 1]`: the 7-node island is the whole rear-suspension cluster, which touches the rest of
+   the graph through nothing else.
+
+So the edge was restored, the change reverted, and the measurement kept in `docs/STATE.md`. The lesson
+is not "Gemini was wrong" — it is that **a reviewer's finding has to be checked against the graph's
+existing edges and its connectivity, not just against the quote.** The quote check passed; the
+structural check is what killed it.
+
+### What the review did earn
+
+- A verified statement that the graph's vaguest edge is also its most load-bearing one, now documented.
+- A `tsc` hazard found and fixed: an export folder inside the repo was being compiled.
+- Two stale claims in our own docs corrected (`59 verified/14 needs_review` → `58/15`; "three edges
+  carry the hypothesis prefix" → two).
+
+### Third pass — a search, not an opinion, and it paid
+
+After the experiment failed I gave Gemini a **search** task with a machine-checkable output format:
+find any sentence attaching the rear suspension to the frame; quote it character for character; if
+nothing exists, print `NO FRAME ATTACHMENT EVIDENCE IN CORPUS`.
+
+It returned exactly one candidate:
+
+```
+big_blue_book_p0921_c00 | The rear shock can develop wear at the bushing of the frame attachments. | A
+```
+
+Machine check: **byte-exact substring** of that chunk, page 921, section `SHOCKS (REAR SHOCKS)`. That
+sentence is now the anchor of `phase9-frame` — `comp-frame` exists as a node because of it, and
+`comp-rear-shock → comp-frame` is a verified `mounted_on` edge resting on it.
+
+This is the shape of review that works: **one narrow question, a strict answer format, and an
+identifier/quote check before belief.** The same pass also established the negative — no chunk
+attaches the crankset — which is now the documented next target.
+
 ## The lesson
 
 An external reviewer that reads the corpus but invents identifiers produces work that is *more*

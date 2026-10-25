@@ -13,12 +13,12 @@ whole point of the project, and it is the rule that matters most.
 
 | | |
 |---|---|
-| Nodes | **73** (64 verified, 1 candidate, 8 needs_review) |
-| Edges | **73** (58 verified, 15 needs_review) |
-| Citations | **166** (118 byte-exact, 48 differ from their chunk in whitespace only) |
+| Nodes | **74** (65 verified, 1 candidate, 8 needs_review) |
+| Edges | **75** (59 verified, 16 needs_review) |
+| Citations | **169** (121 byte-exact, 48 differ from their chunk in whitespace only) |
 | Evidence bundle | **43 chunks** (36 original + 7 added 2026-10-25) |
 | Chunks cited | **41 of 43** — the 2 left uncited are *rejected* evidence, listed in Test Q |
-| Connectivity | **3 components**, largest 69 (95%); the crankset is a separate 3-node island |
+| Connectivity | **3 components**, largest 70 (95%); the crankset is a separate 3-node island |
 | Test suite | **16 tests**, all passing headlessly (`npx tsx tools/run_suite.mjs`) |
 
 Run it locally — no AI Studio, no account, no network: `serve_local.cmd` serves the built `dist/` on
@@ -70,9 +70,9 @@ src/
   data/
     seed_graph.json           FROZEN 27 nodes / 12 edges / 59 citations
     seed-evidence.json        43 verbatim chunks (the corpus the app may cite)
-    expansion-*.json          11 growth batches: phase5 (brakes, cockpit, drivetrain,
+    expansion-*.json          12 growth batches: phase5 (brakes, cockpit, drivetrain,
                               rearshock, quillstem, cassette, hubfit) + phase8 (connectors,
-                              fork, crank, reartriangle)
+                              fork, crank, reartriangle) + phase9 (frame anchor)
     graph.schema.json         JSON schema for nodes/edges
     relation-ontology.json    14 legal relations + which endpoint types each accepts
   services/
