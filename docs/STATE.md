@@ -21,17 +21,20 @@ npx tsx tools/run_suite.mjs                  16/16 passed, exit 0
 python tools/verify_app_state.py             PROBLEMS 0, PASS
 ```
 
-Verifier warnings, **separately classified** because they mean different things:
+Verifier warnings are **classified by where they can be fixed**, and that classification is enforced:
 
-- **48 whitespace-only citations** — OCR double-spaces in the frozen seed. Word sequence identical;
-  evidence-integrity relevant, but not a wrong citation. Deliberately not "tidied".
-- **11 undeclared sections** — metadata omissions (the chunk knows its section, the evidence object
-  omits it). The app's Test P does not check absence, so the independent verifier counts them here.
+- **Frozen-seed artefacts — 59, counted as a class with an exact expected size** (48 whitespace-only
+  citations + 11 undeclared sections, all inside `seed_graph.json`). Drift in either direction is a
+  failure: more means new defects, fewer means the frozen seed was edited and this record is stale.
+- **Outside the seed: zero tolerated.** Every expansion batch is byte-exact with a declared section,
+  and a soft match or missing section anywhere in a batch is now a **PROBLEM, not a warning** — the
+  verifier exits 1. Proven by sabotage: adding one extra space to a `phase9-frame` quote produces
+  `VERDICT: FAIL` and names the edge.
 - **1 known exception** — `comp-bb-threaded`'s section is truncated inside the frozen seed. Printed on
   every run; the verifier fails if the exception ever stops occurring, so the list can only shrink.
 
 A green verifier means *the declared checks pass*. It does not mean every possible defect is ruled
-out. 59 warnings are visible technical debt, not 59 confirmed graph errors.
+out; it means the noise is now separated from the signal.
 
 ## What is deliberately provisional
 

@@ -24,8 +24,11 @@ chunks = json.loads((DATA / "seed-evidence.json").read_text(encoding="utf-8"))["
 onto = json.loads((DATA / "relation-ontology.json").read_text(encoding="utf-8"))["relations"]
 
 problems, warns = [], []
-missing_section = []
 known_hits, known_msgs = set(), []
+# Warnings that are physically confined to the frozen seed. They are counted as a class with an
+# expected size, so a NEW one anywhere - or a drift in these - fails instead of printing quietly.
+frozen_soft, frozen_section = [], []
+EXPECTED_FROZEN = {"whitespace_only_in_seed": 48, "undeclared_section_in_seed": 11}
 
 # Documented exceptions. Each one is printed, never hidden, and the verifier FAILS if an entry here
 # stops occurring (so the list can only shrink honestly).
@@ -35,10 +38,15 @@ KNOWN = {
         "editing the frozen seed for cosmetics, so it is recorded instead.",
 }
 nodes, edges, per_batch = [], [], []
+file_of = {}
 for name in FILES:
     doc = json.loads((DATA / name).read_text(encoding="utf-8"))
     nodes.extend(doc.get("nodes") or [])
     edges.extend(doc.get("edges") or [])
+    for n in doc.get("nodes") or []:
+        file_of[("node", n.get("id"))] = name
+    for e in doc.get("edges") or []:
+        file_of[("edge", e.get("id"))] = name
     batch = doc.get("batch") or ("seed" if name == "seed_graph.json" else name)
     per_batch.append((batch, len(doc.get("nodes") or []), len(doc.get("edges") or [])))
 
@@ -78,10 +86,14 @@ for kind, coll in (("node", nodes), ("edge", edges)):
                 else:
                     problems.append(msg)
             elif not declared and want_section:
-                # Absence asserts nothing false, so it is graded below a failure - but it is still
-                # metadata that the app's Test P does not check, so it is counted and reported.
-                missing_section.append("%s %s: no section declared for %s (bundle says %r)"
-                                       % (kind, ent.get("id"), cid[:40], want_section[:40]))
+                # Absence asserts nothing false, but in a batch we control it is still a metadata gap
+                # that the app's Test P does not check - so there it is a FAILURE, not a warning.
+                msg = ("%s %s: no section declared for %s (bundle says %r)"
+                       % (kind, ent.get("id"), cid[:40], want_section[:40]))
+                if file_of.get((kind, ent.get("id"))) == "seed_graph.json":
+                    frozen_section.append(msg)
+                else:
+                    problems.append("fixable metadata gap outside the frozen seed -> " + msg)
             if q in text:
                 exact += 1
                 pos, mark = text.find(q), text.find("[VISUAL DATA]")
@@ -90,7 +102,14 @@ for kind, coll in (("node", nodes), ("edge", edges)):
                                     % (kind, ent.get("id"), cid))
             elif re.sub(r"\s+", " ", q) in re.sub(r"\s+", " ", text):
                 soft += 1
-                warns.append("%s %s: whitespace-only match on %s" % (kind, ent.get("id"), cid))
+                msg = "%s %s: whitespace-only match on %s" % (kind, ent.get("id"), cid)
+                if file_of.get((kind, ent.get("id"))) == "seed_graph.json":
+                    frozen_soft.append(msg)
+                else:
+                    # Every expansion batch has been byte-exact so far. A soft match here is a
+                    # regression we can fix in one string, so it is treated as a defect.
+                    warns.append(msg)
+                    problems.append("fixable whitespace-only citation outside the frozen seed -> " + msg)
             else:
                 missing += 1
                 problems.append("%s %s: quote not found in %s" % (kind, ent.get("id"), cid))
@@ -156,16 +175,34 @@ report.append("  components=%d sizes=%s largest=%d (%d%%)"
                  round(100 * len(comps[0]) / len(nodes))))
 report.append("  batches: %s" % [(b, n, e) for b, n, e in per_batch])
 report.append("")
-report.append("WARNINGS: %d (%d whitespace-only citations, %d undeclared sections)"
-              % (len(warns) + len(missing_section), len(warns), len(missing_section)))
-for w in warns[:10]:
-    report.append("  - " + w)
-for w in missing_section[:8]:
-    report.append("  - section: " + w)
+for w in frozen_soft[:6]:
+    report.append("  - seed: " + w)
+for w in frozen_section[:6]:
+    report.append("  - seed: section: " + w)
+if len(frozen_soft) + len(frozen_section) > 12:
+    report.append("  ... (%d more, all in seed_graph.json)" % (len(frozen_soft) + len(frozen_section) - 12))
 stale = [k for k in KNOWN if k not in known_hits]
 for k in stale:
     problems.append("stale KNOWN entry, no longer occurring - remove it: %s" % (k,))
 
+# The frozen-seed class has an exact expected size. Drift in either direction is a finding: more
+# means new defects, fewer means someone changed the frozen seed and this record is now a lie.
+actual_frozen = {"whitespace_only_in_seed": len(frozen_soft),
+                 "undeclared_section_in_seed": len(frozen_section)}
+if actual_frozen != EXPECTED_FROZEN:
+    problems.append("frozen-seed warning drift: expected %s, measured %s"
+                    % (EXPECTED_FROZEN, actual_frozen))
+
+report.append("FROZEN-SEED ARTEFACTS, classified (not counted as problems): %d" % len(frozen_soft + frozen_section))
+report.append("  whitespace-only citations in seed_graph.json: %d" % len(frozen_soft))
+report.append("  undeclared sections in seed_graph.json:        %d" % len(frozen_section))
+report.append("  every expansion batch is byte-exact with declared sections (enforced: a soft match or")
+report.append("  missing section outside the seed is a PROBLEM, not a warning)")
+report.append("")
+report.append("FIXABLE WARNINGS OUTSIDE THE SEED: %d" % len(warns))
+for w in warns:
+    report.append("  - " + w)
+report.append("")
 report.append("PROBLEMS: %d" % len(problems))
 for p in problems:
     report.append("  - " + p)
