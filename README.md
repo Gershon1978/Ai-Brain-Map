@@ -70,8 +70,9 @@ src/
   data/
     seed_graph.json           FROZEN 27 nodes / 12 edges / 59 citations
     seed-evidence.json        43 verbatim chunks (the corpus the app may cite)
-    expansion-*.json          8 growth batches (brakes, cockpit, drivetrain, rearshock,
-                              quillstem, cassette, hubfit, connectors)
+    expansion-*.json          11 growth batches: phase5 (brakes, cockpit, drivetrain,
+                              rearshock, quillstem, cassette, hubfit) + phase8 (connectors,
+                              fork, crank, reartriangle)
     graph.schema.json         JSON schema for nodes/edges
     relation-ontology.json    14 legal relations + which endpoint types each accepts
   services/
