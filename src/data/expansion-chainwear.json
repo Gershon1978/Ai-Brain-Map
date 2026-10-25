@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0.0",
+  "batch": "phase14-chain-wear",
+  "source_note": "Chain wear limits from Park Tool's own repair-help article, fetched and read on 2026-10-25. This is the first web-sourced batch: the citation carries source_url and retrieved_at, because a web page changes while a printed page does not. Every other row of the research data sheet was discarded - see docs/RESEARCH_FINDINGS.md.",
+  "nodes": [
+    {
+      "id": "comp-chain",
+      "type": "component",
+      "name": "Chain",
+      "subsystem": "sys-drivetrain",
+      "aliases": ["Drive chain", "Roller chain"],
+      "description": "The chain is a consumable part of the drivetrain; its rivets and rollers wear with use, which shows up as apparent stretching and causes poor meshing with cogs and chainrings.",
+      "status": "verified",
+      "batch": "phase14-chain-wear",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "parktool_chain_wear_p1_c01",
+          "book": "parktool_repair_help",
+          "page": "when-to-replace-a-chain-on-a-bicycle",
+          "section": "Getting Started",
+          "quote": "Chains are a consumable part of the bicycle drivetrain.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0,
+          "source_url": "https://www.parktool.com/en-us/blog/repair-help/when-to-replace-a-chain-on-a-bicycle",
+          "retrieved_at": "2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "std-chain-wear-limit",
+      "type": "standard",
+      "name": "Chain wear replacement limit",
+      "subsystem": "sys-drivetrain",
+      "aliases": ["Chain elongation limit", "Chain stretch limit"],
+      "description": "The wear value at which a chain should be replaced, by drivetrain class: 1.0% for single-speed, 0.75% for a 10-speed cassette/freewheel or less, 0.5% for 11-speed or more. The publisher states these are general guidelines and that each manufacturer has its own specification.",
+      "status": "verified",
+      "batch": "phase14-chain-wear",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "parktool_chain_wear_p1_c00",
+          "book": "parktool_repair_help",
+          "page": "when-to-replace-a-chain-on-a-bicycle",
+          "section": "What The Numbers Mean",
+          "quote": "Drivetrain Wear Single-speed 1.0% 10-speed cassette/freewheel or less 0.75% 11-speed cassette or more 0.5%",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0,
+          "source_url": "https://www.parktool.com/en-us/blog/repair-help/when-to-replace-a-chain-on-a-bicycle",
+          "retrieved_at": "2026-10-25"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-chain-interfaces-cassette",
+      "src": "comp-chain",
+      "dst": "comp-cassette",
+      "type": "interfaces_with",
+      "claim": "The chain meshes with the cassette cogs; wear makes it mesh poorly, causing poor shifting and premature cog wear.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase14-chain-wear",
+      "evidence": [
+        {
+          "chunk_id": "parktool_chain_wear_p1_c01",
+          "book": "parktool_repair_help",
+          "page": "when-to-replace-a-chain-on-a-bicycle",
+          "section": "Getting Started",
+          "quote": "This wear can cause the chain to mesh poorly with cogs and chainrings, causing poor shifting and premature wear to the cogs.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0,
+          "source_url": "https://www.parktool.com/en-us/blog/repair-help/when-to-replace-a-chain-on-a-bicycle",
+          "retrieved_at": "2026-10-25"
+        }
+      ]
+    },
+    {
+      "id": "edge-chain-conforms-wear-limit",
+      "src": "comp-chain",
+      "dst": "std-chain-wear-limit",
+      "type": "conforms_to",
+      "claim": "A chain is replaced when it reaches the wear limit for its drivetrain class: 1.0% single-speed, 0.75% up to 10-speed, 0.5% for 11-speed or more.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [
+        "General guidance: each manufacturer specifies its own limit",
+        "Class-dependent: 1.0% single-speed, 0.75% <=10-speed, 0.5% >=11-speed"
+      ],
+      "conflicts": [],
+      "batch": "phase14-chain-wear",
+      "evidence": [
+        {
+          "chunk_id": "parktool_chain_wear_p1_c00",
+          "book": "parktool_repair_help",
+          "page": "when-to-replace-a-chain-on-a-bicycle",
+          "section": "What The Numbers Mean",
+          "quote": "Your chain should be replaced by the time it reaches the wear value specified.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0,
+          "source_url": "https://www.parktool.com/en-us/blog/repair-help/when-to-replace-a-chain-on-a-bicycle",
+          "retrieved_at": "2026-10-25"
+        }
+      ]
+    }
+  ]
+}

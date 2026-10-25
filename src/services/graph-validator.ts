@@ -29,6 +29,10 @@ export const EvidenceCitationSchema = z.object({
   evidence_grade: EvidenceGradeSchema,
   linked_to_chunk: z.boolean().optional(),
   confidence: z.number().min(0).max(1).optional(),
+  // Web sources only. A printed page does not change; a web page does, so a citation that points at one
+  // must record when it was read, or "the quote is on the page" becomes unfalsifiable.
+  source_url: z.string().url().optional(),
+  retrieved_at: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
 });
 
 export const GraphNodeSchema = z.object({

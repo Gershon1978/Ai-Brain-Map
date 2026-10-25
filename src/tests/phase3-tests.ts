@@ -574,30 +574,30 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
   const mergedForCoverage = getMergedGraph();
   const qErrors: string[] = [];
 
-  // Totals: 87 nodes, 90 edges
-  if (coverageReport.totals.nodes !== 87) {
-    qErrors.push(`Expected 87 nodes, found ${coverageReport.totals.nodes}`);
+  // Totals: 89 nodes, 92 edges
+  if (coverageReport.totals.nodes !== 89) {
+    qErrors.push(`Expected 89 nodes, found ${coverageReport.totals.nodes}`);
   }
-  if (coverageReport.totals.edges !== 90) {
-    qErrors.push(`Expected 90 edges, found ${coverageReport.totals.edges}`);
+  if (coverageReport.totals.edges !== 92) {
+    qErrors.push(`Expected 92 edges, found ${coverageReport.totals.edges}`);
   }
 
-  // Status split: nodes 78 verified / 1 candidate / 8 needs_review; edges 74 verified / 16 needs_review
+  // Status split: nodes 80 verified / 1 candidate / 8 needs_review; edges 76 verified / 16 needs_review
   if (
-    coverageReport.nodeStatusSplit.verified !== 78 ||
+    coverageReport.nodeStatusSplit.verified !== 80 ||
     coverageReport.nodeStatusSplit.candidate !== 1 ||
     coverageReport.nodeStatusSplit.needs_review !== 8
   ) {
     qErrors.push(
-      `Node status split mismatch: expected 78/1/8, got ${coverageReport.nodeStatusSplit.verified}/${coverageReport.nodeStatusSplit.candidate}/${coverageReport.nodeStatusSplit.needs_review}`
+      `Node status split mismatch: expected 80/1/8, got ${coverageReport.nodeStatusSplit.verified}/${coverageReport.nodeStatusSplit.candidate}/${coverageReport.nodeStatusSplit.needs_review}`
     );
   }
   if (
-    coverageReport.edgeStatusSplit.verified !== 74 ||
+    coverageReport.edgeStatusSplit.verified !== 76 ||
     coverageReport.edgeStatusSplit.needs_review !== 16
   ) {
     qErrors.push(
-      `Edge status split mismatch: expected 74/16, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
+      `Edge status split mismatch: expected 76/16, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
     );
   }
 
@@ -633,6 +633,9 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     // phase13: the SYMPTOM/CAUSE/SOLUTION charts that exist only as page images (grade C, OCR).
     // 9 nodes (3 symptoms, 3 failure modes, 3 procedures) and 9 edges, one citation each.
     { batch: 'phase13-fault-charts', nodes: 9, edges: 9, citations: 18 },
+    // phase14: first WEB-sourced batch. Chain wear limits from Park Tool's own article, fetched and
+    // quote-verified online; the citation carries source_url + retrieved_at because web pages change.
+    { batch: 'phase14-chain-wear', nodes: 2, edges: 2, citations: 4 },
   ];
 
   if (coverageReport.batchLedger.length !== expectedBatches.length) {
@@ -656,12 +659,12 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     }
   }
 
-  // Citations: 200 total; 152 byte-exact; 48 whitespace-only (all 48 in frozen seed)
-  if (coverageReport.citations.total !== 200) {
-    qErrors.push(`Expected 200 citations, got ${coverageReport.citations.total}`);
+  // Citations: 204 total; 156 byte-exact; 48 whitespace-only (all 48 in frozen seed)
+  if (coverageReport.citations.total !== 204) {
+    qErrors.push(`Expected 204 citations, got ${coverageReport.citations.total}`);
   }
-  if (coverageReport.citations.byteExact !== 152) {
-    qErrors.push(`Expected 152 byte-exact citations, got ${coverageReport.citations.byteExact}`);
+  if (coverageReport.citations.byteExact !== 156) {
+    qErrors.push(`Expected 156 byte-exact citations, got ${coverageReport.citations.byteExact}`);
   }
   if (coverageReport.citations.whitespaceOnly !== 48) {
     qErrors.push(
@@ -671,14 +674,14 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
 
   // Chunk coverage: 49 distinct cited of 61 bundled, 12 unused: the 2 audited rejections plus the 10
   // OCR'd picture pages whose text (spec tables, cover, cross-reference) no edge cites yet.
-  if (coverageReport.chunkCoverage.citedDistinctCount !== 49) {
+  if (coverageReport.chunkCoverage.citedDistinctCount !== 51) {
     qErrors.push(
-      `Expected 49 cited distinct chunks, got ${coverageReport.chunkCoverage.citedDistinctCount}`
+      `Expected 51 cited distinct chunks, got ${coverageReport.chunkCoverage.citedDistinctCount}`
     );
   }
-  if (coverageReport.chunkCoverage.totalBundledCount !== 61) {
+  if (coverageReport.chunkCoverage.totalBundledCount !== 63) {
     qErrors.push(
-      `Expected 61 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
+      `Expected 63 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
     );
   }
   if (coverageReport.chunkCoverage.unusedCount !== 12) {
@@ -730,9 +733,9 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
       `Expected 1 connected component, got ${coverageReport.connectivity.componentCount}`
     );
   }
-  if (coverageReport.connectivity.largestSize !== 87) {
+  if (coverageReport.connectivity.largestSize !== 89) {
     qErrors.push(
-      `Expected largest component of 87 nodes, got ${coverageReport.connectivity.largestSize}`
+      `Expected largest component of 89 nodes, got ${coverageReport.connectivity.largestSize}`
     );
   }
   if (coverageReport.connectivity.remainingIslands.length !== 0) {

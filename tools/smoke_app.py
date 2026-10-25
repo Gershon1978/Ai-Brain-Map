@@ -36,7 +36,8 @@ def expected_counts():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--url", default="http://localhost:8080")
-    ap.add_argument("--cdp", default="http://127.0.0.1:9222")
+    ap.add_argument("--cdp", default="http://127.0.0.1:9223",
+                    help="port 9223 is the throwaway smoke browser; 9222 is the user's logged-in Chrome")
     ap.add_argument("--timeout", type=int, default=30)
     args = ap.parse_args()
 

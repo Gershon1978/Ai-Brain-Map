@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "corpus": "web_verified",
+  "source_file": "parktool.com/en-us/blog/repair-help/when-to-replace-a-chain-on-a-bicycle",
+  "note": "Grade A web source: the publisher's own prose, fetched and read on 2026-10-25, quote verified against the live page by tools/verify_quotes_online.py. The wear thresholds are a table on the page; the extractor linearises it as 'class value' pairs, and the chunk text records exactly that linearisation rather than a prettified version.",
+  "chunks": {
+    "parktool_chain_wear_p1_c00": {
+      "chunk_id": "parktool_chain_wear_p1_c00",
+      "book": "parktool_repair_help",
+      "page": "when-to-replace-a-chain-on-a-bicycle",
+      "section": "What The Numbers Mean",
+      "source": "https://www.parktool.com/en-us/blog/repair-help/when-to-replace-a-chain-on-a-bicycle",
+      "retrieved_at": "2026-10-25",
+      "text": "Every drivetrain manufacturer has their own specifications, so consult with the manufacturer for the recommended wear level for your system. Below are some general guidelines. Your chain should be replaced by the time it reaches the wear value specified. Drivetrain Wear Single-speed 1.0% 10-speed cassette/freewheel or less 0.75% 11-speed cassette or more 0.5% Remember, using a chain beyond its intended wear limit will prematurely wear out your cogs and chainrings, so staying on top of this routine maintenance task can save you a lot of cost and hassle in the long run."
+    },
+    "parktool_chain_wear_p1_c01": {
+      "chunk_id": "parktool_chain_wear_p1_c01",
+      "book": "parktool_repair_help",
+      "page": "when-to-replace-a-chain-on-a-bicycle",
+      "section": "Getting Started",
+      "source": "https://www.parktool.com/en-us/blog/repair-help/when-to-replace-a-chain-on-a-bicycle",
+      "retrieved_at": "2026-10-25",
+      "text": "Chains are a consumable part of the bicycle drivetrain. As you pile on the miles, your bike's chain will wear out. The internal parts of the chain (the rivets and rollers) begin to wear out, giving the illusion of stretching. This wear can cause the chain to mesh poorly with cogs and chainrings, causing poor shifting and premature wear to the cogs."
+    }
+  }
+}

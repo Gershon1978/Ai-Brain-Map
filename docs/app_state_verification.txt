@@ -1,11 +1,11 @@
 == application state (independent verifier)
-  nodes=87  edges=90  citations=200
-  quotes: byte-exact=152  whitespace-only=48  missing=0
-  chunks: cited 49 of 61, unused 12 ['big_blue_book_p0001_ocr', 'big_blue_book_p0188_ocr', 'big_blue_book_p0219_ocr', 'big_blue_book_p0301_ocr', 'big_blue_book_p0486_ocr', 'big_blue_book_p0693_c00', 'big_blue_book_p0803_ocr', 'big_blue_book_p0842_ocr', 'big_blue_book_p0928_ocr', 'big_blue_book_p0986_ocr', 'big_blue_book_p0990_ocr', 'bike_repair_manual_chris_p0071_c05']
-  node status: {'verified': 78, 'candidate': 1, 'needs_review': 8}
-  edge status: {'verified': 74, 'needs_review': 16}
-  components=1 sizes=[87] largest=87 (100%)
-  batches: [('seed', 27, 12), ('phase5-brake-1', 10, 10), ('phase5-cassette-6', 5, 5), ('phase5-cockpit-2', 7, 7), ('phase8a-brakes', 0, 12), ('phase8c-crank', 2, 2), ('phase10-bb-frame', 0, 1), ('phase5-drivetrain-3', 7, 7), ('phase13-fault-charts', 9, 9), ('phase8b-fork', 1, 3), ('phase12-fork-seal', 3, 4), ('phase9-frame', 1, 2), ('phase5-hubfit-7', 4, 4), ('phase5-quillstem-5', 4, 4), ('phase5-rearshock-4', 5, 5), ('phase8d-reartriangle', 1, 2), ('phase11-crank-torque', 1, 1)]
+  nodes=89  edges=92  citations=204
+  quotes: byte-exact=156  whitespace-only=48  missing=0
+  chunks: cited 51 of 63, unused 12 ['big_blue_book_p0001_ocr', 'big_blue_book_p0188_ocr', 'big_blue_book_p0219_ocr', 'big_blue_book_p0301_ocr', 'big_blue_book_p0486_ocr', 'big_blue_book_p0693_c00', 'big_blue_book_p0803_ocr', 'big_blue_book_p0842_ocr', 'big_blue_book_p0928_ocr', 'big_blue_book_p0986_ocr', 'big_blue_book_p0990_ocr', 'bike_repair_manual_chris_p0071_c05']
+  node status: {'verified': 80, 'candidate': 1, 'needs_review': 8}
+  edge status: {'verified': 76, 'needs_review': 16}
+  components=1 sizes=[89] largest=89 (100%)
+  batches: [('seed', 27, 12), ('phase5-brake-1', 10, 10), ('phase5-cassette-6', 5, 5), ('phase14-chain-wear', 2, 2), ('phase5-cockpit-2', 7, 7), ('phase8a-brakes', 0, 12), ('phase8c-crank', 2, 2), ('phase10-bb-frame', 0, 1), ('phase5-drivetrain-3', 7, 7), ('phase13-fault-charts', 9, 9), ('phase8b-fork', 1, 3), ('phase12-fork-seal', 3, 4), ('phase9-frame', 1, 2), ('phase5-hubfit-7', 4, 4), ('phase5-quillstem-5', 4, 4), ('phase5-rearshock-4', 5, 5), ('phase8d-reartriangle', 1, 2), ('phase11-crank-torque', 1, 1)]
 
   - seed: node comp-rear-hub: whitespace-only match on big_blue_book_p0238_c00
   - seed: node comp-rear-hub: whitespace-only match on big_blue_book_p0250_c00

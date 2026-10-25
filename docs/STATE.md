@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| nodes | **87** — 78 verified, 1 candidate, 8 needs_review |
-| edges | **90** — 74 verified, 16 needs_review |
-| citations | **200** — 152 byte-exact, 48 whitespace-only (all in the frozen seed) |
-| bundle | 61 chunks (43 frozen seed + 7 text-layer pages + 11 OCR'd picture pages); **49 cited** |
-| components | **1** — all 87 nodes connected; no islands |
-| batch ledger | 17 rows (seed + 16 expansion files) |
+| nodes | **89** — 80 verified, 1 candidate, 8 needs_review |
+| edges | **92** — 76 verified, 16 needs_review |
+| citations | **204** — 156 byte-exact, 48 whitespace-only (all in the frozen seed) |
+| bundle | 63 chunks (43 seed + 7 text-layer pages + 11 OCR'd picture pages + 2 verified web); **51 cited** |
+| components | **1** — all 89 nodes connected; no islands |
+| batch ledger | 18 rows (seed + 17 expansion files) |
 
 Checks, all observed on this state:
 
