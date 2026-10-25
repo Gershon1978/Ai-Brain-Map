@@ -2,3 +2,4 @@ node_modules
 dist
 .dev.env.json
 .dev.pid
+_for_gemini

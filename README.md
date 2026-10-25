@@ -14,14 +14,15 @@ whole point of the project, and it is the rule that matters most.
 | | |
 |---|---|
 | Nodes | **73** (64 verified, 1 candidate, 8 needs_review) |
-| Edges | **73** (59 verified, 14 needs_review) |
+| Edges | **73** (58 verified, 15 needs_review) |
 | Citations | **166** (118 byte-exact, 48 differ from their chunk in whitespace only) |
 | Evidence bundle | **43 chunks** (36 original + 7 added 2026-10-25) |
 | Chunks cited | **41 of 43** — the 2 left uncited are *rejected* evidence, listed in Test Q |
 | Connectivity | **3 components**, largest 69 (95%); the crankset is a separate 3-node island |
 | Test suite | **16 tests**, all passing headlessly (`npx tsx tools/run_suite.mjs`) |
 
-Live app: Google AI Studio, app id `82983f51-5ac2-4ac3-ba0f-6d27161b376a`.
+Run it locally — no AI Studio, no account, no network: `serve_local.cmd` serves the built `dist/` on
+<http://localhost:8080>. For development, `npm run dev` (Vite).
 
 ### What the graph is *for*
 
@@ -81,7 +82,7 @@ src/
     hybrid-layout.ts          layout
     graph-export.ts           JSONL / GraphML export with evidence
     sqlite-service.ts         optional sql.js attach of a local kb.db
-  tests/phase3-tests.ts       15 tests, including Test Q (coverage invariants)
+  tests/phase3-tests.ts       16 tests, including Test Q (coverage invariants)
 docs/                         STATUS.md, bundle proposal, verification log
 tools/                        the python verifiers used to grade the AI's work
 ```
@@ -89,12 +90,18 @@ tools/                        the python verifiers used to grade the AI's work
 ## Run it
 
 ```bash
-npm install
-npm run dev      # vite
-npm run build    # tsc --noEmit is run by the AI Studio build; vite build here
+npm ci           # lockfile is tracked
+npm run dev      # vite, http://localhost:3000
+npm run lint     # tsc --noEmit
+npm run build    # vite build -> dist/
+npx tsx tools/run_suite.mjs        # 16 tests headlessly, no browser
+python tools/verify_app_state.py   # independent verifier, PROBLEMS must be 0
 ```
 
-The in-app suite is opened from the UI (TestSuiteModal) and prints all 15 results. Test Q is the
+`docs/REGRESSION.md` shows all five of those passing in a fresh clone (commit `90401e3`).
+`serve_local.cmd` serves the built `dist/` on port 8080 with no node and no network.
+
+The in-app suite is opened from the UI (TestSuiteModal) and prints all 16 results. Test Q is the
 integrity gate: it recomputes nodes, edges, status splits, citations, chunk coverage, connectivity
 and the ceiling sentence, then compares them to deliberate pins. **If the data and the pins
 disagree, that is a real finding, not a nuisance — never edit a pin to match a suspicious number
