@@ -178,7 +178,7 @@ deliverable is a web page needs one check that opens the page.
 | island | size | why it is still isolated |
 |---|---|---|
 | crankset (`comp-bb-threaded`, `comp-chainring`, `comp-crank-arm`) | 3 | no installed-relationship sentence exists: `tools/scan_crankset.py` finds 0 assertions, 1 procedural, 5 removal steps |
-| `comp-fork-seals` | 1 | **2** sentences mention seals with the fork, both merely *mention*: "Inspect fork seals for leaks or damage" and "Check stanchions for scoring, indicating possible seal failure". Nothing states the seals are part of the fork, so the earlier rejection of `p0035_c01` is upheld. |
+| `comp-fork-seals` | 1 | **2** sentences mention seals with the fork, both merely *mention*: "Inspect fork seals for leaks or damage" and "Check stanchions for scoring, indicating possible seal failure". Nothing states the seals are part of the fork, so the earlier rejection of `p0035_c01` is upheld. Checked against the source PDF too: p917 has real structure ("The 'lowers' or 'lower legs' are the section that attaches to the hub and wheel", "bushings pressed into the lower legs") but says nothing about seals, and p899 — suggested as a lower-leg-seal page — is actually "TOP TUBE". |
 
 Both are evidence-starved, not mis-modelled. Closing either needs a source page that states the
 relationship, not a cleverer inference.
