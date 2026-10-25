@@ -1,0 +1,68 @@
+== evidence quality audit (read-only)
+
+60 findings: 5 high, 55 medium
+
+HIGH heading-or-toc       node:prop-fluid-dot                            big_blue_book_p0728_c04  * DOT FLUID, CAUSTIC MATERIAL.
+HIGH heading-or-toc       node:comp-headset                              big_blue_book_p0051_c00  CHAPTER 16 — HEADSETS Headset Types Headset Service Threadless Headset Service T
+HIGH heading-or-toc       edge:edge-headset-interfaces-steerer           big_blue_book_p0051_c00  CHAPTER 16 — HEADSETS Headset Types Headset Service Threadless Headset Service T
+HIGH heading-or-toc       edge:edge-threadless-headset-part-of-cockpit   big_blue_book_p0051_c00  CHAPTER 16 — HEADSETS
+Headset Types
+Headset Service
+Threadless Headset Service
+T
+HIGH heading-or-toc       edge:edge-conn2-dotfluid-constrains-caliper    big_blue_book_p0728_c04  DOT FLUID, CAUSTIC MATERIAL. USE PROPER GLOVES.
+MED  reused-quote         node:comp-rear-hub, node:comp-freehub-body, ed -                        'FREEHUB REMOVAL & INSTALLATION Hubs designed with a freehub ' shared by 3 entities
+MED  reused-quote         node:comp-cassette, edge:edge-cassette-fits-fr -                        'STEP LOCATOR MAINTAINING YOUR TRANSMISSION • CHAIN, CASSETTE' shared by 2 entities
+MED  reused-quote         node:comp-cassette, edge:edge-cassette-fits-fr -                        'Instead, a lockring is integrated into the cassette body and' shared by 2 entities
+MED  reused-quote         node:comp-freehub-xdr, edge:edge-xdr-incomp-ca -                        '**Cassette Body Details:** * **Type:** The cassette body is ' shared by 2 entities
+MED  reused-quote         node:comp-freehub-xdr, edge:edge-xdr-incomp-ca -                        '**Freehub Body:** * **Type:** XDR (XD Road) Compatible * **M' shared by 2 entities
+MED  reused-quote         node:comp-rotor-6bolt, edge:edge-rotor6bolt-in -                        'The common system uses six bolts on a flange built into the ' shared by 3 entities
+MED  reused-quote         node:comp-hub-centerlock, edge:edge-rotor6bolt -                        'FIGURE 13.14: Secure rotor bolts using T25 driver A “center-' shared by 2 entities
+MED  reused-quote         node:comp-caliper-hydraulic, node:prop-fluid-d -                        'HAYES® HYDRAULIC CALIPER BRAKES Hayes® offers brakes in both' shared by 3 entities
+MED  reused-quote         node:comp-headset, edge:edge-headset-interface -                        'CHAPTER 16 — HEADSETS Headset Types Headset Service Threadle' shared by 2 entities
+MED  reused-quote         node:comp-stem, edge:edge-stem-mounted-steerer -                        'FIGURE 15.16: Threadless stem measurements: (A) stem length,' shared by 2 entities
+MED  reused-quote         node:prop-chainline, edge:edge-chainline-affec -                        'CHAINLINE Chainline is the relation of the front and rear sp' shared by 2 entities
+MED  reused-quote         node:prop-chainline, edge:edge-chainline-affec -                        'Incorrect chainline can cause shifting problems.' shared by 2 entities
+MED  reused-quote         node:std-hub-width, edge:edge-hub-conforms-wid -                        '* 9mm Axle, N/A Speeds, 100mm Hub Width: Common bikes * 10mm' shared by 2 entities
+MED  reused-quote         node:rule-controller-bms, edge:edge-bms-constr -                        "The controller's voltage rating must match your battery volt" shared by 2 entities
+MED  reused-quote         node:std-brake-six-bolt, edge:comp-rotor-6bolt -                        'The common system uses six bolts on a flange built into the ' shared by 2 entities
+MED  reused-quote         node:std-brake-centerlock, edge:comp-hub-cente -                        'A “center-lock” hub is designed with splined fittings to acc' shared by 2 entities
+MED  reused-quote         node:std-brake-centerlock-torque, edge:std-bra -                        '*   **Center Lock Ring:** 40 N·m (as indicated on the lock r' shared by 2 entities
+MED  reused-quote         node:comp-brake-lever, edge:comp-brake-lever_i -                        'The brakes bleed from\ncaliper upward, and excess fluid exits' shared by 2 entities
+MED  reused-quote         node:comp-brake-hose, edge:comp-brake-hose_int -                        'be careful when using any brake lines.' shared by 2 entities
+MED  reused-quote         node:proc-brake-bleed, edge:proc-brake-bleed_a -                        'Procedure to bleed Tektro® caliper brakes:\na. Hold bike in r' shared by 2 entities
+MED  reused-quote         node:rule-brake-qualified-service, edge:rule-b -                        'lic brake systems require specialized knowledge and skill. I' shared by 2 entities
+MED  reused-quote         node:std-brake-thru-axle, edge:comp-rear-hub_c -                        '*   **Thru-Axle Diameter:**  Presumed to be 12mm or 15mm bas' shared by 2 entities
+MED  reused-quote         node:comp-cassette-sprockets, edge:edge-sprock -                        'The sprockets on both can\nalso wear.' shared by 2 entities
+MED  reused-quote         node:comp-freewheel, edge:edge-freewheel-part- -                        'The cassette and freewheel allow the rear\nwheel to rotate wh' shared by 2 entities
+MED  reused-quote         node:comp-freewheel-block, edge:edge-block-par -                        'Their internal mechanisms – the\nfreehub body of a cassette a' shared by 2 entities
+MED  reused-quote         node:comp-cassette-lockring, edge:edge-lockrin -                        'Insert the cassette remover into the teeth of\nthe lockring a' shared by 2 entities
+MED  reused-quote         node:rule-remover-tool-depends, edge:edge-remo -                        'The tools for removing a freewheel and a\ncassette depend on ' shared by 2 entities
+MED  reused-quote         node:comp-headset-top-cap, edge:edge-top-cap-p -                        'The bolt in the top cap puts pressure on the\nstem. The stem ' shared by 2 entities
+MED  reused-quote         node:comp-stem-spacers, edge:edge-spacers-moun -                        'Threadless stem height adjustability is limited by the numbe' shared by 2 entities
+MED  reused-quote         node:comp-star-nut, edge:edge-star-nut-mounted -                        'The TNS-4 Threadless Nut Setter uses a sleeved guiding syste' shared by 2 entities
+MED  reused-quote         node:proc-threadless-headset-adj, edge:edge-th -                        'Bearing races must press against\nthe bearings to remove play' shared by 2 entities
+MED  reused-quote         node:std-steerer-dia-unconfirmed, edge:edge-st -                        'Steerer Tube Diameter: Est. 28.6 mm (1 1/8 inch).' shared by 2 entities
+MED  reused-quote         node:rule-stem-clamp-torque, edge:edge-stem-co -                        'Stem Clamp Bolts: Typically 5-7 Nm. Refer to stem manufactur' shared by 2 entities
+MED  reused-quote         edge:edge-conn-hub135-constrains-rearhub, node -                        '10mm Axle, 6-12 Speeds, 135mm Hub Width: MTB internal gear h' shared by 3 entities
+MED  reused-quote         node:comp-crank-arm, edge:edge-conn4-crank-on- -                        'Tighten crank puller to extract crank arm from bottom bracke' shared by 2 entities
+MED  reused-quote         node:comp-chainring, edge:edge-conn4-chainring -                        'countersunk bolt holes for chainring attachment' shared by 2 entities
+MED  reused-quote         node:comp-freehub-ratchet, edge:edge-freehub-r -                        'Hubs designed with a freehub contain a ratcheting mechanism ' shared by 2 entities
+MED  reused-quote         node:comp-freehub-cartridge-bearing, edge:edge -                        'The hub design may include cartridge bearings inside the fre' shared by 2 entities
+MED  reused-quote         node:comp-derailleur-shift-wire, edge:edge-shi -                        'The shift\nwire plugs into the body, and is held in by a pinc' shared by 2 entities
+MED  reused-quote         node:std-chain-pitch-unconfirmed, edge:edge-de -                        'Pin-to-pin distance appears to be ~0.5 inch (12.7 mm).' shared by 2 entities
+MED  reused-quote         node:std-xdr-bearing-dim-unconfirmed, edge:edg -                        'The cassette body contains a bearing (visually identified wi' shared by 2 entities
+MED  reused-quote         node:comp-fork, edge:edge-conn4-fork-turns-fro -                        'turns\nthe fork and the front wheel' shared by 2 entities
+MED  reused-quote         node:std-rear-boost-148mm, edge:edge-rear-hub- -                        '10mm Axle, 10-12 Speeds, 148mm Hub Width: Rear "Boost" stand' shared by 2 entities
+MED  reused-quote         node:std-rear-fat-tire-170mm, edge:edge-rear-h -                        '10mm Axle, 10-12 Speeds, 170mm Hub Width: Fat tire rear open' shared by 2 entities
+MED  reused-quote         node:rule-hub-130mm, edge:edge-rule-hub-130mm- -                        '10mm Axle, 8-12 Speeds, 130mm Hub Width: Modern road bikes, ' shared by 2 entities
+MED  reused-quote         node:comp-quill-wedge, edge:edge-quill-wedge-p -                        'A bolt draws up a wedge or cone which secures\nthe stem tight' shared by 2 entities
+MED  reused-quote         node:comp-quill-binder-bolt, edge:edge-quill-b -                        'The stem binder bolt, bolt head, wedge,\nand outside of the q' shared by 2 entities
+MED  reused-quote         node:comp-quill-post, edge:edge-quill-post-par -                        'The “quill” of quill stem refers to the vertical post that i' shared by 2 entities
+MED  reused-quote         node:std-quill-diameter-fit, edge:edge-quill-s -                        'It is important that the stem’s quill diameter is a correct ' shared by 2 entities
+MED  reused-quote         node:comp-shock-damper, edge:edge-shock-damper -                        'The term “shock” or “rear shock” is the rear suspension link' shared by 2 entities
+MED  reused-quote         node:comp-shock-air-chamber, edge:edge-shock-a -                        'The shock may\nhave a built-in container with pressurized air' shared by 2 entities
+MED  reused-quote         node:comp-shock-coil-spring, edge:edge-shock-c -                        'The rear shock may also have a large external spring surroun' shared by 2 entities
+MED  reused-quote         node:comp-shock-frame-bushing, edge:edge-shock -                        'The rear shock can develop wear at the bushing of the frame ' shared by 2 entities
+MED  reused-quote         node:comp-shock-stanchion-seal, edge:edge-shoc -                        'The shock stanchion also passes through a seal or bushing wh' shared by 2 entities
+MED  reused-quote         node:comp-rear-triangle, edge:edge-conn4-reart -                        'The rear triangle of the frame,\nwhich connects the rear whee' shared by 3 entities

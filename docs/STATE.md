@@ -53,8 +53,12 @@ The other thirteen fall into three classes: **grade-B visual estimates** (`edge-
 `comp-rear-hub_conforms_to_std-brake-thru-axle`, `edge-conn4-chainring-on-crank`), **brand-scoped
 statements dressed as universal properties** (`edge-conn4-caliper-uses-dot-fluid` cites Hayes
 specifically), and **principle-derived claims with no textual assertion** (`edge-rotor6bolt-incomp-
-centerlock` is `evidence_type: mechanical_principle`; its quote describes six-bolt flanges and never
-mentions incompatibility).
+centerlock` is `evidence_type: mechanical_principle`, status `needs_review`). Its first quote only
+describes six-bolt flanges; its second is a truncated figure caption that stops mid-phrase at
+"…accept rotors made with". The exclusion is *reasoned* from "a center-lock hub is designed with
+splined fittings to accept rotors made with a matching internal pattern" plus "six bolts on a flange" —
+which is why the record says `mechanical_principle` and not `service_manual`. Both quotes live in the
+frozen seed, so neither the truncation nor the whitespace can be repaired without unfreezing it.
 
 ## The suspension cluster now hangs on a structural anchor (resolved 2026-10-25)
 
@@ -146,6 +150,38 @@ grown to 43 — now computed from `seed-evidence.json` — and the app subtitle 
 A green pipeline proves what it checks and nothing else. Build/test/verify all ran *before* the
 browser, so "the app builds" was mistaken for "the app works" for an entire session. Any project whose
 deliverable is a web page needs one check that opens the page.
+
+## Islands, measured rather than argued
+
+| island | size | why it is still isolated |
+|---|---|---|
+| crankset (`comp-bb-threaded`, `comp-chainring`, `comp-crank-arm`) | 3 | no installed-relationship sentence exists: `tools/scan_crankset.py` finds 0 assertions, 1 procedural, 5 removal steps |
+| `comp-fork-seals` | 1 | **2** sentences mention seals with the fork, both merely *mention*: "Inspect fork seals for leaks or damage" and "Check stanchions for scoring, indicating possible seal failure". Nothing states the seals are part of the fork, so the earlier rejection of `p0035_c01` is upheld. |
+
+Both are evidence-starved, not mis-modelled. Closing either needs a source page that states the
+relationship, not a cleverer inference.
+
+## Evidence quality — what the gates could not see (audited 2026-10-25)
+
+`tools/audit_quote_quality.py` exists because "the quote is a substring of the chunk" is a low bar. It
+flags quotes that are **section headings / tables of contents**, **truncated mid-word**, **four words
+or fewer**, or **reused across many entities**. Current result: 60 findings — 5 high, 55 medium.
+
+- **55 medium are by design.** A node and the edge about that node legitimately cite the same
+  sentence; reuse across a component and its own relation is not a defect.
+- **5 high are real**, and three of them are the same artefact: the headset chapter's contents list
+  (`CHAPTER 16 — HEADSETS / Headset Types / Headset Service / …`) used as evidence.
+  - `edge-threadless-headset-part-of-cockpit` was `verified` on that TOC. Downgraded to
+    `needs_review`: a contents list documents the manual's *grouping*, not structural membership in
+    the cockpit subsystem. Edges now 58 verified / 17 needs_review.
+  - `node comp-headset` and `edge-headset-interfaces-steerer` rest on the same TOC, but both live in
+    the frozen seed, so they are recorded rather than edited. `edge-headset-interfaces-steerer` does
+    carry a second, substantive quote ("The bolt in the top cap puts pressure on the stem.").
+  - the two `DOT FLUID, CAUSTIC MATERIAL` hits are real safety statements, not TOCs — the detector is
+    deliberately blunt and these are false positives.
+
+The rule this leaves behind: **a heading is a label, not a fact.** Future batches must cite the
+sentence that asserts the relationship, and the auditor is now available to catch it when they don't.
 
 ## Next task
 

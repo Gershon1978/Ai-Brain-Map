@@ -16,6 +16,9 @@ function dropViteDevClient(): Plugin {
   return {
     name: 'drop-vite-dev-client',
     enforce: 'pre',
+    // BUILD ONLY. In `vite dev` the client IS the HMR runtime - stubbing it there would silently
+    // break hot reload and the error overlay while looking like a fix.
+    apply: 'build',
     resolveId(id) {
       if (/vite\/dist\/client|^vite\/client$|^\/@vite\/client$|^virtual:vite-hmr/.test(id)) {
         return EMPTY;
