@@ -102,6 +102,51 @@ excludes it explicitly.
 
 Both are listed in `EXPECTED_UNUSED` in Test Q, so neither can quietly become cited.
 
+## The app was blank while every check was green (fixed 2026-10-25)
+
+Four gates were green — registry guard, `tsc`, 16/16 suite, verifier `PROBLEMS 0` — and the shipped
+app rendered **nothing**. Opening `localhost:8080` in a real browser produced:
+
+```
+ReferenceError: __DEFINES__ is not defined          (Vite's modulepreload polyfill)
+ReferenceError: __HMR_CONFIG_NAME__ is not defined  (Vite's dev client, bundled into production)
+```
+
+Both throw on the first statement of the bundle, so React never mounted. Neither was a build failure:
+`vite build` exited 0 every time. **No check in the project ever loaded the page**, so the failure was
+invisible — the build, the tests and the verifier all operate on source and data, not on a running app.
+
+Root causes, both AI-Studio-era assumptions that a standalone build does not satisfy:
+
+1. the modulepreload polyfill dereferences a build-time `__DEFINES__` global that AI Studio injected;
+2. the dev/HMR client ends up in the bundle with its dev-server placeholders unreplaced (reproduced on
+   Vite 8/rolldown **and** Vite 7, so it is not a version bug).
+
+Fixes in `vite.config.ts`: the polyfill is disabled (it only polyfills `modulepreload` for browsers
+that lack it), `__DEFINES__` is defined as `{}` as a belt, and a small `dropViteDevClient` plugin
+redirects any import of `vite/client` / `vite/dist/client` to an empty module.
+
+**New gate: `tools/smoke_app.py`.** It loads the served `dist/` over CDP and asserts zero console
+errors, zero uncaught page errors, a mounted `#root`, and that the UI's own counters equal the counts
+computed from `src/data`. It prints SKIP (exit 0) when no browser is reachable rather than pretending
+to pass. Current result:
+
+```
+smoke: url=http://localhost:8080  mounted=1  nodes=74  edges=75  chunks=43
+PASS - built app runs, React mounted, UI counters match src/data
+```
+
+Two stale strings died with it: the provenance label was hardcoded `(36 chunks)` while the bundle had
+grown to 43 — now computed from `seed-evidence.json` — and the app subtitle leaked raw batch ids
+(`phase8a-brakes`) and listed Brakes twice; it is now de-duplicated and fully named. The badge reads
+`KNOWLEDGE EXPLORER`, not `PHASE 5 EXPLORER`.
+
+### The lesson
+
+A green pipeline proves what it checks and nothing else. Build/test/verify all ran *before* the
+browser, so "the app builds" was mistaken for "the app works" for an entire session. Any project whose
+deliverable is a web page needs one check that opens the page.
+
 ## Next task
 
 1. **Local-first is settled** — the app runs with no AI Studio: `serve_local.cmd` → `localhost:8080`,

@@ -132,7 +132,7 @@ export default function App() {
                 Hi5 Mechanical Knowledge Graph
               </h1>
               <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-sky-950 text-sky-400 border border-sky-800/40 font-bold">
-                PHASE 5 EXPLORER
+                KNOWLEDGE EXPLORER
               </span>
             </div>
             <p className="text-[10.5px] text-slate-400 font-mono">

@@ -96,6 +96,7 @@ export function getExpansionRegistry(): ExpansionFile[] {
 export function getDerivedSubtitle(): string {
   const batchNameMap: Record<string, string> = {
     brake: 'Brakes',
+    brakes: 'Brakes',
     cockpit: 'Cockpit',
     drivetrain: 'Drivetrain',
     rearshock: 'Rear Shock',
@@ -103,21 +104,27 @@ export function getDerivedSubtitle(): string {
     cassette: 'Cassette',
     hubfit: 'Hub Fit',
     connectors: 'Connectors',
+    fork: 'Fork',
+    crank: 'Crank',
+    reartriangle: 'Rear Triangle',
+    frame: 'Frame',
   };
-  const batches = getExpansionRegistry().map((exp) => {
-    const match = exp.batch.match(/phase\d+-([a-z]+)-\d+/i);
-    if (match) {
-      const key = match[1].toLowerCase();
-      if (batchNameMap[key]) return batchNameMap[key];
-      return match[1].charAt(0).toUpperCase() + match[1].slice(1);
-    }
-    return exp.batch;
-  });
-  const label =
-    batches.length > 2
-      ? `${batches.slice(0, -1).join(', ')} & ${batches[batches.length - 1]}`
-      : batches.join(' & ');
-  return `Hybrid Hierarchical & Constraint Reasoning System • ${label}`;
+  // De-duplicated: phase5-brake-1 and phase8a-brakes are the same subject and used to be listed
+  // twice; phase8a-style batches used to defeat the regex entirely and leak the raw batch id.
+  const labels: string[] = [];
+  for (const exp of getExpansionRegistry()) {
+    const match = exp.batch.match(/phase\d+[a-z]?-([a-z]+)/i);
+    const label = match
+      ? (batchNameMap[match[1].toLowerCase()] ??
+         match[1].charAt(0).toUpperCase() + match[1].slice(1))
+      : exp.batch;
+    if (!labels.includes(label)) labels.push(label);
+  }
+  const list =
+    labels.length > 2
+      ? `${labels.slice(0, -1).join(', ')} & ${labels[labels.length - 1]}`
+      : labels.join(' & ');
+  return `Hybrid Hierarchical & Constraint Reasoning System • ${list}`;
 }
 
 /**
