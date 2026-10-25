@@ -17,6 +17,7 @@ import expansionCrankJson from '../data/expansion-crank.json';
 import expansionReartriangleJson from '../data/expansion-reartriangle.json';
 import expansionFrameJson from '../data/expansion-frame.json';
 import expansionCranksetJson from '../data/expansion-crankset.json';
+import expansionTorqueJson from '../data/expansion-torque.json';
 import { GraphPayload, GraphNode, GraphEdge } from '../types/graph.ts';
 
 export interface ExpansionFile {
@@ -86,6 +87,7 @@ const expansionRegistry: ExpansionFile[] = [
   expansionReartriangleJson as unknown as ExpansionFile,
   expansionFrameJson as unknown as ExpansionFile,
   expansionCranksetJson as unknown as ExpansionFile,
+  expansionTorqueJson as unknown as ExpansionFile,
 ];
 
 export function getExpansionRegistry(): ExpansionFile[] {

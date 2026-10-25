@@ -574,17 +574,17 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
   const mergedForCoverage = getMergedGraph();
   const qErrors: string[] = [];
 
-  // Totals: 74 nodes, 76 edges
-  if (coverageReport.totals.nodes !== 74) {
-    qErrors.push(`Expected 74 nodes, found ${coverageReport.totals.nodes}`);
+  // Totals: 75 nodes, 77 edges
+  if (coverageReport.totals.nodes !== 75) {
+    qErrors.push(`Expected 75 nodes, found ${coverageReport.totals.nodes}`);
   }
-  if (coverageReport.totals.edges !== 76) {
-    qErrors.push(`Expected 76 edges, found ${coverageReport.totals.edges}`);
+  if (coverageReport.totals.edges !== 77) {
+    qErrors.push(`Expected 77 edges, found ${coverageReport.totals.edges}`);
   }
 
   // Status split: nodes 65 verified / 1 candidate / 8 needs_review; edges 59 verified / 16 needs_review
   if (
-    coverageReport.nodeStatusSplit.verified !== 65 ||
+    coverageReport.nodeStatusSplit.verified !== 66 ||
     coverageReport.nodeStatusSplit.candidate !== 1 ||
     coverageReport.nodeStatusSplit.needs_review !== 8
   ) {
@@ -593,11 +593,11 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
   if (
-    coverageReport.edgeStatusSplit.verified !== 60 ||
+    coverageReport.edgeStatusSplit.verified !== 61 ||
     coverageReport.edgeStatusSplit.needs_review !== 16
   ) {
     qErrors.push(
-      `Edge status split mismatch: expected 60/16, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
+      `Edge status split mismatch: expected 61/16, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
     );
   }
 
@@ -624,6 +624,8 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     // phase10: first batch built from the SOURCE PDFs' text layer, not the derived kb.db excerpt.
     // One edge that threads the bottom bracket into the frame, closing the 3-node crankset island.
     { batch: 'phase10-bb-frame', nodes: 0, edges: 1, citations: 2 },
+    // phase11: torque specification from the manual's prose (p349), not from a photo.
+    { batch: 'phase11-crank-torque', nodes: 1, edges: 1, citations: 2 },
   ];
 
   if (coverageReport.batchLedger.length !== expectedBatches.length) {
@@ -647,12 +649,12 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     }
   }
 
-  // Citations: 173 total; 125 byte-exact; 48 whitespace-only (all 48 in frozen seed)
-  if (coverageReport.citations.total !== 173) {
-    qErrors.push(`Expected 173 citations, got ${coverageReport.citations.total}`);
+  // Citations: 175 total; 127 byte-exact; 48 whitespace-only (all 48 in frozen seed)
+  if (coverageReport.citations.total !== 175) {
+    qErrors.push(`Expected 175 citations, got ${coverageReport.citations.total}`);
   }
-  if (coverageReport.citations.byteExact !== 125) {
-    qErrors.push(`Expected 125 byte-exact citations, got ${coverageReport.citations.byteExact}`);
+  if (coverageReport.citations.byteExact !== 127) {
+    qErrors.push(`Expected 127 byte-exact citations, got ${coverageReport.citations.byteExact}`);
   }
   if (coverageReport.citations.whitespaceOnly !== 48) {
     qErrors.push(
@@ -663,14 +665,14 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
   // Chunk coverage: 41 distinct cited of 43 bundled, 2 unused. The two left over are deliberate:
   // p0693_c00 (generic "manufacturers differ" sentence) and p0071_c05 (a visual seal hint) were both
   // audited and rejected as insufficient for an edge.
-  if (coverageReport.chunkCoverage.citedDistinctCount !== 45) {
+  if (coverageReport.chunkCoverage.citedDistinctCount !== 46) {
     qErrors.push(
-      `Expected 45 cited distinct chunks, got ${coverageReport.chunkCoverage.citedDistinctCount}`
+      `Expected 46 cited distinct chunks, got ${coverageReport.chunkCoverage.citedDistinctCount}`
     );
   }
-  if (coverageReport.chunkCoverage.totalBundledCount !== 47) {
+  if (coverageReport.chunkCoverage.totalBundledCount !== 48) {
     qErrors.push(
-      `Expected 47 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
+      `Expected 48 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
     );
   }
   if (coverageReport.chunkCoverage.unusedCount !== 2) {
@@ -708,9 +710,9 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
       `Expected 2 components, got ${coverageReport.connectivity.componentCount}`
     );
   }
-  if (coverageReport.connectivity.largestSize !== 73) {
+  if (coverageReport.connectivity.largestSize !== 74) {
     qErrors.push(
-      `Expected largest component of 73 nodes, got ${coverageReport.connectivity.largestSize}`
+      `Expected largest component of 74 nodes, got ${coverageReport.connectivity.largestSize}`
     );
   }
   if (coverageReport.connectivity.remainingIslands.length !== 1) {
@@ -744,7 +746,7 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     name: 'Test Q: Coverage & Integrity Verification',
     passed: testQPassed,
     message: testQPassed
-      ? `All runtime coverage and integrity invariants verified: 74 nodes (65v/1c/8r), 76 edges (60v/16r), ${coverageReport.batchLedger.length} batches in ledger, 173 citations (125 byte-exact, 48 whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, both rejected evidence), ${coverageReport.connectivity.componentCount} components (largest: ${coverageReport.connectivity.largestSize} nodes, ${coverageReport.connectivity.largestPercentage}%; ${coverageReport.connectivity.remainingIslands.length} islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated against the computed rule.`
+      ? `All runtime coverage and integrity invariants verified: 75 nodes (66v/1c/8r), 77 edges (61v/16r), ${coverageReport.batchLedger.length} batches in ledger, 175 citations (127 byte-exact, 48 whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, both rejected evidence), ${coverageReport.connectivity.componentCount} components (largest: ${coverageReport.connectivity.largestSize} nodes, ${coverageReport.connectivity.largestPercentage}%; ${coverageReport.connectivity.remainingIslands.length} islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated against the computed rule.`
       : `Test Q failed: ${qErrors.join('; ')}`,
     details: { coverageReport, qErrors },
   });

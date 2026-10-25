@@ -306,6 +306,31 @@ a `[VISUAL DATA]` analysis; promoting it while that quote was still attached tri
 And the crank-puller sentence that once demoted the crank edge was replaced — not reinterpreted — by a
 sentence that states the fastening outright.
 
+### Evidence grades (what each one may and may not support)
+
+| grade | meaning | may back a `verified` numeric claim? |
+|---|---|---|
+| **A** | the publisher's own prose, in the text layer | yes |
+| **B+** | table extracted from an image: asserts existence only | no |
+| **B** | model's visual description of a page | no |
+| **C** | **machine transcription of a scanned page** (OCR / vision model) | **no** |
+| **D** | curated row with no chunk link | no |
+
+Grade **C** exists because Sidwells' crank pages are scans: PyMuPDF can render them but this machine has
+no OCR engine (no tesseract, no pdftotext), so any text from those pages would be a *machine
+transcription*, not the publisher's layer. Test K enforces that B **and C** can never justify a numeric
+claim, and `provenance-service.ts` states it in the UI. A grade-C claim can still be useful for wording
+and structure; it can never carry a torque, a diameter or a tolerance.
+
+### Torque from prose, not from a photo (phase11)
+
+`edge-crank-conforms-bolt-torque` (`comp-crank-arm → std-crank-bolt-torque`, `conforms_to`, verified)
+cites p349: *"The bolt/nut may need 25 to 38 Nm (300 to 450 inch-pounds) depending upon brand."* The
+`std-crank-bolt-torque` node is a `measurement`, and the edge carries a `conditions[]` entry saying the
+figure is brand-dependent — so the engine answers "conditionally compatible" rather than pretending to
+a single number. This replaces a family of visual estimates for crankset fasteners with the manual's
+own prose.
+
 ## Next task
 
 1. **Local-first is settled** — the app runs with no AI Studio: `serve_local.cmd` → `localhost:8080`,

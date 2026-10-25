@@ -86,6 +86,9 @@ export type EvidenceGrade =
   | 'A'   // Prose manual text (before [VISUAL DATA] marker; quotable at spec level)
   | 'B+'  // Table image extraction (asserts existence only; verify against printed page)
   | 'B'   // Visual page description (after [VISUAL DATA] marker; locator only, no numbers)
+  | 'C'   // Machine transcription of a scanned page (OCR / vision model). Text is NOT the
+          // publisher's layer: wording may be dropped, and digits are untrustworthy. Never carries
+          // a verified numeric claim; use it for structure and wording, never for a measurement.
   | 'D';  // Curated error code row without a chunk link (linked_to_chunk=false)
 
 export type EvidenceType =

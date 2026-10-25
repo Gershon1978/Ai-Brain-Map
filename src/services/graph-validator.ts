@@ -18,7 +18,7 @@ export const NodePropertySchema = z.object({
   note: z.string().optional(),
 });
 
-export const EvidenceGradeSchema = z.enum(['A', 'B+', 'B', 'D']);
+export const EvidenceGradeSchema = z.enum(['A', 'B+', 'B', 'C', 'D']);
 
 export const EvidenceCitationSchema = z.object({
   chunk_id: z.string().min(1),
@@ -260,12 +260,14 @@ export function validateGraphPayload(
       }
     }
 
-    // Test K: No edge whose claim contains a numeric measurement may cite a Grade B quote
+    // Test K: No edge whose claim contains a numeric measurement may cite a Grade B or Grade C
+    // quote. B is a visual description; C is machine transcription (OCR / vision model), where the
+    // text is not the publisher's own layer and digits are exactly what OCR gets wrong.
     const claimHasNumber = /\b\d+(\.\d+)?\s*(mm|t|nm|n·m|v|w|a|deg|°)\b/i.test(edge.claim);
     for (const cit of edge.evidence) {
-      if (cit.evidence_grade === 'B' && claimHasNumber) {
+      if ((cit.evidence_grade === 'B' || cit.evidence_grade === 'C') && claimHasNumber) {
         errors.push(
-          `Test K violation: Edge ${edge.id} contains numeric claim ("${edge.claim}") but cites Grade B visual description chunk ${cit.chunk_id}`
+          `Test K violation: Edge ${edge.id} contains numeric claim ("${edge.claim}") but cites Grade ${cit.evidence_grade} chunk ${cit.chunk_id}`
         );
       }
 

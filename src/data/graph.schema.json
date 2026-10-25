@@ -122,7 +122,7 @@
                 "quote": { "type": "string" },
                 "evidence_grade": {
                   "type": "string",
-                  "enum": ["A", "B+", "B", "D"]
+                  "enum": ["A", "B+", "B", "C", "D"]
                 },
                 "linked_to_chunk": { "type": "boolean" },
                 "confidence": { "type": "number" }

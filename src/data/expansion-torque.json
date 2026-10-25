@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "batch": "phase11-crank-torque",
+  "source_note": "Torque specification taken from the Big Blue Book's prose (page 349), replacing a family of visual estimates for crankset fasteners.",
+  "nodes": [
+    {
+      "id": "std-crank-bolt-torque",
+      "type": "measurement",
+      "name": "Crank bolt torque",
+      "aliases": [
+        "crank fixing bolt torque"
+      ],
+      "description": "Tightening torque for the bolt or nut that holds a crank arm to the bottom bracket spindle: 25 to 38 Nm (300 to 450 inch-pounds) depending on brand.",
+      "status": "verified",
+      "batch": "phase11-crank-torque",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0349_c00",
+          "book": "big_blue_book",
+          "page": 349,
+          "section": "FIGURE 7.11: Remove crank from spindle by turning driver of ",
+          "quote": "The bolt/nut may need 25 to 38 Nm (300 to 450 inch-pounds)\ndepending upon brand.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-crank-conforms-bolt-torque",
+      "src": "comp-crank-arm",
+      "dst": "std-crank-bolt-torque",
+      "type": "conforms_to",
+      "claim": "The crank arm's fixing bolt is tightened to 25-38 Nm, brand dependent.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [
+        "Torque varies by brand: 25 to 38 Nm"
+      ],
+      "conflicts": [],
+      "batch": "phase11-crank-torque",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0349_c00",
+          "book": "big_blue_book",
+          "page": 349,
+          "section": "FIGURE 7.11: Remove crank from spindle by turning driver of ",
+          "quote": "The bolt/nut may need 25 to 38 Nm (300 to 450 inch-pounds)\ndepending upon brand.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    }
+  ]
+}

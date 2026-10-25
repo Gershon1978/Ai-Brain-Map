@@ -27,6 +27,8 @@ export function getGradeRationale(grade: EvidenceGrade): string {
       return 'B+ = Model table image extraction (asserts existence, not certified dimension)';
     case 'B':
       return 'B = model visual description, page locator only';
+    case 'C':
+      return 'C = machine transcription of a scanned page (OCR/vision): structure only, digits unverified';
     case 'D':
       return 'D = Curated error code row with source_page = 0';
     default:
