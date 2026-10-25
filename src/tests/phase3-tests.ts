@@ -574,30 +574,30 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
   const mergedForCoverage = getMergedGraph();
   const qErrors: string[] = [];
 
-  // Totals: 75 nodes, 77 edges
-  if (coverageReport.totals.nodes !== 75) {
-    qErrors.push(`Expected 75 nodes, found ${coverageReport.totals.nodes}`);
+  // Totals: 78 nodes, 81 edges
+  if (coverageReport.totals.nodes !== 78) {
+    qErrors.push(`Expected 78 nodes, found ${coverageReport.totals.nodes}`);
   }
-  if (coverageReport.totals.edges !== 77) {
-    qErrors.push(`Expected 77 edges, found ${coverageReport.totals.edges}`);
+  if (coverageReport.totals.edges !== 81) {
+    qErrors.push(`Expected 81 edges, found ${coverageReport.totals.edges}`);
   }
 
-  // Status split: nodes 65 verified / 1 candidate / 8 needs_review; edges 59 verified / 16 needs_review
+  // Status split: nodes 69 verified / 1 candidate / 8 needs_review; edges 65 verified / 16 needs_review
   if (
-    coverageReport.nodeStatusSplit.verified !== 66 ||
+    coverageReport.nodeStatusSplit.verified !== 69 ||
     coverageReport.nodeStatusSplit.candidate !== 1 ||
     coverageReport.nodeStatusSplit.needs_review !== 8
   ) {
     qErrors.push(
-      `Node status split mismatch: expected 64/1/8, got ${coverageReport.nodeStatusSplit.verified}/${coverageReport.nodeStatusSplit.candidate}/${coverageReport.nodeStatusSplit.needs_review}`
+      `Node status split mismatch: expected 69/1/8, got ${coverageReport.nodeStatusSplit.verified}/${coverageReport.nodeStatusSplit.candidate}/${coverageReport.nodeStatusSplit.needs_review}`
     );
   }
   if (
-    coverageReport.edgeStatusSplit.verified !== 61 ||
+    coverageReport.edgeStatusSplit.verified !== 65 ||
     coverageReport.edgeStatusSplit.needs_review !== 16
   ) {
     qErrors.push(
-      `Edge status split mismatch: expected 61/16, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
+      `Edge status split mismatch: expected 65/16, got ${coverageReport.edgeStatusSplit.verified}/${coverageReport.edgeStatusSplit.needs_review}`
     );
   }
 
@@ -626,6 +626,10 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     { batch: 'phase10-bb-frame', nodes: 0, edges: 1, citations: 2 },
     // phase11: torque specification from the manual's prose (p349), not from a photo.
     { batch: 'phase11-crank-torque', nodes: 1, edges: 1, citations: 2 },
+    // phase12: the fork-seal island resolved from the Sidwells TEXT LAYER (pp.35, 141) - grade A,
+    // not OCR. 3 nodes (property, symptom, failure mode) and 4 edges, all citing 1 chunk each.
+    // This is why the graph is now ONE connected component: components [78] instead of [74,1].
+    { batch: 'phase12-fork-seal', nodes: 3, edges: 4, citations: 7 },
   ];
 
   if (coverageReport.batchLedger.length !== expectedBatches.length) {
@@ -649,12 +653,12 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     }
   }
 
-  // Citations: 175 total; 127 byte-exact; 48 whitespace-only (all 48 in frozen seed)
-  if (coverageReport.citations.total !== 175) {
-    qErrors.push(`Expected 175 citations, got ${coverageReport.citations.total}`);
+  // Citations: 182 total; 134 byte-exact; 48 whitespace-only (all 48 in frozen seed)
+  if (coverageReport.citations.total !== 182) {
+    qErrors.push(`Expected 182 citations, got ${coverageReport.citations.total}`);
   }
-  if (coverageReport.citations.byteExact !== 127) {
-    qErrors.push(`Expected 127 byte-exact citations, got ${coverageReport.citations.byteExact}`);
+  if (coverageReport.citations.byteExact !== 134) {
+    qErrors.push(`Expected 134 byte-exact citations, got ${coverageReport.citations.byteExact}`);
   }
   if (coverageReport.citations.whitespaceOnly !== 48) {
     qErrors.push(
@@ -662,17 +666,17 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
 
-  // Chunk coverage: 41 distinct cited of 43 bundled, 2 unused. The two left over are deliberate:
+  // Chunk coverage: 48 distinct cited of 50 bundled, 2 unused. The two left over are deliberate:
   // p0693_c00 (generic "manufacturers differ" sentence) and p0071_c05 (a visual seal hint) were both
   // audited and rejected as insufficient for an edge.
-  if (coverageReport.chunkCoverage.citedDistinctCount !== 46) {
+  if (coverageReport.chunkCoverage.citedDistinctCount !== 48) {
     qErrors.push(
-      `Expected 46 cited distinct chunks, got ${coverageReport.chunkCoverage.citedDistinctCount}`
+      `Expected 48 cited distinct chunks, got ${coverageReport.chunkCoverage.citedDistinctCount}`
     );
   }
-  if (coverageReport.chunkCoverage.totalBundledCount !== 48) {
+  if (coverageReport.chunkCoverage.totalBundledCount !== 50) {
     qErrors.push(
-      `Expected 48 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
+      `Expected 50 total bundled chunks, got ${coverageReport.chunkCoverage.totalBundledCount}`
     );
   }
   if (coverageReport.chunkCoverage.unusedCount !== 2) {
@@ -703,30 +707,32 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
 
-  // Connectivity: 2 components, largest 73 nodes (99%). The crankset island is CLOSED by
-  // phase10-bb-frame; comp-fork-seals is the only island left, and it is evidence-starved on purpose.
-  if (coverageReport.connectivity.componentCount !== 2) {
+  // Connectivity: ONE component. The crankset island was closed by phase10-bb-frame; comp-fork-seals
+  // was the last island and is now closed by phase12-fork-seal (Sidwells text layer pp.35/141).
+  // The pins are inverted deliberately: they used to assert the island EXISTED, so that its size
+  // could not drift silently. Now that it is gone, an island reappearing is the regression.
+  if (coverageReport.connectivity.componentCount !== 1) {
     qErrors.push(
-      `Expected 2 components, got ${coverageReport.connectivity.componentCount}`
+      `Expected 1 connected component, got ${coverageReport.connectivity.componentCount}`
     );
   }
-  if (coverageReport.connectivity.largestSize !== 74) {
+  if (coverageReport.connectivity.largestSize !== 78) {
     qErrors.push(
-      `Expected largest component of 74 nodes, got ${coverageReport.connectivity.largestSize}`
+      `Expected largest component of 78 nodes, got ${coverageReport.connectivity.largestSize}`
     );
   }
-  if (coverageReport.connectivity.remainingIslands.length !== 1) {
+  if (coverageReport.connectivity.remainingIslands.length !== 0) {
     qErrors.push(
-      `Expected 1 remaining island, got ${coverageReport.connectivity.remainingIslands.length}`
+      `Expected 0 remaining islands (graph fully connected), got ${coverageReport.connectivity.remainingIslands.length}`
     );
   }
   // Island IDENTITY, not just count. A new fragment must fail here by name, instead of quietly
-  // moving a percentage. Signature is "<exampleNodeId>:<size>", sorted.
+  // moving a percentage. Signature is "<exampleNodeId>:<size>", sorted; empty means no islands.
   const islandSignature = coverageReport.connectivity.remainingIslands
     .map((isl) => `${isl.exampleNodeId}:${isl.size}`)
     .sort()
     .join(',');
-  const EXPECTED_ISLANDS = 'comp-fork-seals:1';
+  const EXPECTED_ISLANDS = '';
   if (islandSignature !== EXPECTED_ISLANDS) {
     qErrors.push(`Island signature mismatch: expected "${EXPECTED_ISLANDS}", got "${islandSignature}"`);
   }
@@ -746,7 +752,7 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     name: 'Test Q: Coverage & Integrity Verification',
     passed: testQPassed,
     message: testQPassed
-      ? `All runtime coverage and integrity invariants verified: 75 nodes (66v/1c/8r), 77 edges (61v/16r), ${coverageReport.batchLedger.length} batches in ledger, 175 citations (127 byte-exact, 48 whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, both rejected evidence), ${coverageReport.connectivity.componentCount} components (largest: ${coverageReport.connectivity.largestSize} nodes, ${coverageReport.connectivity.largestPercentage}%; ${coverageReport.connectivity.remainingIslands.length} islands: ${coverageReport.connectivity.remainingIslands.map((isl) => `${isl.exampleNodeId}[${isl.size}]`).join(', ')}). Ceiling sentence validated against the computed rule.`
+      ? `All runtime coverage and integrity invariants verified: ${coverageReport.totals.nodes} nodes (${coverageReport.nodeStatusSplit.verified}v/${coverageReport.nodeStatusSplit.candidate}c/${coverageReport.nodeStatusSplit.needs_review}r), ${coverageReport.totals.edges} edges (${coverageReport.edgeStatusSplit.verified}v/${coverageReport.edgeStatusSplit.needs_review}r), ${coverageReport.batchLedger.length} batches in ledger, ${coverageReport.citations.total} citations (${coverageReport.citations.byteExact} byte-exact, ${coverageReport.citations.whitespaceOnly} whitespace-only in seed), ${coverageReport.chunkCoverage.citedDistinctCount}/${coverageReport.chunkCoverage.totalBundledCount} chunks cited (${coverageReport.chunkCoverage.unusedCount} unused, both rejected evidence), ${coverageReport.connectivity.componentCount} component (largest: ${coverageReport.connectivity.largestSize} nodes, ${coverageReport.connectivity.largestPercentage}%; ${coverageReport.connectivity.remainingIslands.length} islands: none - the graph is fully connected). Ceiling sentence validated against the computed rule.`
       : `Test Q failed: ${qErrors.join('; ')}`,
     details: { coverageReport, qErrors },
   });
@@ -841,11 +847,29 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     rErrors.push('R5: part_of contains a cycle');
   }
 
+  // R6 - a symptom can be observed ON a subcomponent, not only on a whole component. The fork-seal
+  // island was closed by saying "cracked seals indicate a fault at comp-fork-seals", and `indicates`
+  // listed component but not subcomponent as a target. Same asymmetry as R2/R4: the ontology says
+  // "indicates component fault" and a subcomponent fault is a component fault. Widened, and pinned.
+  if (!typesOf('indicates').includes('subcomponent')) {
+    rErrors.push('R6: indicates should allow a subcomponent target');
+  }
+  if (!srcsOf('indicates').includes('symptom')) {
+    rErrors.push('R6: indicates must keep allowing a symptom source');
+  }
+  const sealSymptom = findEdge('sym-fork-seal-wear', 'comp-fork-seals');
+  if (!sealSymptom || sealSymptom.type !== 'indicates') {
+    rErrors.push('R6: sym-fork-seal-wear -> comp-fork-seals should be an indicates edge');
+  }
+  if ((findNode('comp-fork-seals') as any)?.type !== 'subcomponent') {
+    rErrors.push('R6: comp-fork-seals should still be typed subcomponent (the rule was narrow, not the node mis-typed)');
+  }
+
   results.push({
     name: 'Test R: Ontology Adjudication Regressions',
     passed: rErrors.length === 0,
     message: rErrors.length === 0
-      ? 'All five adjudications hold for their own reason: torque retyped to measurement, affects widened to accept procedures, hub/thru-axle retyped to conforms_to, part_of widened symmetrically with contains, no part_of cycles.'
+      ? 'All six adjudications hold for their own reason: torque retyped to measurement, affects widened to accept procedures, hub/thru-axle retyped to conforms_to, part_of widened symmetrically with contains, no part_of cycles, indicates widened to accept a subcomponent fault.'
       : `Test R failed: ${rErrors.join('; ')}`,
     details: rErrors,
   });

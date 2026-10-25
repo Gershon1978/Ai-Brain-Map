@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0.0",
+  "batch": "phase12-fork-seal",
+  "source_note": "Fork seals, from the Sidwells text layer pp.35 and 141 (grade A). Replaces the island's reliance on a vision-model description: the manual states what the seal is for, that it is on the fork, and that cracked seals are evidence of worn seals.",
+  "nodes": [
+    {
+      "id": "prop-fork-seal-function",
+      "type": "property",
+      "name": "Fork seal function (contaminant exclusion)",
+      "subsystem": "sys-cockpit",
+      "aliases": [
+        "Seal function"
+      ],
+      "description": "The suspension fork's seal keeps dirt out of the fork's interior.",
+      "status": "verified",
+      "batch": "phase12-fork-seal",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0141_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 141,
+          "section": "AIR/OIL FORK",
+          "quote": "Seal\nKeeps dirt out\nof fork’s\ninterior",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "sym-fork-seal-wear",
+      "type": "symptom",
+      "name": "Cracked or slack fork seals",
+      "subsystem": "sys-cockpit",
+      "aliases": [
+        "Seal cracks",
+        "Slack seals"
+      ],
+      "description": "Cracks or slackness visible at the fork or shock seals during a service check.",
+      "status": "verified",
+      "batch": "phase12-fork-seal",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0035_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 35,
+          "section": "Servicing",
+          "quote": "Fork and shock seals for cracks and slackness",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "fm-worn-fork-seals",
+      "type": "failure_mode",
+      "name": "Worn fork seals",
+      "subsystem": "sys-cockpit",
+      "aliases": [
+        "Worn dust seals"
+      ],
+      "description": "Worn fork seals, evidenced by play, absence of visible oil lines on the stanchions, or cracked seals; the manual says replacement is a job for a qualified technician.",
+      "status": "verified",
+      "batch": "phase12-fork-seal",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0035_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 35,
+          "section": "Servicing",
+          "quote": "Play, absence of oil lines, and cracked seals are all evidence of\nworn seals, which should be replaced by a qualified technician.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-forkseals-part-of-fork",
+      "src": "comp-fork-seals",
+      "dst": "comp-fork",
+      "type": "part_of",
+      "claim": "The fork seals are fitted on the fork and are renewed as part of its bi-annual service.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase12-fork-seal",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0035_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 35,
+          "section": "Servicing",
+          "quote": "Seals on forks and shocks, as part of bi-annual service \nby qualified technician",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "edge-forkseals-has-function",
+      "src": "comp-fork-seals",
+      "dst": "prop-fork-seal-function",
+      "type": "has_property",
+      "claim": "The fork seal's function is to keep dirt out of the fork's interior.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase12-fork-seal",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0141_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 141,
+          "section": "AIR/OIL FORK",
+          "quote": "Seal\nKeeps dirt out\nof fork’s\ninterior",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "edge-sym-sealwear-indicates-worn",
+      "src": "sym-fork-seal-wear",
+      "dst": "fm-worn-fork-seals",
+      "type": "indicates",
+      "claim": "Cracked or slack fork seals indicate worn seals, which should be replaced by a qualified technician.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase12-fork-seal",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0035_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 35,
+          "section": "Servicing",
+          "quote": "Play, absence of oil lines, and cracked seals are all evidence of\nworn seals, which should be replaced by a qualified technician.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "id": "edge-sym-sealwear-indicates-forkseals",
+      "src": "sym-fork-seal-wear",
+      "dst": "comp-fork-seals",
+      "type": "indicates",
+      "claim": "Cracked or slack seals indicate a fault at the fork seals themselves, which the manual says a qualified technician should replace.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase12-fork-seal",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0035_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 35,
+          "section": "Servicing",
+          "quote": "Fork and shock seals for cracks and slackness",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    }
+  ]
+}

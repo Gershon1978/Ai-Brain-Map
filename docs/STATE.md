@@ -4,12 +4,12 @@
 
 | | |
 |---|---|
-| nodes | **74** — 65 verified, 1 candidate, 8 needs_review |
-| edges | **75** — 59 verified, 16 needs_review |
-| citations | **169** — 121 byte-exact, 48 whitespace-only (all in the frozen seed) |
-| bundle | 43 chunks; **41 cited**, 2 deliberately uncited |
-| components | **3** — largest 70 (95%), crankset island 3, `comp-fork-seals` 1 |
-| batch ledger | 13 rows (seed + 12 expansion files) |
+| nodes | **78** — 69 verified, 1 candidate, 8 needs_review |
+| edges | **81** — 65 verified, 16 needs_review |
+| citations | **182** — 134 byte-exact, 48 whitespace-only (all in the frozen seed) |
+| bundle | 50 chunks (43 frozen seed + 7 ingested pages); **48 cited**, 2 deliberately uncited |
+| components | **1** — all 78 nodes connected; no islands |
+| batch ledger | 16 rows (seed + 15 expansion files) |
 
 Checks, all observed on this state:
 
@@ -175,13 +175,67 @@ deliverable is a web page needs one check that opens the page.
 
 ## Islands, measured rather than argued
 
-| island | size | why it is still isolated |
-|---|---|---|
-| crankset (`comp-bb-threaded`, `comp-chainring`, `comp-crank-arm`) | 3 | no installed-relationship sentence exists: `tools/scan_crankset.py` finds 0 assertions, 1 procedural, 5 removal steps |
-| `comp-fork-seals` | 1 | **2** sentences mention seals with the fork, both merely *mention*: "Inspect fork seals for leaks or damage" and "Check stanchions for scoring, indicating possible seal failure". Nothing states the seals are part of the fork, so the earlier rejection of `p0035_c01` is upheld. Checked against the source PDF too: p917 has real structure ("The 'lowers' or 'lower legs' are the section that attaches to the hub and wheel", "bushings pressed into the lower legs") but says nothing about seals, and p899 — suggested as a lower-leg-seal page — is actually "TOP TUBE". |
+**There are none left. `connectivity = 1 component, 78 nodes`** (was `[74,1]`, then `[76,2]`, now `[78]`).
 
-Both are evidence-starved, not mis-modelled. Closing either needs a source page that states the
-relationship, not a cleverer inference.
+| island | was | how it was closed |
+|---|---|---|
+| crankset (`comp-bb-threaded`, `comp-chainring`, `comp-crank-arm`) | 3 | `phase10-bb-frame`: BBB p373's own sentence about the shell |
+| `comp-fork-seals` | 1 | `phase12-fork-seal`: **Sidwells pp.35 and 141**, from the text layer |
+
+### How the fork-seal island was actually closed (and why the earlier verdict was wrong)
+
+The recorded blocker was *"Sidwells p2 is image-only and there is no OCR engine"*. Both halves were
+wrong, and the error was in the premise rather than the tooling:
+
+1. **p2 never needed OCR.** `tools/ocr_page.py inventory` says Sidwells has a text layer on **158 of
+   160** pages; the image-only ones are **p2 and p6**, and rendering them shows both are full-page
+   *photographs* (p2: a hand with a chain tool on a chainring; p6: a cassette with a screwdriver). OCR
+   returns 0 lines because there is no text to recover. A photo cannot testify.
+2. **The evidence was in the text layer the whole time.** `tools/find_pages.py` locates the suspension
+   chapter at **pp.140–147**, and p141's exploded-fork diagram carries the sentence that was missing:
+   *"Seal / Keeps dirt out of fork's interior"*, plus p35's service list: *"Fork and shock seals for
+   cracks and slackness"* and *"Seals on forks and shocks, as part of bi-annual service by qualified
+   technician"*, and *"Play, absence of oil lines, and cracked seals are all evidence of worn seals,
+   which should be replaced by a qualified technician."*
+
+That last sentence is a diagnostic rule stated outright by the publisher, so phase12 adds three nodes
+(`prop-fork-seal-function`, `sym-fork-seal-wear`, `fm-worn-fork-seals`) and four edges at **grade A**,
+including `sym-fork-seal-wear → comp-fork-seals` (`indicates`). The island's previous support was a
+**grade-B vision description**; it now rests on the publisher's own words.
+
+### OCR: what was bought, and what it measured
+
+`rapidocr_onnxruntime` (CPU, ONNX, no PyTorch, no admin) is installed in the workspace venv, so a real
+OCR engine exists after all — the earlier "no OCR engine" claim only ever checked for *system* binaries
+(`tesseract`, `pdftotext`). `tools/ocr_page.py` renders with PyMuPDF and OCRs, and it **measures itself**
+against pages whose text layer is known, instead of being trusted:
+
+| page | reference | OCR output | edit distance | CER | word recall | verdict |
+|---|---|---|---|---|---|---|
+| BBB p349 | 1013 chars | 1013 chars | **0** | **0.00%** | 100% | byte-perfect |
+| BBB p337 | 925 chars | 931 chars | 19 | **2.05%** | 92.5% | usable, one graphic misread |
+
+The p337 errors are a stylised figure caption being read as `OUHUIHS` — exactly the failure mode grade C
+exists to contain. **No claim in the graph currently rests on OCR output**, because the pages that
+needed evidence turned out to have a text layer.
+
+### Two gates were quietly wrong, and adding a bundle exposed both
+
+Neither bug was in the app; both were in checks that had hardcoded the *old* corpus.
+
+- `tools/verify_app_state.py` loaded `evidence-bundle-2.json` **by name**, so it counted 48 chunks and
+  175 citations while the app had 50 and 182. It now globs `evidence-bundle-*.json`, for the same reason
+  the expansion files have always been globbed: a new file must never be invisible to a gate.
+- `tools/smoke_app.py` did the same for its chunk count. This one mattered more, because the first smoke
+  run after the new batch failed with *"UI shows 75/77/48, data has 50 chunks"* — the gate was right and
+  the **served `dist/` was stale**. A data change without a rebuild is now a caught failure rather than
+  a false green.
+
+And the verifier caught a modelling error the suite did not: `sym-fork-seal-wear → comp-fork-seals`
+violated the ontology because `indicates` allowed `component` targets but not `subcomponent`. That was
+widened deliberately (recorded as **R6** in Test R, same reasoning as R2/R4: every relation that names
+`component` also names `subcomponent`), rather than bending the edge to point at the whole fork.
+
 
 ## Evidence quality — what the gates could not see (audited 2026-10-25)
 
@@ -276,12 +330,15 @@ disk and were verified as the real origin:
 | book | file | pages | text layer |
 |---|---|---|---|
 | Big Blue Book, 4th ed. (Park Tool / C. Calvin Jones) | `723775317-Big-Blue-Book-…pdf` | **992** | yes |
-| Bicycle Repair Manual (Chris Sidwells) | `22743195-Bicycle-Repair-Manual-…pdf` | **160** | partial — some pages are image-only |
+| Bicycle Repair Manual (Chris Sidwells) | `22743195-Bicycle-Repair-Manual-…pdf` | **160** | yes, except p2 and p6, which are photographs |
 
 Page mapping was checked rather than assumed: a quote from `big_blue_book_p0921_c00` is on page 921,
-`p0679_c00` on 679, and `bike_repair_manual_chris_p0148_c00` on 148. But Sidwells **page 2 is a scan
-(0 extracted chars)**, so the crank pages in that book cannot be cited from its text layer — they would
-need OCR. Every new citation therefore comes from Big Blue Book, whose text layer is complete.
+`p0679_c00` on 679, and `bike_repair_manual_chris_p0148_c00` on 148.
+
+The earlier claim that *"Sidwells page 2 is a scan, so that book cannot be cited from its text layer"*
+was wrong twice over (see *How the fork-seal island was actually closed*): p2 is a photograph with no
+text, and 158 of the book's 160 pages do have a text layer. `tools/ocr_page.py inventory` is the check
+that settles this in one command, and `tools/find_pages.py` is what finds the page that carries a claim.
 
 **Ingested: 4 pages, each one cited** (`src/data/evidence-bundle-2.json`). The rule is to ingest only
 what is about to be used — adding all 1152 pages would drop coverage to a meaningless fraction and
@@ -296,9 +353,8 @@ the suite and the verifier cannot disagree about which chunks exist.
 | `comp-crank-arm → comp-bb-threaded` (`mounted_on`) | **needs_review → verified** | p337 "Crank bolts secure the left and right cranks to the spindle." |
 | `comp-chainring → comp-crank-arm` (`mounted_on`) | **needs_review → verified** | p421 "Chainrings are toothed sprockets attached to the cranks." |
 
-Components went from `[70, 3, 1]` to **`[73, 1]`**: 99% of the graph is one component and the only
-island left is `comp-fork-seals`, for which the manuals genuinely say nothing about membership (they
-mention fork seals only as an inspection item).
+Components went from `[70, 3, 1]` to **`[73, 1]`**, and the last island (`comp-fork-seals`) was closed
+later by `phase12-fork-seal` from the Sidwells text layer, giving **`[78]` — one connected graph**.
 
 Two rules did real work here. The chainring edge had been `needs_review` because its only evidence was
 a `[VISUAL DATA]` analysis; promoting it while that quote was still attached tripped the verifier's
@@ -316,11 +372,15 @@ sentence that states the fastening outright.
 | **C** | **machine transcription of a scanned page** (OCR / vision model) | **no** |
 | **D** | curated row with no chunk link | no |
 
-Grade **C** exists because Sidwells' crank pages are scans: PyMuPDF can render them but this machine has
-no OCR engine (no tesseract, no pdftotext), so any text from those pages would be a *machine
-transcription*, not the publisher's layer. Test K enforces that B **and C** can never justify a numeric
-claim, and `provenance-service.ts` states it in the UI. A grade-C claim can still be useful for wording
-and structure; it can never carry a torque, a diameter or a tolerance.
+Grade **C** exists for text that a *machine* produced from a page image, and it is never allowed to
+carry a number. Test K enforces that B **and C** cannot justify a numeric claim, and
+`provenance-service.ts` states it in the UI. A grade-C claim can be useful for wording and structure; it
+can never carry a torque, a diameter or a tolerance.
+
+The grade is not hypothetical any more: `tools/ocr_page.py` gives the machine the ability to produce
+exactly such text, and measures its own error rate first (0.00% on BBB p349, 2.05% on p337). If a page
+ever arrives that is a genuine scan *and* carries a needed claim, the path is: OCR it, ingest at grade C,
+cite the surrounding wording, and never the digits.
 
 ### Torque from prose, not from a photo (phase11)
 
@@ -335,14 +395,13 @@ own prose.
 
 1. **Local-first is settled** — the app runs with no AI Studio: `serve_local.cmd` → `localhost:8080`,
    built from `dist/`. `docs/REGRESSION.md` proves a clean clone reproduces the state.
-2. **The crankset island is the last structural hole, and it is evidence-starved — measured, not
-   assumed.** `python tools/scan_crankset.py` classifies every crankset sentence in the bundle:
-   **0** assert an installed relationship, **1** only asks the mechanic to confirm shell width and
-   threading (`p0002_c02`), **5** are removal or service steps. The removal-instruction rule that
-   demoted `comp-crank-arm → comp-bb-threaded` is applied literally there. Closing the island needs a
-   bottom-bracket interface source, not more inference.
+2. **Connectivity is done: 1 component, 78 nodes, 0 islands.** Both islands were closed by finding the
+   sentence that states the relationship (`phase10-bb-frame` from BBB p373, `phase12-fork-seal` from
+   Sidwells pp.35/141) — not by loosening a rule or inferring membership. There is no structural hole
+   left to argue about.
 3. The rear-suspension cluster is anchored now, but its anchor is one grade-A sentence about bushing
    wear. A frame/suspension schematic page would replace "wear at the frame attachments" with an
    explicit mounting statement.
 4. New knowledge otherwise requires **new source evidence** or a **documented correction** — never a
-   connectivity target.
+   connectivity target. `tools/find_pages.py` should be the first move on any gap: search the text
+   layer before concluding a fact is missing, because twice now the sentence was already there.

@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "corpus": "bike_repair_manual_chris_pdf_textlayer",
+  "source_file": "22743195-Bicycle-Repair-Manual-Chris-Sidwells.pdf",
+  "note": "Pages ingested from the source PDF's own text layer (PyMuPDF), one chunk per cited region. Grade A: these are the publisher's words, not a transcription. Ingested because comp-fork-seals was an island and the suspension-fork pages carry the sentences that connect it.",
+  "chunks": {
+    "bike_repair_manual_chris_p0035_c00": {
+      "chunk_id": "bike_repair_manual_chris_p0035_c00",
+      "book": "bike_repair_manual_chris",
+      "page": 35,
+      "section": "Servicing",
+      "source": "22743195-Bicycle-Repair-Manual-Chris-Sidwells.pdf",
+      "text": "Fork and shock for play (see pp.142–47, 150–51)\nFork stanchions to see if oil line visible (see pp.142–47)\nFork and shock seals for cracks and slackness (see pp.142–47,\n150–51). \nPlay, absence of oil lines, and cracked seals are all evidence of\nworn seals, which should be replaced by a qualified technician.\nFork and shock sag (see pp.142–43, 150–51)\nTip bike upside down and store overnight so oil can\nredistribute in fork\nFreehub body and freewheel for play (see pp.66–7)\nRear mech frame fixing bolt for play (see pp.54–5)\nCleats for wear (see pp.84–5)\nJockey wheels for wear (see pp.54–5)\nOil in hub gear, if equipped with oil port (see pp.58–9)\nGrease bearings in pedals (see pp.80–1)\nChain (see pp.64–5)\nInner and outer cables (see pp.46–9)\nSprockets on a heavily used bike (see pp.66–7)\nBearings in open-bearing hubs for wear (see pp.100–1)\nBearings and bearing surfaces in headsets for wear \n(see pp.90–3)\nGrease open-bearing hubs (see pp.100–1)\nGrease headsets (see pp.90–3)\nHandlebar tape and grips (see pp.94–7)\nGrease brake bosses (see pp.122–23)\nInner and outer cables (see pp.114–17)\nFork steerer for cracks, by removing the headset \n(see pp.90–3)\nFork oil (see pp.144–47)\nSeals on forks and shocks, as part of bi-annual service \nby qualified technician\nEVERY MONTH\nEVERY SIX MONTHS"
+    },
+    "bike_repair_manual_chris_p0141_c00": {
+      "chunk_id": "bike_repair_manual_chris_p0141_c00",
+      "book": "bike_repair_manual_chris",
+      "page": 141,
+      "section": "AIR/OIL FORK",
+      "source": "22743195-Bicycle-Repair-Manual-Chris-Sidwells.pdf",
+      "text": "How they work\nWhen a bump pushes up the sliders on this fork, a piston\nmoves up the left stanchion, compressing the air. Once the\nbump has been absorbed, the air pushes the piston back and\nthe fork rebounds. The damping mechanism in the right \nstanchion, which is full of oil, also moves up and down with\nthe bump, controlling the speed of compression and rebound.  \nAIR/OIL FORK \nFork crown\nTurns the fork\nBrake arch\nConnects the\ntwo sliders\nSlider \nMoves up and\ndown on the\nstanchion\nDamping\nmechanism\nMoves up\nand down\nwith slider\nPiston\nMoves up\nand down\nin response\nto bumps\nOil chamber\nContains oil\nSeal\nKeeps dirt out\nof fork’s\ninterior\nRight\nstanchion \nContains the\ndamping\nmechanism \n141\nAir\nchamber\nContains\nair\nShaft bolt\nFastens\nshaft to\nslider\nLeft\nstanchion\nContains\nthe spring\nmechanism\nand piston"
+    }
+  }
+}

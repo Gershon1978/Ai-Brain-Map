@@ -79,7 +79,7 @@
       "symmetric": false,
       "description": "Diagnostic symptom or error code indicates component fault.",
       "allowed_source_types": ["symptom", "error_code"],
-      "allowed_target_types": ["component", "failure_mode"]
+      "allowed_target_types": ["component", "subcomponent", "failure_mode"]
     },
     "unknown_due_to_missing_evidence": {
       "symmetric": false,

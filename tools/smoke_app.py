@@ -95,7 +95,9 @@ def main():
         problems.append("UI node count %s != data %d" % (got_nodes.group(0) if got_nodes else None, want_nodes))
     if not got_edges or int(got_edges.group(1)) != want_edges:
         problems.append("UI edge count %s != data %d" % (got_edges.group(0) if got_edges else None, want_edges))
-    chunk_bundles = [DATA / "seed-evidence.json", DATA / "evidence-bundle-2.json"]
+    # Globbed like the expansion files and like tools/verify_app_state.py: a new evidence bundle
+    # must never be silently invisible to a gate, or the gate can pass while the UI is wrong.
+    chunk_bundles = [DATA / "seed-evidence.json"] + sorted(DATA.glob("evidence-bundle-*.json"))
     bundle_chunks = 0
     for b in chunk_bundles:
         if b.exists():
