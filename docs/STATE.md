@@ -36,6 +36,21 @@ Verifier warnings are **classified by where they can be fixed**, and that classi
 A green verifier means *the declared checks pass*. It does not mean every possible defect is ruled
 out; it means the noise is now separated from the signal.
 
+## The mechanical canon (four distinctions, each learned by catching a real defect)
+
+1. **Co-motion is not attachment.** "Turns the fork and the front wheel" does not prove the wheel is
+   mounted to the fork.
+2. **A removal instruction is not an installed state.** "Extract the crank arm from the bottom bracket
+   spindle" does not document how the arm is fixed.
+3. **A grade-B visual estimate cannot back a `verified` claim**, and never a number.
+4. **Presupposition is not assertion.** Naming a part as a modifier, a wear site or a diagnostic
+   condition establishes that it exists in discourse, not that it is fixed to anything. *Worked
+   example:* "wear at the bushing of the frame attachments" presupposes a mounting without stating
+   one, which is why `comp-rear-shock → comp-frame` is `needs_review` and not `verified`.
+
+Rules 1–3 were enforced by hand and then encoded in statuses. Rule 4 is now the one to apply first in
+any new batch: it is the cheapest way an author smuggles world knowledge into an evidence graph.
+
 ## What is deliberately provisional
 
 Fifteen edges carry `needs_review`. Because the engine only returns `verified_compatible` across
@@ -189,6 +204,30 @@ or fewer**, or **reused across many entities**. Current result: 60 findings — 
 
 The rule this leaves behind: **a heading is a label, not a fact.** Future batches must cite the
 sentence that asserts the relationship, and the auditor is now available to catch it when they don't.
+
+## The reasoning engine had a one-sided gate (found 2026-10-25 by the query harness)
+
+`tools/query_harness.mjs` drives the 5-state engine the way a mechanic would — a plain query mapped to
+a `(subject, target)` pair with the verdict the evidence must produce. It found an asymmetry:
+
+| path | before | now |
+|---|---|---|
+| `verified` + `fits_into` | `verified_compatible` | unchanged |
+| `needs_review` + `fits_into` | `conditionally_compatible` (the "Fix C" gate) | unchanged |
+| `verified` + `incompatible_with` | `incompatible` | unchanged |
+| **`needs_review` + `incompatible_with`** | **`incompatible`** — a hard verdict from an unreviewed edge | **`conditionally_compatible`** |
+
+So the engine refused to *assert* fitment from an unreviewed edge, but happily asserted *exclusion*
+from one. Fixed in `constraint-engine.ts` (`rule-unreviewed-exclusion`) and pinned by **Test S**, which
+also asserts that a `mounted_on` edge never fabricates fitment (mounting ≠ compatibility).
+
+Harness result: **6/6 verdicts as expected**, covering `incompatible` ×2,
+`conditionally_compatible`, `unknown_missing_evidence` ×2 and `verified_compatible`.
+
+One expectation of mine was wrong and corrected: I assumed a verified `mounted_on` edge made
+"does a quill stem fit a threaded steerer" answer `verified_compatible`. It returns
+`unknown_missing_evidence`, which is right — a mounting tells you how two parts are joined, not
+whether a particular diameter mates.
 
 ## Next task
 

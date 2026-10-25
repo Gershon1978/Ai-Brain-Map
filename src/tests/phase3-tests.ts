@@ -714,6 +714,16 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
       `Expected 2 remaining islands, got ${coverageReport.connectivity.remainingIslands.length}`
     );
   }
+  // Island IDENTITY, not just count. A new fragment must fail here by name, instead of quietly
+  // moving a percentage. Signature is "<exampleNodeId>:<size>", sorted.
+  const islandSignature = coverageReport.connectivity.remainingIslands
+    .map((isl) => `${isl.exampleNodeId}:${isl.size}`)
+    .sort()
+    .join(',');
+  const EXPECTED_ISLANDS = 'comp-bb-threaded:3,comp-fork-seals:1';
+  if (islandSignature !== EXPECTED_ISLANDS) {
+    qErrors.push(`Island signature mismatch: expected "${EXPECTED_ISLANDS}", got "${islandSignature}"`);
+  }
 
   // Plain sentence stating the ceiling - it must follow the same rule the service computes, so a
   // frozen copy of it cannot pass while the panel says something false.
@@ -832,6 +842,56 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
       ? 'All five adjudications hold for their own reason: torque retyped to measurement, affects widened to accept procedures, hub/thru-axle retyped to conforms_to, part_of widened symmetrically with contains, no part_of cycles.'
       : `Test R failed: ${rErrors.join('; ')}`,
     details: rErrors,
+  });
+
+  // --- 17. Test S: unreviewed-exclusion gate ---
+  // The positive side always refused to answer from needs_review edges ("Fix C"), but the negative
+  // side did not: a needs_review incompatible_with still produced a confident "incompatible". The
+  // query harness found the asymmetry. Both halves are pinned here so neither can drift back.
+  const sErrors: string[] = [];
+  const sGraph = getMergedGraph();
+  const sEngine = new ConstraintEngine({
+    nodes: new Map<string, GraphNode>(sGraph.nodes.map((n) => [n.id, n])),
+    edges: sGraph.edges as GraphEdge[],
+    isDatabaseAttached: false,
+  });
+
+  // verified exclusion -> a hard verdict is allowed
+  const verifiedExclusion = sEngine.evaluateCompatibility('prop-fluid-dot', 'prop-fluid-mineral');
+  if (verifiedExclusion.verdict !== 'incompatible') {
+    sErrors.push(
+      `S1: verified exclusion (prop-fluid-dot vs prop-fluid-mineral) must stay "incompatible", got "${verifiedExclusion.verdict}"`
+    );
+  }
+
+  // needs_review exclusion -> must degrade, never assert incompatibility
+  const unreviewedExclusion = sEngine.evaluateCompatibility('comp-rotor-6bolt', 'comp-hub-centerlock');
+  if (unreviewedExclusion.verdict !== 'conditionally_compatible') {
+    sErrors.push(
+      `S2: needs_review exclusion (comp-rotor-6bolt vs comp-hub-centerlock) must be "conditionally_compatible", got "${unreviewedExclusion.verdict}"`
+    );
+  }
+  for (const ev of unreviewedExclusion.evaluations) {
+    if (ev.state === 'incompatible') {
+      sErrors.push('S3: an unreviewed exclusion still emitted an "incompatible" evaluation');
+    }
+  }
+
+  // a mounting edge is not a fitment claim: the engine must not invent compatibility from it
+  const mountingOnly = sEngine.evaluateCompatibility('comp-stem-quill', 'comp-steerer');
+  if (mountingOnly.verdict === 'verified_compatible') {
+    sErrors.push(
+      'S4: mounted_on alone must not yield verified_compatible (mounting is not fitment), got it'
+    );
+  }
+
+  results.push({
+    name: 'Test S: Unreviewed-Exclusion Gate Parity',
+    passed: sErrors.length === 0,
+    message: sErrors.length === 0
+      ? 'Symmetry holds: a verified exclusion still returns "incompatible", a needs_review exclusion degrades to "conditionally_compatible" with no incompatible evaluation, and a mounting edge never fabricates fitment.'
+      : `Test S failed: ${sErrors.join('; ')}`,
+    details: sErrors,
   });
 
   const allPassed = results.every((r) => r.passed);

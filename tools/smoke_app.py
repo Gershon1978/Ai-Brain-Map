@@ -59,7 +59,15 @@ def main():
         page = ctx.new_page()
         page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
         page.on("pageerror", lambda e: page_errors.append(str(e)))
-        page.goto(args.url, wait_until="domcontentloaded", timeout=args.timeout * 1000)
+        try:
+            page.goto(args.url, wait_until="domcontentloaded", timeout=args.timeout * 1000)
+        except Exception as e:
+            # A browser was reachable but the app was not: that is a FAILURE, not a skip. A gate that
+            # crashes here would exit 1 with a traceback and no diagnosis; a gate that skips would lie.
+            print("FAIL: cannot load %s (%s)" % (args.url, str(e).splitlines()[0][:120]))
+            print("      is the static server running?  serve_local.cmd  ->  http://localhost:8080")
+            page.close()
+            return 1
         try:
             page.wait_for_function(
                 "() => { const r = document.getElementById('root'); return r && r.children.length > 0; }",

@@ -48,6 +48,14 @@ width compatible with this frame" — and it answers with a 5-state verdict
 5. **The coverage panel and Test Q are computed, not hard-coded.** If you change the graph, the
    numbers in `src/tests/phase3-tests.ts` must be updated to the recomputed truth — never the
    other way round.
+6. **Presupposition is not assertion.** A sentence that mentions a part as a modifier, a wear site or
+   a diagnostic condition shows the part *exists*; it does not document how it is fixed.
+   *Test:* does the text state the mounting, fit or boundary itself, or merely presuppose the part
+   exists? Require the former before marking a structural relation `verified`.
+   *Worked example:* "wear at the bushing of the frame attachments" presupposes a mounting but never
+   says the shock is mounted to the frame — so that `mounted_on` edge stays `needs_review`.
+   (This is distinction 4 of the mechanical canon; the first three are co-motion ≠ attachment,
+   removal ≠ installed state, and grade-B visual estimates cannot back numbers.)
 
 Read `docs/STATUS.md` (long, chronological) for how four separate fabrications were caught before
 this discipline was tightened. It is the most useful file for understanding *why* the rules look

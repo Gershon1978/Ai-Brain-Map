@@ -90,6 +90,29 @@ export class ConstraintEngine {
         };
       }
 
+      // Gate: an UNREVIEWED exclusion must not produce a hard verdict.
+      // The positive side already refuses to answer from needs_review edges ("Fix C"); the negative
+      // side never checked, so `needs_review` + incompatible_with still returned a confident
+      // "incompatible". The query harness caught that asymmetry; this closes it.
+      if (incompEdge.status !== 'verified') {
+        evaluations.push({
+          rule_id: 'rule-unreviewed-exclusion',
+          rule_name: 'Unreviewed Exclusion Gate',
+          state: 'conditionally_compatible',
+          passed: false,
+          reason: `Exclusion ${incompEdge.id} is ${incompEdge.status}, not verified: ${incompEdge.claim}`,
+          evidence_citations: incompEdge.evidence,
+          conditions: incompEdge.conditions,
+        });
+        return {
+          subject_id: subjectId,
+          target_id: targetId,
+          verdict: 'conditionally_compatible',
+          overall_explanation: `Cannot assert incompatibility: edge ${incompEdge.id} is ${incompEdge.status}, so the exclusion is recorded but not confirmed.`,
+          evaluations,
+        };
+      }
+
       evaluations.push({
         rule_id: incompEdge.id,
         rule_name: 'Explicit Interface Incompatibility Rule',

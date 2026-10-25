@@ -165,6 +165,22 @@ cost a `verified` edge and gained consistency; the edge also picked up a second,
 House rule that came out of it: *presupposition is not assertion.* A sentence may only carry a
 `verified` structural relation if it says the relation, not if it implies the part exists.
 
+### Sixth pass — its acceptance queries found an engine defect (and one of its own expectations was wrong)
+
+Given the harness task, it produced six mechanic-style queries plus the id each would lean on. Four of
+six ids were real; `edge-cassette-xdr-fits-freehub` and `edge-cassette-xd-fits-freehub` do not exist
+(the real ones are `edge-xdr-incomp-cassette` and `edge-cassette-fits-freehub`), so the queries were
+re-mapped onto real pairs — the *queries* were right even where the ids were not.
+
+Its expected verdict for 6-bolt → Center Lock was `incompatible`. The engine said `incompatible` too —
+and both were wrong: that exclusion edge is `needs_review`, so a confident exclusion is exactly what
+the project forbids. Running the harness surfaced a real one-sided gate in `constraint-engine.ts`
+(fitment was gated on review status, exclusion was not). Fixed, pinned by Test S.
+
+That is the most useful thing a reviewer has done in this project: **its test cases, not its answers.
+** The answers carried two invented ids; the test cases exposed a defect that four green gates and
+17 passing tests had missed.
+
 ## The lesson
 
 An external reviewer that reads the corpus but invents identifiers produces work that is *more*
