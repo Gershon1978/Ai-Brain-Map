@@ -13,6 +13,8 @@ import expansionCassetteJson from '../data/expansion-cassette.json';
 import expansionHubfitJson from '../data/expansion-hubfit.json';
 import expansionConnectorsJson from '../data/expansion-connectors.json';
 import expansionForkJson from '../data/expansion-fork.json';
+import expansionCrankJson from '../data/expansion-crank.json';
+import expansionReartriangleJson from '../data/expansion-reartriangle.json';
 import { GraphPayload, GraphNode, GraphEdge } from '../types/graph.ts';
 
 export interface ExpansionFile {
@@ -72,6 +74,8 @@ const expansionRegistry: ExpansionFile[] = [
   expansionHubfitJson as unknown as ExpansionFile,
   expansionConnectorsJson as unknown as ExpansionFile,
   expansionForkJson as unknown as ExpansionFile,
+  expansionCrankJson as unknown as ExpansionFile,
+  expansionReartriangleJson as unknown as ExpansionFile,
 ];
 
 export function getExpansionRegistry(): ExpansionFile[] {

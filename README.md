@@ -13,13 +13,13 @@ whole point of the project, and it is the rule that matters most.
 
 | | |
 |---|---|
-| Nodes | **69** (61 verified, 1 candidate, 7 needs_review) |
-| Edges | **63** (53 verified, 10 needs_review) |
-| Citations | **152** (104 byte-exact, 48 differ from their chunk in whitespace only) |
+| Nodes | **73** (64 verified, 1 candidate, 8 needs_review) |
+| Edges | **73** (59 verified, 14 needs_review) |
+| Citations | **166** (118 byte-exact, 48 differ from their chunk in whitespace only) |
 | Evidence bundle | **43 chunks** (36 original + 7 added 2026-10-25) |
-| Chunks cited | **36 of 43** — 7 unused (8a cites 2 of them, 8b/8c the rest) |
-| Connectivity | 7 components, largest 35 (51%) |
-| Test suite | **16 tests**, all passing headlessly (`npx tsx tools/run_suite.mjs`). Test Q pins the graph numbers *and* the exact list of uncited chunks; Test R pins the five ontology adjudications by reason |
+| Chunks cited | **41 of 43** — the 2 left uncited are *rejected* evidence, listed in Test Q |
+| Connectivity | **3 components**, largest 69 (95%); the crankset is a separate 3-node island |
+| Test suite | **16 tests**, all passing headlessly (`npx tsx tools/run_suite.mjs`) |
 
 Live app: Google AI Studio, app id `82983f51-5ac2-4ac3-ba0f-6d27161b376a`.
 
@@ -105,9 +105,16 @@ only the optional "attach a local kb.db" feature needs it.
 
 ---
 
-## What to do next — see `HANDOFF.md`
+## What to do next — the bundle is frozen
 
-The graph is at its **evidence ceiling**: all 36 original chunks are cited, so it could not grow.
-On 2026-10-25 the owner approved growing the bundle to **43 chunks**, which unlocks the last 6
-disconnected islands. `HANDOFF.md` contains the three ready batches (8a, 8b, 8c) with the exact
-chunk ids, exact quotes and exact claims to place — plus the projected numbers after each one.
+The evidence work is **complete for this bundle**: 41 of the 43 chunks are cited, and the two that are
+not (`p0693_c00`, `p0071_c05`) were audited and **rejected** — one is a generic "manufacturers
+differ" sentence, the other a visual seal hint. Both are pinned in Test Q so they cannot quietly
+become cited.
+
+43/43 coverage would be a coverage milestone, not proof of completeness: it would not mean every
+useful claim in the manuals has been extracted, nor that every relationship is established. New
+knowledge enters only with **new source evidence** or a **documented correction**.
+
+`docs/STATE.md` records the frozen state and what the next task should be (a reproducible
+synchronisation + regression check, not further expansion).

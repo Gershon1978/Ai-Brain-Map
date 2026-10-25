@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "batch": "phase8c-crank",
+  "nodes": [
+    {
+      "id": "comp-crank-arm",
+      "type": "component",
+      "name": "Crank Arm",
+      "subsystem": "sys-drivetrain",
+      "aliases": [],
+      "description": "The crank arm carries the chainring and mounts on the bottom bracket spindle; a crank puller threads into it and pushes against the spindle to remove it.",
+      "status": "verified",
+      "batch": "phase8c-crank",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0002_c02",
+          "book": "bike_repair_manual_chris",
+          "page": 2,
+          "quote": "Tighten crank puller to extract crank arm from bottom bracket spindle.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0,
+          "section": "5.  If bottom bracket service is required, use appropriate BB tool to remove bearing cups. Note thread direction: Right side is usually reverse-threaded."
+        }
+      ]
+    },
+    {
+      "id": "comp-chainring",
+      "type": "subcomponent",
+      "name": "Chainring",
+      "subsystem": "sys-drivetrain",
+      "aliases": [],
+      "description": "The toothed front sprocket bolted to the crank arm.",
+      "status": "needs_review",
+      "batch": "phase8c-crank",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0003_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 3,
+          "quote": "countersunk bolt holes for chainring attachment",
+          "evidence_grade": "B",
+          "linked_to_chunk": true,
+          "confidence": 0.8,
+          "section": "C H R I S S I D W E L L S"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-conn4-crank-on-bb-spindle",
+      "src": "comp-crank-arm",
+      "dst": "comp-bb-threaded",
+      "type": "mounted_on",
+      "claim": "The crank arm is mounted on the bottom bracket spindle; tightening a crank puller against the spindle extracts it.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8c-crank",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0002_c02",
+          "book": "bike_repair_manual_chris",
+          "page": 2,
+          "quote": "Tighten crank puller to extract crank arm from bottom bracket spindle.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0,
+          "section": "5.  If bottom bracket service is required, use appropriate BB tool to remove bearing cups. Note thread direction: Right side is usually reverse-threaded."
+        }
+      ]
+    },
+    {
+      "id": "edge-conn4-chainring-on-crank",
+      "src": "comp-chainring",
+      "dst": "comp-crank-arm",
+      "type": "mounted_on",
+      "claim": "The chainring bolts to the crank arm through countersunk holes (visual evidence only).",
+      "status": "needs_review",
+      "evidence_type": "service_manual",
+      "confidence": 0.8,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8c-crank",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0003_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 3,
+          "quote": "countersunk bolt holes for chainring attachment",
+          "evidence_grade": "B",
+          "linked_to_chunk": true,
+          "confidence": 0.8,
+          "section": "C H R I S S I D W E L L S"
+        }
+      ]
+    }
+  ]
+}

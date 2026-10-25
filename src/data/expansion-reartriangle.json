@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0.0",
+  "batch": "phase8d-reartriangle",
+  "nodes": [
+    {
+      "id": "comp-rear-triangle",
+      "type": "component",
+      "name": "Rear Triangle",
+      "subsystem": "sys-wheels",
+      "aliases": [],
+      "description": "The rear triangle of the frame connects the rear wheel to the shock absorber and moves independently of the rest of the frame on full-suspension bikes.",
+      "status": "verified",
+      "batch": "phase8d-reartriangle",
+      "properties": {},
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0148_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 148,
+          "quote": "The rear triangle of the frame,\nwhich connects the rear wheel to the shock\nabsorber",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0,
+          "section": "REAR SUSPENSION"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-conn4-reartriangle-holds-shock",
+      "src": "comp-rear-triangle",
+      "dst": "comp-rear-shock",
+      "type": "interfaces_with",
+      "claim": "The rear triangle connects the shock absorber to the frame.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8d-reartriangle",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0148_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 148,
+          "quote": "The rear triangle of the frame,\nwhich connects the rear wheel to the shock\nabsorber",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0,
+          "section": "REAR SUSPENSION"
+        }
+      ]
+    },
+    {
+      "id": "edge-conn4-reartriangle-links-wheel",
+      "src": "comp-rear-triangle",
+      "dst": "sys-wheels",
+      "type": "affects",
+      "claim": "Connectivity hypothesis: the rear triangle links the rear wheel to the shock absorber, coupling the suspension linkage to the wheel. This is a linkage, not membership.",
+      "status": "needs_review",
+      "evidence_type": "service_manual",
+      "confidence": 0.5,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase8d-reartriangle",
+      "evidence": [
+        {
+          "chunk_id": "bike_repair_manual_chris_p0148_c00",
+          "book": "bike_repair_manual_chris",
+          "page": 148,
+          "quote": "The rear triangle of the frame,\nwhich connects the rear wheel to the shock\nabsorber",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 0.5,
+          "section": "REAR SUSPENSION"
+        }
+      ]
+    }
+  ]
+}
