@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "corpus": "big_blue_book_pdf_textlayer",
+  "source_file": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+  "note": "Pages ingested from the source PDF's own text layer (pypdf), one chunk per page. Only pages that are cited by an edge are ingested; this is not a bulk dump.",
+  "chunks": {
+    "big_blue_book_p0337_c00": {
+      "chunk_id": "big_blue_book_p0337_c00",
+      "book": "big_blue_book",
+      "page": 337,
+      "section": "CRANK TYPES",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "text": "CRANK TYPES\nCommon modern crank designs include “three-piece” and “two-piece”\ncrank systems. The parts of the three-piece crankset are the left crank, the\nright crank, and the axle spindle (figure 7.1). The spindle is held in position\nby bearings in the frame. Both cranks must be removed to service or replace\nthe bearings of a three-piece system. Crank bolts secure the left and right\ncranks to the spindle.\nFIGURE 7.1: Three-piece crank components: left crank, spindle, and\nright crank with chainrings\nTwo-piece crank designs include systems such as Shimano® Hollowech\nII®, Campagnolo® Ultra-Torque®, SRAM® DUB® and GXP®, Race\nFace® X-Type, FSA® MegaEvo®, Rotor® and other similar systems. The\nspindle is permanently fixed on one crank, making it effectively one piece of\nthe system. The second piece is simply the other crank. The spindle passes\nthrough the bearings fitted in the frame. The opposite crank has a fastener"
+    },
+    "big_blue_book_p0373_c00": {
+      "chunk_id": "big_blue_book_p0373_c00",
+      "book": "big_blue_book",
+      "page": 373,
+      "section": "FIGURE 7.30: Spin cranks to feel for grinding on a worn bott",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "text": "FIGURE 7.30: Spin cranks to feel for grinding on a worn bottom\nbracket bearing\nThe bottom bracket shell is part of the frame that houses the bottom\nbracket bearings and spindle. There are currently multiple bottom bracket\nshell designs, and the bearing system installed must be compatible with the\nshell design used. It is necessary to know the bottom bracket system to have\nthe correct tools and parts for service. The brand or model of crank does not\nnecessarily determine the tools or procedures for the bearing service. In\nsome cases you may need to disassemble the cranks to inspect the bottom\nbracket shell.\nTwo basic designs for bottom bracket shells are threaded shells and non-\nthreaded shells. There are numerous standards for each."
+    },
+    "big_blue_book_p0374_c00": {
+      "chunk_id": "big_blue_book_p0374_c00",
+      "book": "big_blue_book",
+      "page": 374,
+      "section": "THREADED STANDARDS",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "text": "THREADED STANDARDS\nThreaded bottom bracket shells have an internal thread to accept the\nexternal thread of the bottom bracket bearing cups or adaptors (figure 7.31).\nCarbon fiber bikes with a threaded bottom bracket shell use a metal insert\nfor the internal threading. The common bottom bracket shell threading\nstandard is 1.37 in. x 24 tpi. This is also referred to as BSA, English or ISO\nthreading, The left-side (non-drive side) thread is a right-hand threaded,\nwhich removes counterclockwise and tightens clockwise. The right-side\n(drive side) thread is a left-hand threaded. It is installed counterclockwise\nand is removed clockwise.\nFIGURE 7.31: Bottom bracket marking indicating side of bike\nA less common threading standard is 36mm x 24 tpi and is referred to as\n“Italian.” Both drive and non-drive parts are right-hand threaded. Both sides\nremove counterclockwise and install clockwise. This bottom bracket\nstandard is too large to fit into an English sized frame. An English bottom"
+    },
+    "big_blue_book_p0421_c00": {
+      "chunk_id": "big_blue_book_p0421_c00",
+      "book": "big_blue_book",
+      "page": 421,
+      "section": "CHAINRINGS",
+      "source": "723775317-Big-Blue-Book-of-Bicycle-Repair-4th-Edition-by-C-Calvin-Jones.pdf",
+      "text": "CHAINRINGS\nChainrings are toothed sprockets attached to the cranks. Cranks may be\ndesigned to accept one, two, or three chainrings. Better quality models of\ncranks are designed so the rings are replaceable. The old ring is removed and\na new ring is installed. Different rings may also be fitted if the rider desires a\ndifferent gear ratio. There are less expensive models of cranks that use\nchainrings permanently mounted to the crank, which means the entire\ncrankset must be replaced if the rings wear out or are damaged.\nFor cranks with multiple rings, the chainrings attach to the part of the\ncrank called the “spider.” Spiders may have three, four, five, or six mounting\narms. Chainring mounting holes must match the spider mounting holes in\norder to fit. As the chainrings turn, the mounting bolts trace a circle. The\ndiameter of this circle is called the “bolt circle diameter,” abbreviated as\nBCD. New chainrings must match both the number of mounting holes and\nthe bolt circle diameter (figure 7.66).\nFIGURE 7.66: Bolt circle diameter of a five-arm crank"
+    }
+  }
+}

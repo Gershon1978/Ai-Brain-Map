@@ -21,6 +21,10 @@ DATA = ROOT / "src" / "data"
 FILES = ["seed_graph.json"] + sorted(p.name for p in DATA.glob("expansion-*.json"))
 
 chunks = json.loads((DATA / "seed-evidence.json").read_text(encoding="utf-8"))["chunks"]
+# Bundle 2: pages ingested from the source PDFs' own text layer. Additive; bundle 1 is frozen.
+_b2 = DATA / "evidence-bundle-2.json"
+if _b2.exists():
+    chunks.update(json.loads(_b2.read_text(encoding="utf-8"))["chunks"])
 onto = json.loads((DATA / "relation-ontology.json").read_text(encoding="utf-8"))["relations"]
 
 problems, warns = [], []

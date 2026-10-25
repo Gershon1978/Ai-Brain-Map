@@ -14,12 +14,12 @@ whole point of the project, and it is the rule that matters most.
 | | |
 |---|---|
 | Nodes | **74** (65 verified, 1 candidate, 8 needs_review) |
-| Edges | **75** (59 verified, 16 needs_review) |
-| Citations | **169** (121 byte-exact, 48 differ from their chunk in whitespace only) |
-| Evidence bundle | **43 chunks** (36 original + 7 added 2026-10-25) |
-| Chunks cited | **41 of 43** — the 2 left uncited are *rejected* evidence, listed in Test Q |
-| Connectivity | **3 components**, largest 70 (95%); the crankset is a separate 3-node island |
-| Test suite | **16 tests**, all passing headlessly (`npx tsx tools/run_suite.mjs`) |
+| Edges | **76** (60 verified, 16 needs_review) |
+| Citations | **173** (125 byte-exact, 48 differ from their chunk in whitespace only) |
+| Evidence bundle | **47 chunks** — 43 from the frozen kb.db excerpt + **4 ingested from the source PDFs' own text layer** |
+| Chunks cited | **45 of 47** — the 2 left uncited are *rejected* evidence, listed in Test Q |
+| Connectivity | **2 components**, largest 73 (99%); the crankset island is **closed**, `comp-fork-seals` is the only one left |
+| Test suite | **17 tests**, all passing headlessly (`npx tsx tools/run_suite.mjs`) |
 
 Run it locally — no AI Studio, no account, no network: `serve_local.cmd` serves the built `dist/` on
 <http://localhost:8080>. For development, `npm run dev` (Vite).

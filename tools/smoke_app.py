@@ -95,7 +95,11 @@ def main():
         problems.append("UI node count %s != data %d" % (got_nodes.group(0) if got_nodes else None, want_nodes))
     if not got_edges or int(got_edges.group(1)) != want_edges:
         problems.append("UI edge count %s != data %d" % (got_edges.group(0) if got_edges else None, want_edges))
-    bundle_chunks = len(json.loads((DATA / "seed-evidence.json").read_text(encoding="utf-8"))["chunks"])
+    chunk_bundles = [DATA / "seed-evidence.json", DATA / "evidence-bundle-2.json"]
+    bundle_chunks = 0
+    for b in chunk_bundles:
+        if b.exists():
+            bundle_chunks += len(json.loads(b.read_text(encoding="utf-8"))["chunks"])
     if not got_chunks or int(got_chunks.group(1)) != bundle_chunks:
         problems.append("UI provenance label says %s chunks, bundle has %d"
                         % (got_chunks.group(1) if got_chunks else None, bundle_chunks))

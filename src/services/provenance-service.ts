@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import seedEvidence from '../data/seed-evidence.json';
+import { getEvidenceChunks } from './evidence-corpus.ts';
 import { EvidenceGrade } from '../types/graph.ts';
 
 export type ProvenanceSource = 'bundled' | 'attached_db';
 
-// Computed from the bundle, never typed: the label used to say "36 chunks" long after the corpus
-// grew to 43, which is exactly the kind of frozen copy this project forbids in a provenance claim.
-const BUNDLED_CHUNK_COUNT = Object.keys((seedEvidence as { chunks?: Record<string, unknown> }).chunks || {}).length;
+// Computed from the merged corpus (both bundles), never typed: this label said "36 chunks" long after
+// the bundle had grown, which is exactly the kind of frozen copy a provenance claim must not contain.
+const BUNDLED_CHUNK_COUNT = Object.keys(getEvidenceChunks()).length;
 
 export function getProvenanceLabel(source: ProvenanceSource, totalDbChunks?: number): string {
   if (source === 'attached_db') {

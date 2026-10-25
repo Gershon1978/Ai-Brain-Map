@@ -55,8 +55,8 @@
       "src": "comp-crank-arm",
       "dst": "comp-bb-threaded",
       "type": "mounted_on",
-      "claim": "The crank arm is joined to the bottom bracket spindle: tightening a crank puller against the spindle extracts the arm. The source is a removal instruction, so the installed mounting relationship is implied rather than documented.",
-      "status": "needs_review",
+      "claim": "Crank bolts secure the left and right cranks to the spindle, so the crank arm is joined to the bottom bracket spindle.",
+      "status": "verified",
       "evidence_type": "service_manual",
       "confidence": 1.0,
       "conditions": [],
@@ -72,6 +72,16 @@
           "linked_to_chunk": true,
           "confidence": 1.0,
           "section": "5.  If bottom bracket service is required, use appropriate BB tool to remove bearing cups. Note thread direction: Right side is usually reverse-threaded."
+        },
+        {
+          "chunk_id": "big_blue_book_p0337_c00",
+          "book": "big_blue_book",
+          "page": 337,
+          "section": "CRANK TYPES",
+          "quote": "Crank bolts secure the left and right\ncranks to the spindle.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
         }
       ]
     },
@@ -80,23 +90,23 @@
       "src": "comp-chainring",
       "dst": "comp-crank-arm",
       "type": "mounted_on",
-      "claim": "The chainring bolts to the crank arm through countersunk holes (visual evidence only).",
-      "status": "needs_review",
+      "claim": "Chainrings are toothed sprockets attached to the cranks.",
+      "status": "verified",
       "evidence_type": "service_manual",
-      "confidence": 0.8,
+      "confidence": 1.0,
       "conditions": [],
       "conflicts": [],
       "batch": "phase8c-crank",
       "evidence": [
         {
-          "chunk_id": "bike_repair_manual_chris_p0003_c00",
-          "book": "bike_repair_manual_chris",
-          "page": 3,
-          "quote": "countersunk bolt holes for chainring attachment",
-          "evidence_grade": "B",
+          "chunk_id": "big_blue_book_p0421_c00",
+          "book": "big_blue_book",
+          "page": 421,
+          "section": "CHAINRINGS",
+          "quote": "Chainrings are toothed sprockets attached to the cranks.",
+          "evidence_grade": "A",
           "linked_to_chunk": true,
-          "confidence": 0.8,
-          "section": "C H R I S S I D W E L L S"
+          "confidence": 1.0
         }
       ]
     }

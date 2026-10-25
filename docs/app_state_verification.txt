@@ -1,11 +1,11 @@
 == application state (independent verifier)
-  nodes=74  edges=75  citations=170
-  quotes: byte-exact=122  whitespace-only=48  missing=0
-  chunks: cited 41 of 43, unused 2 ['big_blue_book_p0693_c00', 'bike_repair_manual_chris_p0071_c05']
+  nodes=74  edges=76  citations=173
+  quotes: byte-exact=125  whitespace-only=48  missing=0
+  chunks: cited 45 of 47, unused 2 ['big_blue_book_p0693_c00', 'bike_repair_manual_chris_p0071_c05']
   node status: {'verified': 65, 'candidate': 1, 'needs_review': 8}
-  edge status: {'verified': 57, 'needs_review': 18}
-  components=3 sizes=[70, 3, 1] largest=70 (95%)
-  batches: [('seed', 27, 12), ('phase5-brake-1', 10, 10), ('phase5-cassette-6', 5, 5), ('phase5-cockpit-2', 7, 7), ('phase8a-brakes', 0, 12), ('phase8c-crank', 2, 2), ('phase5-drivetrain-3', 7, 7), ('phase8b-fork', 1, 3), ('phase9-frame', 1, 2), ('phase5-hubfit-7', 4, 4), ('phase5-quillstem-5', 4, 4), ('phase5-rearshock-4', 5, 5), ('phase8d-reartriangle', 1, 2)]
+  edge status: {'verified': 60, 'needs_review': 16}
+  components=2 sizes=[73, 1] largest=73 (99%)
+  batches: [('seed', 27, 12), ('phase5-brake-1', 10, 10), ('phase5-cassette-6', 5, 5), ('phase5-cockpit-2', 7, 7), ('phase8a-brakes', 0, 12), ('phase8c-crank', 2, 2), ('phase10-bb-frame', 0, 1), ('phase5-drivetrain-3', 7, 7), ('phase8b-fork', 1, 3), ('phase9-frame', 1, 2), ('phase5-hubfit-7', 4, 4), ('phase5-quillstem-5', 4, 4), ('phase5-rearshock-4', 5, 5), ('phase8d-reartriangle', 1, 2)]
 
   - seed: node comp-rear-hub: whitespace-only match on big_blue_book_p0238_c00
   - seed: node comp-rear-hub: whitespace-only match on big_blue_book_p0250_c00

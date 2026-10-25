@@ -268,6 +268,44 @@ it. **No synthetic conflict will be added.** Fabricating a contradiction to exer
 undermine the only thing this graph claims — that every assertion is grounded in a cited sentence.
 `conflicted` stays proven by construction until two sources genuinely disagree.
 
+## Working from the manuals, not the kb.db (2026-10-25)
+
+The corpus began as a 43-chunk excerpt of a `kb.db` built from two service manuals. Both PDFs are on
+disk and were verified as the real origin:
+
+| book | file | pages | text layer |
+|---|---|---|---|
+| Big Blue Book, 4th ed. (Park Tool / C. Calvin Jones) | `723775317-Big-Blue-Book-…pdf` | **992** | yes |
+| Bicycle Repair Manual (Chris Sidwells) | `22743195-Bicycle-Repair-Manual-…pdf` | **160** | partial — some pages are image-only |
+
+Page mapping was checked rather than assumed: a quote from `big_blue_book_p0921_c00` is on page 921,
+`p0679_c00` on 679, and `bike_repair_manual_chris_p0148_c00` on 148. But Sidwells **page 2 is a scan
+(0 extracted chars)**, so the crank pages in that book cannot be cited from its text layer — they would
+need OCR. Every new citation therefore comes from Big Blue Book, whose text layer is complete.
+
+**Ingested: 4 pages, each one cited** (`src/data/evidence-bundle-2.json`). The rule is to ingest only
+what is about to be used — adding all 1152 pages would drop coverage to a meaningless fraction and
+bury the corpus. Bundle 1 stays frozen; `src/services/evidence-corpus.ts` merges the two so the app,
+the suite and the verifier cannot disagree about which chunks exist.
+
+### The crankset island is closed, with declarative sentences at last
+
+| edge | status | evidence (byte-exact, page) |
+|---|---|---|
+| `comp-bb-threaded → comp-frame` (`fits_into`) | verified | p374 "Threaded bottom bracket shells have an internal thread to accept the external thread of the bottom bracket bearing cups or adaptors (figure 7.31)." + p373 "The bottom bracket shell is part of the frame that houses the bottom bracket bearings and spindle." |
+| `comp-crank-arm → comp-bb-threaded` (`mounted_on`) | **needs_review → verified** | p337 "Crank bolts secure the left and right cranks to the spindle." |
+| `comp-chainring → comp-crank-arm` (`mounted_on`) | **needs_review → verified** | p421 "Chainrings are toothed sprockets attached to the cranks." |
+
+Components went from `[70, 3, 1]` to **`[73, 1]`**: 99% of the graph is one component and the only
+island left is `comp-fork-seals`, for which the manuals genuinely say nothing about membership (they
+mention fork seals only as an inspection item).
+
+Two rules did real work here. The chainring edge had been `needs_review` because its only evidence was
+a `[VISUAL DATA]` analysis; promoting it while that quote was still attached tripped the verifier's
+"verified but quote inside visual data" rule, so the visual citation was removed and the prose one kept.
+And the crank-puller sentence that once demoted the crank edge was replaced — not reinterpreted — by a
+sentence that states the fastening outright.
+
 ## Next task
 
 1. **Local-first is settled** — the app runs with no AI Studio: `serve_local.cmd` → `localhost:8080`,

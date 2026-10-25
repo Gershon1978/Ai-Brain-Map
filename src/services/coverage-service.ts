@@ -4,7 +4,7 @@
  */
 
 import { getSeedGraph, getExpansionRegistry, getMergedGraph } from './graph-loader.ts';
-import seedEvidence from '../data/seed-evidence.json';
+import { getEvidenceChunks } from './evidence-corpus.ts';
 
 export interface BatchLedgerRow {
   batch: string;
@@ -56,7 +56,7 @@ export function computeCoverageReport(): CoverageReport {
   const seed = getSeedGraph();
   const expansions = getExpansionRegistry();
   const merged = getMergedGraph();
-  const rawChunks = (seedEvidence as any).chunks || {};
+  const rawChunks = getEvidenceChunks();
 
   // 1. Totals
   const totalNodes = merged.nodes.length;

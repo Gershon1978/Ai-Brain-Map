@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "batch": "phase10-bb-frame",
+  "source_note": "First batch built from the source PDF text layer rather than the derived kb.db excerpt: big_blue_book pages 337, 373, 374, 421 (Park Tool Big Blue Book, 4th ed.).",
+  "nodes": [],
+  "edges": [
+    {
+      "id": "edge-bb-threads-into-frame-shell",
+      "src": "comp-bb-threaded",
+      "dst": "comp-frame",
+      "type": "fits_into",
+      "claim": "A threaded bottom bracket threads into the frame: the shell has an internal thread that accepts the external thread of the bearing cups, and the shell is part of the frame.",
+      "status": "verified",
+      "evidence_type": "service_manual",
+      "confidence": 1.0,
+      "conditions": [],
+      "conflicts": [],
+      "batch": "phase10-bb-frame",
+      "evidence": [
+        {
+          "chunk_id": "big_blue_book_p0374_c00",
+          "book": "big_blue_book",
+          "page": 374,
+          "section": "THREADED STANDARDS",
+          "quote": "Threaded bottom bracket shells have an internal thread to accept the\nexternal thread of the bottom bracket bearing cups or adaptors (figure 7.31).",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        },
+        {
+          "chunk_id": "big_blue_book_p0373_c00",
+          "book": "big_blue_book",
+          "page": 373,
+          "section": "FIGURE 7.30: Spin cranks to feel for grinding on a worn bott",
+          "quote": "The bottom bracket shell is part of the frame that houses the bottom\nbracket bearings and spindle.",
+          "evidence_grade": "A",
+          "linked_to_chunk": true,
+          "confidence": 1.0
+        }
+      ]
+    }
+  ]
+}
