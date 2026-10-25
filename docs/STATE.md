@@ -229,6 +229,28 @@ One expectation of mine was wrong and corrected: I assumed a verified `mounted_o
 `unknown_missing_evidence`, which is right — a mounting tells you how two parts are joined, not
 whether a particular diameter mates.
 
+## Conformance was inverted (found by extending the harness to 12 cases)
+
+The harness now covers 12 paths and passes 12/12. Extending it exposed a second engine defect, and this
+one was a logic inversion rather than a missing gate:
+
+| relation | caveats (`conditions[]`) | before | now |
+|---|---|---|---|
+| `conforms_to` | non-empty | `conditionally_compatible` | unchanged |
+| `conforms_to` | **empty** | **`unknown_missing_evidence`** | **`verified_compatible`** |
+
+So adding caveats made a conformance *answerable* while a clean verified conformance fell through to
+"unknown". A `verified conforms_to` asserts the conformance itself, so it now answers; an unreviewed
+one degrades to conditional, like every other relation. Pinned as S5/S6 in Test S.
+
+Gaps that remain genuinely unfillable, verified rather than assumed:
+
+- **`conflicted` is unreachable in this graph.** 0 edges carry a non-empty `conflicts[]`, and 0 node
+  pairs carry opposing `compatible_with`/`incompatible_with` edges. The verdict is implemented and
+  tested by construction, not by data.
+- `std-quill-diameter-fit` has **no edge to `comp-steerer`** (the real relation is
+  `comp-stem-quill → std-quill-diameter-fit`), so a quill-diameter query cannot exercise that pair.
+
 ## Next task
 
 1. **Local-first is settled** — the app runs with no AI Studio: `serve_local.cmd` → `localhost:8080`,

@@ -885,11 +885,27 @@ export function runPhase3Tests(): { passed: boolean; results: TestResult[] } {
     );
   }
 
+  // conforms_to: a clean verified conformance must answer, and caveats must downgrade it.
+  // Before this branch existed the behaviour was inverted: caveats were answerable, a clean
+  // assertion fell through to unknown_missing_evidence.
+  const cleanConformance = sEngine.evaluateCompatibility('comp-rear-hub', 'std-rear-boost-148mm');
+  if (cleanConformance.verdict !== 'verified_compatible') {
+    sErrors.push(
+      `S5: verified conforms_to with no conditions must be "verified_compatible", got "${cleanConformance.verdict}"`
+    );
+  }
+  const caveatedConformance = sEngine.evaluateCompatibility('comp-rear-hub', 'std-hub-width');
+  if (caveatedConformance.verdict !== 'conditionally_compatible') {
+    sErrors.push(
+      `S6: conforms_to carrying conditions must be "conditionally_compatible", got "${caveatedConformance.verdict}"`
+    );
+  }
+
   results.push({
     name: 'Test S: Unreviewed-Exclusion Gate Parity',
     passed: sErrors.length === 0,
     message: sErrors.length === 0
-      ? 'Symmetry holds: a verified exclusion still returns "incompatible", a needs_review exclusion degrades to "conditionally_compatible" with no incompatible evaluation, and a mounting edge never fabricates fitment.'
+      ? 'Symmetry holds: a verified exclusion still returns "incompatible", a needs_review exclusion degrades to "conditionally_compatible" with no incompatible evaluation, a mounting edge never fabricates fitment, a clean verified conforms_to answers "verified_compatible" and the same relation with caveats degrades.'
       : `Test S failed: ${sErrors.join('; ')}`,
     details: sErrors,
   });

@@ -23,6 +23,13 @@ const CASES = [
   { q: 'Does an 11-speed road cassette fit this freehub body?', a: 'unk-freehub-body-length', b: 'comp-cassette', expected: 'unknown_missing_evidence', why: 'no dimension in the corpus' },
   { q: 'Does a cassette fit a freehub body?', a: 'comp-cassette', b: 'comp-freehub-body', expected: 'verified_compatible', why: 'verified fits_into edge' },
   { q: 'Does a quill stem fit a threaded steerer?', a: 'comp-stem-quill', b: 'comp-steerer', expected: 'unknown_missing_evidence', why: 'a mounted_on edge documents a mounting, NOT fitment - the engine is right to refuse' },
+  // --- coverage cases: paths the first six did not touch ---
+  { q: 'Does a hub conform to a width standard that carries caveats?', a: 'comp-rear-hub', b: 'std-hub-width', expected: 'conditionally_compatible', why: 'verified conforms_to with non-empty conditions[]' },
+  { q: 'Does a hub conform to the Boost 148 standard?', a: 'comp-rear-hub', b: 'std-rear-boost-148mm', expected: 'verified_compatible', why: 'verified conforms_to, no caveats: conformance is the claim, so it should carry' },
+  { q: 'Which fluid does this caliper use?', a: 'comp-caliper-hydraulic', b: 'prop-fluid-dot', expected: 'unknown_missing_evidence', why: 'has_property answers a property, not fitment - and this one is needs_review anyway' },
+  { q: 'Can this unknown-length freehub take a rear hub?', a: 'unk-freehub-body-length', b: 'comp-rear-hub', expected: 'unknown_missing_evidence', why: 'unknown_requirement NODE path, no edge between the pair' },
+  { q: 'Does a brake pad fit a fork?', a: 'comp-brake-pad', b: 'comp-fork', expected: 'unknown_missing_evidence', why: 'no edge at all between the pair' },
+  { q: 'Does a freehub body accept a cassette (reversed direction)?', a: 'comp-freehub-body', b: 'comp-cassette', expected: 'verified_compatible', why: 'verified fits_into, queried in the opposite direction - the engine must be symmetric' },
 ];
 
 const check = process.argv.includes('--check');

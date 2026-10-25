@@ -232,6 +232,33 @@ export class ConstraintEngine {
       };
     }
 
+    // Check for conformance to a standard with no caveats.
+    // Without this branch the answer depended on whether conditions[] was EMPTY, which is backwards:
+    // a conforms_to carrying caveats was answered "conditionally_compatible", while a clean verified
+    // conformance fell through to "unknown". A verified conforms_to asserts the conformance itself.
+    const conformEdge = directEdges.find((e) => e.type === 'conforms_to');
+    if (conformEdge) {
+      const conformReviewed = conformEdge.status === 'verified';
+      evaluations.push({
+        rule_id: conformEdge.id,
+        rule_name: conformReviewed ? 'Verified Standard Conformance' : 'Unreviewed Conformance',
+        state: conformReviewed ? 'verified_compatible' : 'conditionally_compatible',
+        passed: conformReviewed,
+        reason: conformEdge.claim,
+        evidence_citations: conformEdge.evidence,
+        conditions: conformEdge.conditions,
+      });
+      return {
+        subject_id: subjectId,
+        target_id: targetId,
+        verdict: conformReviewed ? 'verified_compatible' : 'conditionally_compatible',
+        overall_explanation: conformReviewed
+          ? `Verified conforming: ${conformEdge.claim}`
+          : `Conformance not reviewed: ${conformEdge.claim}`,
+        evaluations,
+      };
+    }
+
     // Default: If no direct edge exists, evaluate properties
     const subjectProps = Object.values(subject.properties);
     const hasUnmeasuredCritical = subjectProps.some(

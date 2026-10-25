@@ -181,6 +181,19 @@ That is the most useful thing a reviewer has done in this project: **its test ca
 ** The answers carried two invented ids; the test cases exposed a defect that four green gates and
 17 passing tests had missed.
 
+### Seventh pass — the coverage audit found a logic inversion
+
+Asked which paths the 6-case harness did *not* cover, it returned 8 gaps with `UNFILLABLE` used
+honestly twice. Verified against the graph: 5 usable, 2 correctly unfillable, 1 wrong
+(`std-quill-diameter-fit` has no edge to `comp-steerer`). Its claim that `conflicted` is unreachable
+was true and checkable — 0 edges carry `conflicts[]`, 0 pairs carry opposing edges.
+
+Implementing the usable gaps (12 cases) immediately failed: a **verified `conforms_to` with no
+caveats** returned `unknown_missing_evidence` while the same relation *with* caveats returned
+`conditionally_compatible`. That inversion is now fixed and pinned (S5/S6).
+
+Two passes in a row, its *test cases* found engine defects its *answers* would never have found.
+
 ## The lesson
 
 An external reviewer that reads the corpus but invents identifiers produces work that is *more*
